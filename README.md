@@ -1,2 +1,2 @@
 # distant-dreamers
-Javascript based game.
+Javascript based RPG style game.

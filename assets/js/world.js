@@ -9,26 +9,25 @@ class World {
        const image = new Image()
        image.onload = () => {
         this.ctx.drawImage(image, 0, 0)
-
        }
-       image.src = "/assets/images/maps/test.png"
+       image.src = "/../assets/images/maps/test.png"
 
-       const x = 0
-       const y = 0
-       const hero = new Image()
-       hero.onload = () => {
-        this.ctx.drawImage(
-            hero, 
-            0,
-            0,
-            32,
-            32,
-            x,
-            y,
-            32,
-            32
-        )
-       }
-       hero.src = "/assets/images/characters/hero.png"
+       // Place some game objects here
+       const hero = new GameObject({
+        x: 5,
+        y: 6,
+       })
+
+       const npc1 = new GameObject({
+        x: 7,
+        y: 9,
+        src: "/../assets/images/characters/npc1.png"
+       })
+
+       setTimeout(() => {
+        hero.sprite.draw(this.ctx)
+        npc1.sprite.draw(this.ctx)
+       }, 200)
+
     }
 }

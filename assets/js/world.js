@@ -12,19 +12,26 @@ class World {
             // Clear the frame
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-            // Draw Lower Layer
-            this.map.drawLowerImage(this.ctx)
+            // Character with camera
+            const cameraCharacter = this.map.gameObjects.hero
 
-            // Draw Game Objects
+            // Update all objects (2nd loop)
             Object.values(this.map.gameObjects).forEach(object => {
                 object.update({
                     arrow: this.directionInput.direction
                 })
-                object.sprite.draw(this.ctx)
+            })
+
+            // Draw Lower Layer
+            this.map.drawLowerImage(this.ctx, cameraCharacter)
+
+            // Draw Game Objects
+            Object.values(this.map.gameObjects).forEach(object => {
+                object.sprite.draw(this.ctx, cameraCharacter)
             })
 
             // Draw Upper Layer
-            this.map.drawUpperImage(this.ctx)
+            this.map.drawUpperImage(this.ctx, cameraCharacter)
 
             requestAnimationFrame(() => {
                 step()

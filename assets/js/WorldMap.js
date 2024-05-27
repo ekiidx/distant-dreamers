@@ -9,12 +9,20 @@ class WorldMap {
         this.upperImage.src = config.upperSrc
     }
 
-    drawLowerImage(ctx) {
-        ctx.drawImage(this.lowerImage, 0, 0)
+    drawLowerImage(ctx, cameraCharacter) {
+        ctx.drawImage(
+            this.lowerImage, 
+            utils.withGrid(10.5) - cameraCharacter.x,
+            utils.withGrid(6) - cameraCharacter.y
+        )
     }
 
-    drawUpperImage(ctx) {
-        ctx.drawImage(this.upperImage, 0, 0)
+    drawUpperImage(ctx, cameraCharacter) {
+        ctx.drawImage(
+            this.upperImage, 
+            utils.withGrid(10.5) - cameraCharacter.x,
+            utils.withGrid(6) - cameraCharacter.y
+        )
     }
 }
 

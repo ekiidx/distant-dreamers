@@ -18,7 +18,8 @@ class World {
             // Update all objects (2nd loop)
             Object.values(this.map.gameObjects).forEach(object => {
                 object.update({
-                    arrow: this.directionInput.direction
+                    arrow: this.directionInput.direction,
+                    map: this.map
                 })
             })
 
@@ -42,6 +43,7 @@ class World {
 
     init() {
         this.map = new WorldMap(window.WorldMaps.TestRoom)
+        this.map.mountObjects()
         this.directionInput = new PlayerInput()
         this.directionInput.init()
         this.startGameLoop()

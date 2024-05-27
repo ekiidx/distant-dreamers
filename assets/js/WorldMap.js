@@ -2,6 +2,8 @@ class WorldMap {
     constructor(config) {
         this.gameObjects = config.gameObjects
 
+        this.walls = config.walls || {}
+
         this.lowerImage = new Image()
         this.lowerImage.src = config.lowerSrc
 
@@ -24,6 +26,32 @@ class WorldMap {
             utils.withGrid(6) - cameraCharacter.y
         )
     }
+
+    isSpaceTaken(currentX, currentY, direction) {
+        const {x,y} = utils.nextPosition(currentX, currentY, direction)
+        return this.walls[`${x},${y}`] || false
+    }
+
+    mountObjects() {
+        Object.keys(this.gameObjects).forEach(key => {
+            // determine object mount
+            let object = this.gameObjects[key]
+            object.id = key
+            object.mount(this)
+        })
+    }
+
+    addWall(x,y) {
+        this.walls[`${x},${y}`] = true
+    }
+    removeWall(x,y) {
+        delete this.walls[`${x},${y}`] 
+    }
+    moveWall(wasX, wasY, direction) {
+        this.removeWall(wasX, wasY)
+        const {x,y} = utils.nextPosition(wasX, wasY, direction)
+        this.addWall(x,y)
+    }
 }
 
 window.WorldMaps = {
@@ -39,8 +67,74 @@ window.WorldMaps = {
             npc1: new Character({
                 x: utils.withGrid(7),
                 y: utils.withGrid(9),
-                src: "assets/images/characters/npc1.png"
-            })
+                src: "assets/images/characters/npc1.png",
+                behaviorLoop: [
+                    { type: "stand", direction: "left", time: 800 },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "stand", direction: "right", time: 1200 },
+                    { type: "stand", direction: "left", time: 300 },
+                ]
+            }),
+            npc2: new Character({
+                x: utils.withGrid(2),
+                y: utils.withGrid(8),
+                src: "assets/images/characters/npc1.png",
+                behaviorLoop: [
+                    { type: "walk", direction: "left" },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "up" },
+                    { type: "walk", direction: "right" },
+                    { type: "walk", direction: "down" },
+                ]
+            }),
+        },
+        walls: {
+            //"16,16": true
+            [utils.asGridCoord(0,3)] : true,
+            [utils.asGridCoord(0,4)] : true,
+            [utils.asGridCoord(0,5)] : true,
+            [utils.asGridCoord(0,6)] : true,
+            [utils.asGridCoord(0,7)] : true,
+            [utils.asGridCoord(1,2)] : true,
+            [utils.asGridCoord(2,2)] : true,
+            [utils.asGridCoord(3,2)] : true,
+            [utils.asGridCoord(4,2)] : true,
+            [utils.asGridCoord(5,2)] : true,
+            [utils.asGridCoord(6,2)] : true,
+            [utils.asGridCoord(7,3)] : true,
+            [utils.asGridCoord(7,2)] : true,
+            [utils.asGridCoord(7,1)] : true,
+            [utils.asGridCoord(8,0)] : true,
+            [utils.asGridCoord(9,1)] : true,
+            [utils.asGridCoord(9,2)] : true,
+            [utils.asGridCoord(9,3)] : true,
+            [utils.asGridCoord(10,2)] : true,
+            [utils.asGridCoord(11,2)] : true,
+            [utils.asGridCoord(12,3)] : true,
+            [utils.asGridCoord(12,4)] : true,
+            [utils.asGridCoord(12,5)] : true,
+            [utils.asGridCoord(12,6)] : true,
+            [utils.asGridCoord(12,7)] : true,
+            [utils.asGridCoord(12,8)] : true,
+            [utils.asGridCoord(12,9)] : true,
+            [utils.asGridCoord(11,10)] : true,
+            [utils.asGridCoord(10,10)] : true,
+            [utils.asGridCoord(9,10)] : true,
+            [utils.asGridCoord(8,10)] : true,
+            [utils.asGridCoord(7,10)] : true,
+            [utils.asGridCoord(6,10)] : true,
+            [utils.asGridCoord(5,10)] : true,
+            [utils.asGridCoord(4,10)] : true,
+            [utils.asGridCoord(4,11)] : true,
+            [utils.asGridCoord(3,12)] : true,
+            [utils.asGridCoord(2,11)] : true,
+            [utils.asGridCoord(2,10)] : true,
+            [utils.asGridCoord(1,10)] : true,
+            [utils.asGridCoord(0,9)] : true,
+            [utils.asGridCoord(0,8)] : true,
+
+            
+
         }
     },
     TestRoom2: {

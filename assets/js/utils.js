@@ -19,5 +19,12 @@ const utils = {
             x += size
         }
         return {x,y}
+    },
+    // Helper for
+    emitEvent(name, detail) {
+        const event = new CustomEvent(name, {
+            detail
+        })
+        document.dispatchEvent(event)
     }
 }

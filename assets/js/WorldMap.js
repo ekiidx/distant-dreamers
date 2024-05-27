@@ -80,10 +80,10 @@ window.WorldMaps = {
                 y: utils.withGrid(8),
                 src: "assets/images/characters/npc1.png",
                 behaviorLoop: [
-                    { type: "walk", direction: "left" },
-                    { type: "stand", direction: "up", time: 800 },
-                    { type: "walk", direction: "up" },
                     { type: "walk", direction: "right" },
+                    // { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "up" },
+                    { type: "walk", direction: "left" },
                     { type: "walk", direction: "down" },
                 ]
             }),

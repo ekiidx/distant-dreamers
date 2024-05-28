@@ -27,7 +27,10 @@ class World {
             this.map.drawLowerImage(this.ctx, cameraCharacter)
 
             // Draw Game Objects
-            Object.values(this.map.gameObjects).forEach(object => {
+            Object.values(this.map.gameObjects).sort((a,b) => {
+                // render more northern objects on screen before southern to fix z-index issue for sprites
+                return a.y - b.y
+            }).forEach(object => {
                 object.sprite.draw(this.ctx, cameraCharacter)
             })
 

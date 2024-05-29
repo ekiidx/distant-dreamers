@@ -26,5 +26,12 @@ const utils = {
             detail
         })
         document.dispatchEvent(event)
+    },
+    // spin char 180 degrees
+    oppositeDirection(direction) {
+        if (direction === "left") { return "right" }
+        if (direction === "right") { return "left" }
+        if (direction === "up") { return "down" }
+        return "up"
     }
 }

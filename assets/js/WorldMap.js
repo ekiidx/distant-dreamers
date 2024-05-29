@@ -63,6 +63,18 @@ class WorldMap {
         Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
       }
 
+    // Check is there is action to be taken at a space
+    checkForActionScene() {
+        const hero = this.gameObjects["hero"]
+        const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction)
+        const match = Object.values(this.gameObjects).find(object => {
+            return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
+        })
+        if (!this.isScenePlaying && match && match.talking.length) {
+            this.startScene(match.talking[0].events)
+        } 
+    }
+
     addWall(x,y) {
         this.walls[`${x},${y}`] = true
     }
@@ -95,6 +107,14 @@ window.WorldMaps = {
                     { type: "stand", direction: "up", time: 800 },
                     { type: "stand", direction: "right", time: 1200 },
                     { type: "stand", direction: "left", time: 300 },
+                ],
+                talking: [
+                    {
+                        events: [
+                            { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
+                            { type: "message", text: "You can press 'Enter' to talk to others like me."}
+                        ]
+                    }
                 ]
             }),
             npc2: new Character({
@@ -107,7 +127,7 @@ window.WorldMaps = {
                     { type: "walk", direction: "left" },
                     { type: "walk", direction: "down" },
                 ]
-            }),
+            })
         },
         walls: {
             //"16,16": true

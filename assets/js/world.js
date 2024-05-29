@@ -44,9 +44,19 @@ class World {
         step()
     }
 
+    bindActionInput() {
+        new KeyPressListener("Enter", () => {
+            // Is there a char to talk to?
+            // check for scene at certain position and determin if char has something to say, and if so, then fire
+            this.map.checkForActionScene()
+        })
+    }
+
     init() {
         this.map = new WorldMap(window.WorldMaps.TestRoom)
         this.map.mountObjects()
+
+        this.bindActionInput()
 
         this.directionInput = new PlayerInput()
         this.directionInput.init()
@@ -54,7 +64,7 @@ class World {
         this.startGameLoop()
 
         this.map.startScene([
-            { type: "message", text: "Welcome to Distant Dreamers"}
+            { type: "message", text: "Welcome to Distant Dreamers!"}
             // { who: "hero", type: "walk",  direction: "down" },
             // { who: "hero", type: "walk",  direction: "down" },
             // { who: "npc1", type: "walk",  direction: "left" },

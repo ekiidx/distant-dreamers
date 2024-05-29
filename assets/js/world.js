@@ -54,6 +54,7 @@ class World {
         this.startGameLoop()
 
         this.map.startScene([
+            { type: "message", text: "Welcome to Distant Dreamers"}
             // { who: "hero", type: "walk",  direction: "down" },
             // { who: "hero", type: "walk",  direction: "down" },
             // { who: "npc1", type: "walk",  direction: "left" },

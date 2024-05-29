@@ -47,6 +47,14 @@ class WorldEvent {
         document.addEventListener("WalkingComplete", completeHandler)
     }
 
+    message(resolve) {
+        const message = new Message({
+            text: this.event.text,
+            onComplete: () => resolve()
+        })
+        message.init( document.querySelector(".game-container"))
+    }
+
     init() {
         return new Promise(resolve => {
             this[this.event.type](resolve)

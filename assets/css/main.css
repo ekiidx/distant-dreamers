@@ -1,3 +1,13 @@
+:root {
+    --border-color: #2e1250;
+    --dialog-background: #1a0c25;
+
+    --menu-background: #2e1250;
+    --menu-border-color: #2e1250;
+    --menu-font-color: #a2d4fc;
+    --menu-selected-background: #1a0c25;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -18,4 +28,40 @@ body {
 }
 .game-container canvas {
     image-rendering: pixelated;
+}
+
+/* Messages */
+.message-box {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3rem;
+    background: var(--menu-background);
+    border-top: 1px solid var(--menu-border-color);
+    color: var(--menu-font-color);
+}
+.message-box p {
+    margin: 0;
+    font-size: 11px;
+}
+.message-box button {
+    padding-right: 0.35rem;
+    padding-bottom: 0.35rem;
+    font-family: Arial, Helvetica, sans-serif;
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+    margin: 0;
+    color: var(--menu-font-color);
+    font-size: 7px;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
 }

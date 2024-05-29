@@ -31,8 +31,8 @@ class GameObject {
 
     async doBehaviorEvent(map) {
 
-        // Stop if there is a scene or no scene config set
-        if (map.isScenePlaying || this.behaviorLoop.length === 0) {
+        // Stop if there is a scene or no scene config set (stop async events before they happen)
+        if (map.isScenePlaying || this.behaviorLoop.length === 0 || this.isStanding) {
             return
         }
 

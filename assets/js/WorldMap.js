@@ -60,7 +60,7 @@ class WorldMap {
         this.isScenePlaying = false
 
         // Reset NPCs to do idle behavior
-        // Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
+        Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
       }
 
     addWall(x,y) {

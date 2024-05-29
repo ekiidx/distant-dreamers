@@ -19,6 +19,12 @@ class Message {
             // Close message box
             this.done()
         })
+
+        this.actionListener = new KeyPressListener("Enter", () => {
+            // Close message box with Enter key
+            this.actionListener.unbind()
+            this.done()
+        })
     }
 
     done() {

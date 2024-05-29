@@ -1,7 +1,8 @@
 class WorldMap {
     constructor(config) {
+        this.world = null
         this.gameObjects = config.gameObjects
-
+        this.sceneSpaces = config.sceneSpaces || {}
         this.walls = config.walls || {}
 
         this.lowerImage = new Image()
@@ -75,6 +76,14 @@ class WorldMap {
         } 
     }
 
+    checkForFootstepScene() {
+        const hero = this.gameObjects["hero"]
+        const match = this.sceneSpaces[ `${hero.x},${hero.y}` ]
+        if (!this.isScenePlaying && match) {
+            this.startScene( match[0].events )
+        }
+    }
+
     addWall(x,y) {
         this.walls[`${x},${y}`] = true
     }
@@ -121,12 +130,12 @@ window.WorldMaps = {
                 x: utils.withGrid(2),
                 y: utils.withGrid(8),
                 src: "assets/images/characters/npc1.png",
-                behaviorLoop: [
-                    { type: "walk", direction: "right" },
-                    { type: "walk", direction: "up" },
-                    { type: "walk", direction: "left" },
-                    { type: "walk", direction: "down" },
-                ]
+                // behaviorLoop: [
+                //     { type: "walk", direction: "right" },
+                //     { type: "walk", direction: "up" },
+                //     { type: "walk", direction: "left" },
+                //     { type: "walk", direction: "down" },
+                // ]
             })
         },
         walls: {
@@ -174,26 +183,37 @@ window.WorldMaps = {
             [utils.asGridCoord(1,10)] : true,
             [utils.asGridCoord(0,9)] : true,
             [utils.asGridCoord(0,8)] : true,
+        },
+        sceneSpaces: {
+            [utils.asGridCoord(3,10)] : [
+                {
+                    events: [
+                        // {who: "npc1", type: "walk", direction: "up"},
+                        {type: "changeMap", map: "TestRoom2"}
+                    ]
+                }
+            ]
         }
     },
     TestRoom2: {
-        lowerSrc: "assets/images/maps/test_room_lower_2.png",
-        upperSrc: "assets/images/maps/test_room_upper2.png",
+        lowerSrc: "assets/images/maps/test_room_lower.png",
+        upperSrc: "assets/images/maps/test_room_upper.png",
         gameObjects: {
-            hero: new GameObject({
-                x: 5,
-                y: 6,
+            hero: new Character({
+                isPlayerControlled: true,
+                x: utils.withGrid(5),
+                y: utils.withGrid(6),
             }),
-            npc1: new GameObject({
-                x: 9,
-                y: 2,
-                src: "assets/images/characters/npc1.png"
-            }),
-            npc2: new GameObject({
-                x:20,
-                y: 2,
-                src: "assets/images/characters/npc2.png"
-            })
+            // npc1: new Character({
+            //     x: utils.withGrid(9),
+            //     y: utils.withGrid(2),
+            //     src: "assets/images/characters/npc1.png"
+            // }),
+            // npc2: new Character({
+            //     x: utils.withGrid(20),
+            //     y: utils.withgrid(2),
+            //     src: "assets/images/characters/npc2.png"
+            // })
         }
     },
 }

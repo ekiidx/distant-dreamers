@@ -52,11 +52,25 @@ class World {
         })
     }
 
-    init() {
-        this.map = new WorldMap(window.WorldMaps.TestRoom)
+    bindHeroPositionCheck() {
+        document.addEventListener("WalkingComplete", e => {
+            if (e.detail.whoId === "hero") {
+                // Player position has changed
+                this.map.checkForFootstepScene()
+            }
+        })
+    }
+
+    startMap(mapConfig) {
+        this.map = new WorldMap(mapConfig)
+        this.map.world = this
         this.map.mountObjects()
+    }
+    init() {
+        this.startMap(window.WorldMaps.TestRoom)
 
         this.bindActionInput()
+        this.bindHeroPositionCheck()
 
         this.directionInput = new PlayerInput()
         this.directionInput.init()

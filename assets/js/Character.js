@@ -21,7 +21,7 @@ class Character extends GameObject {
             // More code for starting to walk
 
             // Keyboard ready and have key pressed
-            if (this.isPlayerControlled && state.arrow) {
+            if (!state.map.isScenePlaying && this.isPlayerControlled && state.arrow) {
                 this.startBehavior(state, {
                     type: "walk",
                     direction: state.arrow
@@ -37,6 +37,10 @@ class Character extends GameObject {
         if (behavior.type === "walk") {
             // stop player movement if space in front is taken
             if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+
+                behavior.retry && setTimeout(() => {
+                    this.startBehavior(state, behavior)
+                }, 10)
                 return
             }
             // Ready to move

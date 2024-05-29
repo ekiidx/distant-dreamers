@@ -9,6 +9,8 @@ class WorldMap {
 
         this.upperImage = new Image()
         this.upperImage.src = config.upperSrc
+
+        this.isScenePlaying = false
     }
 
     drawLowerImage(ctx, cameraCharacter) {
@@ -40,6 +42,26 @@ class WorldMap {
             object.mount(this)
         })
     }
+
+    async startScene(events) {
+        this.isScenePlaying = true
+    
+        // Start loop of asynic events
+        // await each one
+        for (let i=0; i<events.length; i++) {
+          const eventHandler = new WorldEvent({
+            event: events[i],
+            map: this,
+          })
+          await eventHandler.init()
+        }
+    
+        // when all events have played, set to false to continue on with the game
+        this.isScenePlaying = false
+
+        // Reset NPCs to do idle behavior
+        // Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
+      }
 
     addWall(x,y) {
         this.walls[`${x},${y}`] = true
@@ -81,7 +103,6 @@ window.WorldMaps = {
                 src: "assets/images/characters/npc1.png",
                 behaviorLoop: [
                     { type: "walk", direction: "right" },
-                    // { type: "stand", direction: "up", time: 800 },
                     { type: "walk", direction: "up" },
                     { type: "walk", direction: "left" },
                     { type: "walk", direction: "down" },
@@ -101,6 +122,7 @@ window.WorldMaps = {
             [utils.asGridCoord(4,2)] : true,
             [utils.asGridCoord(5,2)] : true,
             [utils.asGridCoord(6,2)] : true,
+            [utils.asGridCoord(6,3)] : true,
             [utils.asGridCoord(7,3)] : true,
             [utils.asGridCoord(7,2)] : true,
             [utils.asGridCoord(7,1)] : true,
@@ -132,9 +154,6 @@ window.WorldMaps = {
             [utils.asGridCoord(1,10)] : true,
             [utils.asGridCoord(0,9)] : true,
             [utils.asGridCoord(0,8)] : true,
-
-            
-
         }
     },
     TestRoom2: {
@@ -154,7 +173,7 @@ window.WorldMaps = {
                 x:20,
                 y: 2,
                 src: "assets/images/characters/npc2.png"
-            }),
+            })
         }
     },
 }

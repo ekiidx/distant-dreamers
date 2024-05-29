@@ -50,5 +50,8 @@ class GameObject {
         if (this.behaviorLoopIndex === this.behaviorLoop.length) {
             this.behaviorLoopIndex = 0
         }
+
+         //Loop again
+        this.doBehaviorEvent(map);
     }
 }

@@ -47,8 +47,18 @@ class World {
     init() {
         this.map = new WorldMap(window.WorldMaps.TestRoom)
         this.map.mountObjects()
+
         this.directionInput = new PlayerInput()
         this.directionInput.init()
+        
         this.startGameLoop()
+
+        this.map.startScene([
+            // { who: "hero", type: "walk",  direction: "down" },
+            // { who: "hero", type: "walk",  direction: "down" },
+            // { who: "npc1", type: "walk",  direction: "left" },
+            // { who: "npc1", type: "walk",  direction: "left" },
+            // { who: "npc1", type: "stand",  direction: "up", time: 800 },
+          ])
     }
 }

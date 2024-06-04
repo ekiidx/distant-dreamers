@@ -60,8 +60,13 @@ class WorldEvent {
     }
 
     changeMap(resolve) {
-        this.map.world.startMap( window.WorldMaps[this.event.map])
-        resolve()
+        const sceneTransition = new SceneTransition()
+        sceneTransition.init(document.querySelector(".game-container"), () => {
+            this.map.world.startMap( window.WorldMaps[this.event.map])
+            resolve()
+
+            sceneTransition.fadeOut()
+        })
     }
 
     init() {

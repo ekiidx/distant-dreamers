@@ -71,3 +71,27 @@ body {
     font-family: inherit;
     cursor: pointer;
 }
+
+.transition {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #ffffff;
+    opacity: 0;
+    animation: transition-fade-in 1.2s forwards;
+}
+
+.transition.fade-out {
+    animation: transition-fade-out 1.2s forwards;
+}
+
+@keyframes transition-fade-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+@keyframes transition-fade-out {
+    from { opacity: 1 }
+    to { opacity: 0}
+}

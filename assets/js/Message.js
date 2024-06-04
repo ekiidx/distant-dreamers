@@ -11,9 +11,15 @@ class Message {
         this.element.classList.add("message-box")
 
         this.element.innerHTML = (`
-            <p>${this.text}</p>
+            <p class="text-message"></p>
             <button>Next &#127769;</button>
         `)
+
+        // Init typewriter effect
+        this.typewriterText = new Typewriter({
+            element: this.element.querySelector(".text-message"),
+            text: this.text
+        })
 
         this.element.querySelector("button").addEventListener("click", () => {
             // Close message box
@@ -22,18 +28,23 @@ class Message {
 
         this.actionListener = new KeyPressListener("Enter", () => {
             // Close message box with Enter key
-            this.actionListener.unbind()
             this.done()
         })
     }
 
     done() {
-        this.element.remove()
-        this.onComplete()
+        if (this.typewriterText.isDone) {
+            this.element.remove()
+            this.actionListener.unbind()
+            this.onComplete()
+        } else {
+            this.typewriterText.warpToDone()
+        }
     }
 
     init(container) {
         this.createElement()
         container.appendChild(this.element)
+        this.typewriterText.init()
     }
 }

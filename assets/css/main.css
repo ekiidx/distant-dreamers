@@ -49,6 +49,12 @@ body {
     margin: 0;
     font-size: 11px;
 }
+.message-box span {
+    opacity: 0;
+}
+.message-box span.revealed {
+    opacity: 1;
+}
 .message-box button {
     padding-right: 0.35rem;
     padding-bottom: 0.35rem;

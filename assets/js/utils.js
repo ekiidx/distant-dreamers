@@ -35,6 +35,10 @@ const utils = {
             }, ms)
         })
     },
+
+    randomFromArray(array) {
+        return array[ Math.floor(Math.random()*array.length) ]
+    },
     
     // spin char 180 degrees
     oppositeDirection(direction) {

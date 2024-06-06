@@ -11,7 +11,7 @@ window.Fighters = {
     type: FighterTypes.normal,
     src: "/images/characters/",
     icon: "/images/icons/spicy.png",
-    actions: [ "strike" ]
+    actions: [ "fear", "regen", "strike" ]
   },
   "e001": {
     name: "Enemy",

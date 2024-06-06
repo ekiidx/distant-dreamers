@@ -7,7 +7,6 @@
     --menu-font-color: #a2d4fc;
     --menu-selected-background: #1a0c25;
 }
-
 * {
     box-sizing: border-box;
 }
@@ -23,13 +22,11 @@ body {
     height: 198px;
     border: 1px solid #fff;
     margin: 0 auto;
-
     transform: scale(3) translateY(50%);
 }
 .game-container canvas {
     image-rendering: pixelated;
 }
-
 /* Messages */
 .message-box {
     padding-left: 1rem;
@@ -71,7 +68,6 @@ body {
     font-family: inherit;
     cursor: pointer;
 }
-
 .transition {
     position: absolute;
     left: 0;
@@ -82,11 +78,9 @@ body {
     opacity: 0;
     animation: transition-fade-in 1.2s forwards;
 }
-
 .transition.fade-out {
     animation: transition-fade-out 1.2s forwards;
 }
-
 @keyframes transition-fade-in {
     from { opacity: 0 }
     to { opacity: 1 }
@@ -94,4 +88,175 @@ body {
 @keyframes transition-fade-out {
     from { opacity: 1 }
     to { opacity: 0}
+}
+.battle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: url(/assets/images/maps/battle_room.png);
+    background-size: cover;
+    image-rendering: pixelated;
+}
+.battle-hero {
+    bottom: 57px;
+    left: 1px;
+    position: absolute;
+    transform: scale(2);
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    background: url(/assets/images/characters/shadow.png) no-repeat no-repeat;
+}
+.battle-enemy {
+    top: 42px;
+    right: -1px;
+    position: absolute;
+    transform: scale(2);
+    width: 32px;
+    height: 32px;
+    overflow: hidden;
+    background: url(/assets/images/characters/shadow.png) no-repeat no-repeat;
+}
+.battle-hero img {
+    pointer-events: none;
+    transform: translateY(-32px);
+}
+.battle-enemy img {
+    pointer-events: none;
+    transform: translateY(-96px);
+}
+.enemy {
+    width: 67px;
+    height: 14px;
+    background: url(/assets/images/ui/enemy-plate.png) no-repeat no-repeat;
+    position: absolute;
+  }
+  .battle .enemy {
+    transform: scale(2);
+  }
+  .battle .enemy[data-active="false"] {
+    opacity: 0;
+  }
+  .battle .enemy[data-active="true"] {
+    opacity: 1;
+  }
+  .enemy[data-team="player"] {
+    left: 46px;
+    top: 70px;
+  }
+  .enemy[data-team="enemy"] {
+    top: 28px;
+    right: 77px;
+  }
+  .enemy-crop {
+    position: absolute;
+    bottom: 1px;
+    left:3px;
+    width: 22px;
+    height: 12px;
+    overflow:hidden;
+  }
+  .enemy-character {
+    display:block;
+    position: absolute;
+    left: -11px;
+    bottom: -7px;
+  }
+  .battle .enemy-crop {
+    display:none;
+  }
+  .enemy-name {
+    position: absolute;
+    left:-2px;
+    top:-8px;
+    white-space: nowrap;
+    background: var(--menu-font-color);
+    color: #fff;
+    font-size: 5px; /*This is only so small because the component is scaled 2x in battle which is weird */
+    padding-left: 2px;
+    padding-right: 2px;
+    margin: 0;
+  }
+  .enemy-type {
+    position: absolute;
+    left: 3px;
+    top: -2px;
+    width: 16px;
+    height: 16px;
+  }
+  .enemy-hp-container {
+    position: absolute;
+    left:20px;
+    top:4px;
+    width: 26px;
+    height: 3px;
+  }
+  .enemy-hp-container > rect {
+    transition: width 0.2s;
+  }
+  .enemy-xp-container {
+    position: absolute;
+    left:20px;
+    top:8px;
+    width: 26px;
+    height: 2px;
+  }
+  .enemy-level {
+    position: absolute;
+    font-size: 12px;
+    right: 2px;
+    top: -1px;
+    width: 17px;
+    height: 12px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    background: #F8C594;
+    border: 1px solid #A48465;
+    margin: 0;
+  }
+  .enemy-status {
+    position: absolute;
+    font-size: 5px;
+    left: 47px;
+    bottom: -3px;
+    padding-left: 2px;
+    padding-right: 2px;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    margin: 0;
+  }
+  .enemy-status[data-status="fast"] {
+    color: red;
+  }
+  .enemy-status[data-status="slow"] {
+    background: #582a79;
+  }
+  
+  /* Animations */
+@keyframes battle-damage-blink {
+  to {
+    visibility: hidden; 
+  } 
+}
+.battle-damage-blink {
+  animation: battle-damage-blink 0.3s steps(2, start) infinite;
+}
+@keyframes battle-spin-right {
+  0% { transform: translate3d(0,0,0) rotate(0deg) scale(2)}
+  25% { transform: translate3d(155px,-30px,0) rotate(45deg) scale(2)}
+  100% { transform: translate3d(0,0,0) scale(2)}
+}
+.battle-spin-right {
+  animation: battle-spin-right 0.8s;
+}
+@keyframes battle-spin-left {
+  0% { transform: translate3d(0,0,0) rotate(0deg) scale(2)}
+  25% { transform: translate3d(-100%, 25%,0) rotate(45deg) scale(2)}
+  100% { transform: translate3d(0,0,0) scale(2)}
+}
+.battle-spin-left {
+  animation: battle-spin-left 0.8s;
 }

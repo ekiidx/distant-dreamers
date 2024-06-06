@@ -27,6 +27,15 @@ const utils = {
         })
         document.dispatchEvent(event)
     },
+
+    wait(ms) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve()
+            }, ms)
+        })
+    },
+    
     // spin char 180 degrees
     oppositeDirection(direction) {
         if (direction === "left") { return "right" }

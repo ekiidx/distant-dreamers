@@ -25,5 +25,24 @@ window.Actions = {
             { type: "stateChange", status: { type: "fear", expiresIn: 3 } },
             { type: "textMessage", text: "{TARGET} is afraid!" }
         ]
-    }
+    },
+    // Items
+    item_recoverStatus: {
+        name: "Remedy",
+        description: "Remove negative status.",
+        targetType: "friendly",
+        success: [
+            { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
+            { type: "stateChange", status: null },
+        ]
+    },
+    item_recoverHp: {
+        name: "Potion",
+        description: "Heal 10 HP.",
+        targetType: "friendly",
+        success: [
+            { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
+            { type: "stateChange", recover: 10 },
+        ]
+    },
 }

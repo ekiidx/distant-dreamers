@@ -67,6 +67,7 @@ class BattleEvent {
         const menu = new BattleMenu({
             caster: this.event.caster,
             enemy: this.event.enemy,
+            items: this.battle.items,
             onComplete: submission => {
                 // { what to use, who to use it on }
                 resolve(submission)

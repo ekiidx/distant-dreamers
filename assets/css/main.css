@@ -287,3 +287,56 @@ body {
   top: 56px;
   animation: glob-left 1s forwards;
 }
+.keyboard-menu {
+  border: 1px solid var(--border-color);
+  background: var(--menu-background);
+  position: absolute;
+}
+.keyboard-menu button {
+  color: var(--menu-font-color);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+  height: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+  padding-left: 0.5rem;
+  font-size: 10px;
+}
+.keyboard-menu button:focus {
+  background: var(--menu-selected-background);
+  outline: 0;
+}
+.keyboard-menu .option {
+  position: relative;
+}
+.keyboard-menu .option .right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.battle .keyboard-menu {
+  right: 0;
+  bottom: 0;
+  width: 140px;
+}
+.description-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: var(--menu-font-color);
+  border-top: 1px solid var(--border-color);
+  background: var(--menu-background);
+  padding: 2px;
+}
+.description-box p {
+  font-size: 10px;
+  margin: 0;
+}

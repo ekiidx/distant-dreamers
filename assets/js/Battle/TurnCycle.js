@@ -1,7 +1,8 @@
 class TurnCycle {
-    constructor({ battle, onNewEvent }) {
+    constructor({ battle, onNewEvent, onWinner }) {
       this.battle = battle
       this.onNewEvent = onNewEvent
+      this.onWinner = onWinner
       this.currentTeam = "player" //or "enemy"
     }
   
@@ -35,6 +36,45 @@ class TurnCycle {
         await this.onNewEvent(event)
       }
 
+      // Did the target die?
+      const targetDead = submission.target.hp <= 0
+      if (targetDead) {
+        await this.onNewEvent({
+          type: "textMessage", text: `${submission.target.name} is defeated!`
+        })
+
+        if (submission.target.team === "enemy") {
+
+          const playerActiveId = this.battle.activeCombatants.player
+          const xp = submission.target.givesXp
+
+          await this.onNewEvent({
+            type: "textMessage",
+            text: `Gained ${xp} XP!`
+          })
+
+          await this.onNewEvent({
+            type: "giveXp",
+            xp,
+            combatant:  this.battle.combatants[playerActiveId]
+          })
+        }
+      }
+
+      // Do we having a winning team?
+      const winner = this.getWinningTeam()
+      if (winner) {
+        await this.onNewEvent({
+          type: "textMessage",
+          text: "Winner!"
+        })
+        // End Battle
+        this.onWinner(winner)
+        return
+      }
+
+      // We have dead player, but still no winner
+
       // Check for post events
       // do things after the original turn submission
       const postEvents = caster.getPostEvents()
@@ -58,6 +98,18 @@ class TurnCycle {
       this.currentTeam = this.currentTeam === "player" ? "enemy" : "player"
       this.turn();
   
+    }
+
+    getWinningTeam() {
+      let aliveTeams = {}
+      Object.values(this.battle.combatants).forEach(c => {
+        if (c.hp > 0) {
+          aliveTeams[c.team] = true
+        }
+      })
+      if (!aliveTeams["player"]) { return "enemy"}
+      if (!aliveTeams["enemy"]) { return "player"}
+      return null
     }
   
     async init() {

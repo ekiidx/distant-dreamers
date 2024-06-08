@@ -3,6 +3,8 @@ class Enemy {
         Object.keys(config).forEach(key => {
             this[key] = config[key]
         })
+        // Use maxHp if no hp was passed through
+        this.hp = typeof(this.hp) === "undefined" ? this.maxHp : this.hp
         this.battle = battle;
     }
     get hpPercent() {
@@ -17,6 +19,11 @@ class Enemy {
     get isActive() {
         return this.battle.activeCombatants[this.team] === this.id
     }
+
+    get givesXp() {
+        return this.level * 20
+    }
+    
     createElement() {
         this.hudElement = document.createElement("div")
         this.hudElement.classList.add("enemy")

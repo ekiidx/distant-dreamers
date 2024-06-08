@@ -24,8 +24,6 @@ class WorldEvent {
         document.addEventListener("StandComplete", completeHandler)
     }
 
-
-
     walk(resolve) {
         const who = this.map.gameObjects[ this.event.who ]
         who.startBehavior({
@@ -71,6 +69,7 @@ class WorldEvent {
 
     battle(resolve) {
         const battle = new Battle({
+            enemy: Enemies[this.event.enemyId],
             onComplete: () => {
                 resolve()
             }

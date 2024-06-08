@@ -1,6 +1,6 @@
 window.Actions = {
     strike: {
-        name: "Attack",
+        name: "Strike",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "animation", animation: "spin"},
@@ -29,7 +29,7 @@ window.Actions = {
     // Items
     item_recoverStatus: {
         name: "Remedy",
-        description: "Remove negative status.",
+        description: "Remove all status.",
         targetType: "friendly",
         success: [
             { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
@@ -38,11 +38,11 @@ window.Actions = {
     },
     item_recoverHp: {
         name: "Potion",
-        description: "Heal 10 HP.",
+        description: "Heal 30 HP.",
         targetType: "friendly",
         success: [
             { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
-            { type: "stateChange", recover: 10 },
+            { type: "stateChange", recover: 30 },
         ]
     },
 }

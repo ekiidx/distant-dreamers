@@ -121,7 +121,8 @@ window.WorldMaps = {
                     {
                         events: [
                             { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
-                            { type: "message", text: "You can press 'Enter' to talk to others like me."}
+                            { type: "message", text: "You can press 'Enter' to talk to others like me."},
+                            { type: "battle", enemyId: "vicious" }
                         ]
                     }
                 ]

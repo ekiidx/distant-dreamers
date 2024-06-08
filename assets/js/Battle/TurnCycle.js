@@ -20,6 +20,10 @@ class TurnCycle {
       })
 
       if (submission.instanceId) {
+
+        // Add to list to persist player state later
+        this.battle.usedInstanceIds[submission.instanceId] = true
+        // Remove item from battle state
         this.battle.items = this.battle.items.filter(i => i.instanceId !== submission.instanceId)
       }
 
@@ -113,10 +117,10 @@ class TurnCycle {
     }
   
     async init() {
-      // await this.onNewEvent({
-      //   type: "textMessage",
-      //   text: "The battle is starting!"
-      // })
+      await this.onNewEvent({
+        type: "textMessage",
+        text: `${this.battle.enemy.name} wants to battle!`
+      })
   
       //Start the first turn!
       this.turn()

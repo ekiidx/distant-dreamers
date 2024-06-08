@@ -42,11 +42,11 @@ class Battle {
             this.addCombatant("e_"+key, "enemy", this.enemy.fighters[key])
         })
 
+        // Start empty
         this.items = [
             // { actionId: "item_recoverStatus", instanceId: "p1", team: "player" },
             // { actionId: "item_recoverStatus", instanceId: "p2", team: "player" },
             // { actionId: "item_recoverStatus", instanceId: "p3", team: "enemy" },
-
             // {actionId: "item_recoverHp", instanceId: "p4", team: "player" }
         ]
 
@@ -105,6 +105,25 @@ class Battle {
                 })
             },
             onWinner: winner => {
+
+                if (winner === "player") {
+                    const playerState = window.playerState
+                    Object.keys(playerState.fighters).forEach(id => {
+                        const playerStateFighter = playerState.fighters[id]
+                        const combatant = this.combatants[id]
+                        if (combatant) {
+                            playerStateFighter.hp = combatant.hp
+                            playerStateFighter.xp = combatant.xp
+                            playerStateFighter.maxXp = combatant.maxXp
+                            playerStateFighter.level = combatant.level
+                        }
+                    })
+
+                    // Get rid of player items
+                    playerState.items = playerState.items.filter(item => {
+                        return !this.usedInstanceIds[item.instanceId]
+                    })
+                } 
                 this.element.remove()
                 this.onComplete()
             }

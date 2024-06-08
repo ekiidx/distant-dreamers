@@ -77,15 +77,15 @@ class World {
         
         this.startGameLoop()
 
-        this.map.startScene([
-            // { type: "message", text: "Welcome to Distant Dreamers!"}
-            // { type: "changeMap", map: "TestRoom" }
-            { type: "battle", enemyId: "vicious" }
-            // { who: "hero", type: "walk",  direction: "down" },
-            // { who: "hero", type: "walk",  direction: "down" },
-            // { who: "npc1", type: "walk",  direction: "left" },
-            // { who: "npc1", type: "walk",  direction: "left" },
-            // { who: "npc1", type: "stand",  direction: "up", time: 800 },
-          ])
+        // this.map.startScene([
+        //     // { type: "message", text: "Welcome to Distant Dreamers!"}
+        //     // { type: "changeMap", map: "TestRoom" }
+        //     { type: "battle", enemyId: "vicious" }
+        //     // { who: "hero", type: "walk",  direction: "down" },
+        //     // { who: "hero", type: "walk",  direction: "down" },
+        //     // { who: "npc1", type: "walk",  direction: "left" },
+        //     // { who: "npc1", type: "walk",  direction: "left" },
+        //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
+        //   ])
     }
 }

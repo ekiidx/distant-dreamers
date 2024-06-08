@@ -3,22 +3,23 @@ class PlayerState {
         this.fighters = {
             "p1": {
                 fighterId: "p01",
-                hp: 30,
-                maxHp: 50,
-                xp: 75,
-                maxXp: 100,
-                level: 1,
-                status: { type: "regen" },
-            },
-            "p2": {
-                fighterId: "e001",
                 hp: 50,
                 maxHp: 50,
-                xp: 75,
+                xp: 90,
                 maxXp: 100,
                 level: 1,
-                status: null,
-            }
+                // status: { type: "regen" },
+                status: null
+            },
+            // "p2": {
+            //     fighterId: "e001",
+            //     hp: 50,
+            //     maxHp: 50,
+            //     xp: 75,
+            //     maxXp: 100,
+            //     level: 1,
+            //     status: null,
+            // }
         }
         this.lineup = ["p1"]
         this.items = [

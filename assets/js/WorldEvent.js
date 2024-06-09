@@ -74,7 +74,19 @@ class WorldEvent {
                 resolve()
             }
         })
-        battle.init(document.querySelector(".game-container"));
+        battle.init(document.querySelector(".game-container"))
+    }
+
+    pause(resolve) {
+        this.map.isPaused = true
+        const menu = new PauseMenu({
+            onComplete: () => {
+                resolve()
+                this.map.isPaused = false
+                this.map.world.startGameLoop()
+            }
+        })
+        menu.init(document.querySelector(".game-container"))
     }
 
     init() {

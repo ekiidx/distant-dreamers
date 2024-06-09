@@ -37,9 +37,12 @@ class World {
             // Draw Upper Layer
             this.map.drawUpperImage(this.ctx, cameraCharacter)
 
-            requestAnimationFrame(() => {
-                step()
-            })
+            if(!this.map.isPaused) {
+                // Fire next frame
+                requestAnimationFrame(() => {
+                    step()
+                })
+            }
         }
         step()
     }
@@ -49,6 +52,13 @@ class World {
             // Is there a char to talk to?
             // check for scene at certain position and determin if char has something to say, and if so, then fire
             this.map.checkForActionScene()
+        })
+        new KeyPressListener("Escape", () => {
+            if (!this.map.isScenePlaying) {
+                this.map.startScene([
+                    { type: "pause" }
+                ])
+            }
         })
     }
 
@@ -67,6 +77,12 @@ class World {
         this.map.mountObjects()
     }
     init() {
+
+        // Fire the hud
+        // this.hud = new Hud()
+        // this.hud.init(document.querySelector(".game-container"));
+
+        
         this.startMap(window.WorldMaps.TestRoom)
 
         this.bindActionInput()

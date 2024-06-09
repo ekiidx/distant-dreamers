@@ -12,6 +12,7 @@ class WorldMap {
         this.upperImage.src = config.upperSrc
 
         this.isScenePlaying = false
+        this.isPaused = false
     }
 
     drawLowerImage(ctx, cameraCharacter) {

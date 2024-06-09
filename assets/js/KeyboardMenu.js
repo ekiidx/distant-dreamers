@@ -1,9 +1,10 @@
 class KeyboardMenu {
-    constructor() {
-        this.options = []
+    constructor(config={}) {
+        this.options = [] // set by updater method
         this.up = null
         this.down = null
         this.prevFocus = null
+        this.descriptionContainer = config.descriptionContainer || null
     }
 
     setOptions(options) {
@@ -31,7 +32,7 @@ class KeyboardMenu {
             })
             button.addEventListener("focus", () => {
                 this.prevFocus = button
-                this.descriptionElementText.innerHTML = button.dataset.description
+                this.descriptionElementText.innerText = button.dataset.description
             })
         })
 
@@ -63,8 +64,8 @@ class KeyboardMenu {
     }
 
     init(container) {
-        this.createElement()
-        container.appendChild(this.descriptionElement)
+        this.createElement();
+        (this.descriptionContainer || container).appendChild(this.descriptionElement)
         container.appendChild(this.element)
 
         this.up = new KeyPressListener("ArrowUp", () => {

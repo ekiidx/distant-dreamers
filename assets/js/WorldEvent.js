@@ -1,11 +1,11 @@
 class WorldEvent {
     constructor({ map, event}) {
-        this.map = map
-        this.event = event
+        this.map = map;
+        this.event = event;
     }
 
     stand(resolve) {
-        const who = this.map.gameObjects[ this.event.who ]
+        const who = this.map.gameObjects[ this.event.who ];
         who.startBehavior({
           map: this.map
         }, {
@@ -17,15 +17,15 @@ class WorldEvent {
         //Set up a handler to complete when correct char is done standing, then resolve the event
         const completeHandler = e => {
             if (e.detail.whoId === this.event.who) {
-            document.removeEventListener("StandComplete", completeHandler)
+            document.removeEventListener("StandComplete", completeHandler);
             resolve()
             }
         }
-        document.addEventListener("StandComplete", completeHandler)
+        document.addEventListener("StandComplete", completeHandler);
     }
 
     walk(resolve) {
-        const who = this.map.gameObjects[ this.event.who ]
+        const who = this.map.gameObjects[ this.event.who ];
         who.startBehavior({
             map: this.map
         }, {
@@ -37,32 +37,41 @@ class WorldEvent {
         // Set up handler to complete when correct char is finished moving, then resolve event
         const completeHandler = e => {
             if (e.detail.whoId === this.event.who) {
-                document.removeEventListener("WalkingComplete", completeHandler)
+                document.removeEventListener("WalkingComplete", completeHandler);
                 resolve()
             }
         }
-        document.addEventListener("WalkingComplete", completeHandler)
+        document.addEventListener("WalkingComplete", completeHandler);
     }
 
     message(resolve) {
         if (this.event.faceHero) {
-            const obj = this.map.gameObjects[this.event.faceHero]
-            obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction)
+            const obj = this.map.gameObjects[this.event.faceHero];
+            obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction);
         }
         const message = new Message({
             text: this.event.text,
             onComplete: () => resolve()
         })
-        message.init( document.querySelector(".game-container"))
+        message.init( document.querySelector(".game-container"));
     }
 
     changeMap(resolve) {
-        const sceneTransition = new SceneTransition()
-        sceneTransition.init(document.querySelector(".game-container"), () => {
-            this.map.world.startMap( window.WorldMaps[this.event.map])
-            resolve()
 
-            sceneTransition.fadeOut()
+        // Deactive all objects
+        Object.values(this.map.gameObjects).forEach(obj => {
+            obj.isMounted = false;
+        })
+
+        const sceneTransition = new SceneTransition();
+        sceneTransition.init(document.querySelector(".game-container"), () => {
+            this.map.world.startMap( window.WorldMaps[this.event.map], {
+                x: this.event.x,
+                y: this.event.y,
+                direction: this.event.direction,
+            });
+            resolve();
+            sceneTransition.fadeOut();
         })
     }
 
@@ -77,20 +86,21 @@ class WorldEvent {
     }
 
     pause(resolve) {
-        this.map.isPaused = true
+        this.map.isPaused = true;
         const menu = new PauseMenu({
+            save: this.map.world.save,
             onComplete: () => {
-                resolve()
-                this.map.isPaused = false
-                this.map.world.startGameLoop()
+                resolve();
+                this.map.isPaused = false;
+                this.map.world.startGameLoop();
             }
-        })
-        menu.init(document.querySelector(".game-container"))
+        });
+        menu.init(document.querySelector(".game-container"));
     }
 
     addStoryFlag(resolve) {
-        window.playerState.storyFlags[this.event.flag] = true
-        resolve()
+        window.playerState.storyFlags[this.event.flag] = true;
+        resolve();
     } 
 
     init() {

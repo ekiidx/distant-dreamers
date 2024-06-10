@@ -21,7 +21,7 @@ class PlayerState {
             //     status: null,
             // }
         }
-        this.lineup = ["p1"]
+        this.lineup = ["p1"];
         this.items = [
             { actionId: "item_recoverHp", instanceId: "item1" },
             { actionId: "item_recoverHp", instanceId: "item2" },
@@ -31,7 +31,7 @@ class PlayerState {
             // "DID_SOMETHING": true,
             // "DEAFEATED_FIRST_BOSS": true
             TEST_EVENT: true
-        }
+        };
     }
 
     swapLineup(oldId, incomingId) {
@@ -46,4 +46,4 @@ class PlayerState {
         utils.emitEvent("LineupChanged");
     }
 }
-window.playerState = new PlayerState()
+window.playerState = new PlayerState();

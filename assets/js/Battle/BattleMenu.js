@@ -1,16 +1,16 @@
 class BattleMenu {
     constructor({ caster, enemy, onComplete, items }) {
-        this.caster = caster
-        this.enemy = enemy
-        this.onComplete = onComplete
+        this.caster = caster;
+        this.enemy = enemy;
+        this.onComplete = onComplete;
 
         let quantityMap = {}
         items.forEach(item => {
             if (item.team === caster.team ) {
 
-                let existing = quantityMap[item.actionId]
+                let existing = quantityMap[item.actionId];
                 if (existing) {
-                    existing.quantity += 1
+                    existing.quantity += 1;
                 } else {
                     quantityMap[item.actionId] = {
                         actionId: item.actionId,
@@ -20,7 +20,7 @@ class BattleMenu {
                 }
             }
         })
-        this.items = Object.values(quantityMap)
+        this.items = Object.values(quantityMap);
     }
 
     getScreens() {
@@ -30,7 +30,7 @@ class BattleMenu {
             handler: () => {
                 this.keyboardMenu.setOptions(this.getScreens().root)
             }
-        }
+        };
 
         return {
             root: [
@@ -86,7 +86,7 @@ class BattleMenu {
 
     menuSubmit(action, instanceId = null) {
 
-        this.keyboardMenu?.end()
+        this.keyboardMenu?.end();
 
         this.onComplete({
             action,
@@ -96,12 +96,12 @@ class BattleMenu {
     }
 
     decide() {
-        this.menuSubmit(Actions[ this.caster.actions[0] ])
+        this.menuSubmit(Actions[ this.caster.actions[0] ]);
     }
 
     showMenu(container) {
-        this.keyboardMenu = new KeyboardMenu()
-        this.keyboardMenu.init(container)
+        this.keyboardMenu = new KeyboardMenu();
+        this.keyboardMenu.init(container);
         this.keyboardMenu.setOptions(this.getScreens().root)
     }
 

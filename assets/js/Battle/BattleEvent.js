@@ -1,7 +1,7 @@
 class BattleEvent {
     constructor(event, battle) {
-        this.event = event
-        this.battle = battle
+        this.event = event;
+        this.battle = battle;
     }
 
     textMessage(resolve) {
@@ -14,15 +14,15 @@ class BattleEvent {
         const message = new Message({
           text,
           onComplete: () => {
-            resolve()
+            resolve();
           }
         })
         message.init( this.battle.element )
       }
     
       async stateChange(resolve) {
-        const { caster, target, damage, recover, status, action } = this.event
-        let who = this.event.onCaster ? caster : target
+        const { caster, target, damage, recover, status, action } = this.event;
+        let who = this.event.onCaster ? caster : target;
 
         if (damage) {
           //modify the target to have less HP
@@ -35,9 +35,9 @@ class BattleEvent {
         }
 
         if (recover) {
-          let newHp = who.hp + recover
+          let newHp = who.hp + recover;
           if (newHp > who.maxHp) {
-            newHp = who.maxHp
+            newHp = who.maxHp;
           }
           who.update({
             hp: newHp
@@ -77,35 +77,35 @@ class BattleEvent {
     }
 
     giveXp(resolve) {
-      let amount = this.event.xp
-      const {combatant} = this.event
+      let amount = this.event.xp;
+      const {combatant} = this.event;
       const step = () => {
         if(amount > 0) {
-          amount -= 1
-          combatant.xp += 1
+          amount -= 1;
+          combatant.xp += 1;
 
          // Check if we've hit a level up
          if (combatant.xp === combatant.maxXp) {
-          combatant.xp = 0
-          combatant.maxXp = 100
-          combatant.level += 1
+          combatant.xp = 0;
+          combatant.maxXp = 100;
+          combatant.level += 1;
          }
 
-         combatant.update()
-         requestAnimationFrame(step)
-         return
+         combatant.update();
+         requestAnimationFrame(step);
+         return;
         }
-        resolve()
+        resolve();
       }
-      requestAnimationFrame(step)
+      requestAnimationFrame(step);
     }
 
     animation(resolve) {
-        const fn = BattleAnimations[this.event.animation]
-        fn(this.event, resolve)
+        const fn = BattleAnimations[this.event.animation];
+        fn(this.event, resolve);
       }
 
     init(resolve) {
-        this[this.event.type](resolve)
+        this[this.event.type](resolve);
     }
 }

@@ -15,26 +15,26 @@ window.BattleAnimations = {
     },
 
     async glob(event, onComplete) {
-      const {caster} = event
-      let div = document.createElement("div")
-      div.classList.add("glob")
-      div.classList.add(caster.team === "player" ? "glob-right" : "glob-left")
+      const {caster} = event;
+      let div = document.createElement("div");
+      div.classList.add("glob");
+      div.classList.add(caster.team === "player" ? "glob-right" : "glob-left");
 
       div.innerHTML = (`
       <svg viewBox="0 0 32 32" width="32" height="32">
         <circle cx="16" cy="16" r="16" fill="${event.color}" />
       </svg>
-      `)
+      `);
 
       // Remove class when animation is complete
       div.addEventListener("animationend", () => {
-        div.remove()
-      })
+        div.remove();
+      });
 
       // Add to scene
-      document.querySelector(".battle").appendChild(div)
+      document.querySelector(".battle").appendChild(div);
 
-      await utils.wait(820)
-      onComplete()
+      await utils.wait(820);
+      onComplete();
     }
   }

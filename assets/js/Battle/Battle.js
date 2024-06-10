@@ -1,8 +1,8 @@
 class Battle {
     constructor({ enemy, onComplete }) {
 
-        this.enemy = enemy
-        this.onComplete = onComplete
+        this.enemy = enemy;
+        this.onComplete = onComplete;
 
         this.combatants = {
             // "player1": new Enemy({
@@ -36,11 +36,11 @@ class Battle {
         // Add player team
         window.playerState.lineup.forEach(id => {
             this.addCombatant(id, "player", window.playerState.fighters[id])
-        })
+        });
         // Add enemy team
         Object.keys(this.enemy.fighters).forEach(key => {
             this.addCombatant("e_"+key, "enemy", this.enemy.fighters[key])
-        })
+        });
 
         // Start empty
         this.items = [
@@ -89,12 +89,12 @@ class Battle {
     }
 
     init(container) {
-        this.createElement()
-        container.appendChild(this.element)
+        this.createElement();
+        container.appendChild(this.element);
 
         Object.keys(this.combatants).forEach(key => {
-            let combatant = this.combatants[key]
-            combatant.id = key
+            let combatant = this.combatants[key];
+            combatant.id = key;
             combatant.init(this.element)
         })
 
@@ -103,21 +103,21 @@ class Battle {
             onNewEvent: event => {
                 return new Promise(resolve => {
                     const battleEvent = new BattleEvent(event, this)
-                    battleEvent.init(resolve)
+                    battleEvent.init(resolve);
                 })
             },
             onWinner: winner => {
 
                 if (winner === "player") {
-                    const playerState = window.playerState
+                    const playerState = window.playerState;
                     Object.keys(playerState.fighters).forEach(id => {
-                        const playerStateFighter = playerState.fighters[id]
-                        const combatant = this.combatants[id]
+                        const playerStateFighter = playerState.fighters[id];
+                        const combatant = this.combatants[id];
                         if (combatant) {
-                            playerStateFighter.hp = combatant.hp
-                            playerStateFighter.xp = combatant.xp
-                            playerStateFighter.maxXp = combatant.maxXp
-                            playerStateFighter.level = combatant.level
+                            playerStateFighter.hp = combatant.hp;
+                            playerStateFighter.xp = combatant.xp;
+                            playerStateFighter.maxXp = combatant.maxXp;
+                            playerStateFighter.level = combatant.level;
                         }
                     })
 
@@ -127,12 +127,12 @@ class Battle {
                     })
 
                     //Send signal to update
-                    // utils.emitEvent("PlayerStateUpdated")
+                    // utils.emitEvent("PlayerStateUpdated");
                 } 
-                this.element.remove()
-                this.onComplete(winner === "player")
+                this.element.remove();
+                this.onComplete(winner === "player");
             }
         })
-        this.turnCycle.init()
+        this.turnCycle.init();
     }
 }

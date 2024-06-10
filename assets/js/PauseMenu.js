@@ -1,6 +1,7 @@
 class PauseMenu {
-    constructor({onComplete}) {
-        this.onComplete = onComplete
+    constructor({save, onComplete}) {
+        this.save = save;
+        this.onComplete = onComplete;
     }
 
     getOptions(screenKey) {
@@ -8,8 +9,8 @@ class PauseMenu {
         //Case 1: Show the first page of options
         if (screenKey === "root") {
             const lineupFighters = playerState.lineup.map(id => {
-            const {fighterId} = playerState.fighters[id]
-            const base = Fighters[fighterId]
+            const {fighterId} = playerState.fighters[id];
+            const base = Fighters[fighterId];
             return {
                 label: base.name,
                 description: base.description,
@@ -24,14 +25,15 @@ class PauseMenu {
                     label: "Save",
                     description: "Save your game.",
                     handler: () => {
-                        //TODO
+                        this.save.save();
+                        this.close();
                     }
                 },
                 {
                     label: "Close",
                     description: "Close the menu.",
                     handler: () => {
-                        this.close()
+                        this.close();
                     }
                 }
             ]
@@ -40,16 +42,16 @@ class PauseMenu {
         //Case 2: Show the options for just one fighter (by id)
         const unequipped = Object.keys(playerState.fighters).filter(id => {
             // -1 means it's not in the array
-            return playerState.lineup.indexOf(id) === -1
+            return playerState.lineup.indexOf(id) === -1;
         }).map(id => {
-            const {fighterId} = playerState.fighters[id]
-            const base = Fighters[fighterId]
+            const {fighterId} = playerState.fighters[id];
+            const base = Fighters[fighterId];
             return {
                 label: `Swap for ${base.name}`,
                 description: base.description,
                 handler: () => {
                     playerState.swapLineup(screenKey, id)
-                    this.keyboardMenu.setOptions( this.getOptions("root") )
+                    this.keyboardMenu.setOptions( this.getOptions("root") );
                 }
             }
         })
@@ -57,51 +59,51 @@ class PauseMenu {
         return [
             ...unequipped,
             {
-            label: "Move to front",
-            description: "Move this fighter to the front of the list.",
-            handler: () => {
-                playerState.moveToFront(screenKey);
-                this.keyboardMenu.setOptions( this.getOptions("root") )
-            }
+                label: "Move to front",
+                description: "Move this fighter to the front of the list.",
+                handler: () => {
+                    playerState.moveToFront(screenKey);
+                    this.keyboardMenu.setOptions( this.getOptions("root") );
+                }
             },
             {
-            label: "Back",
-            description: "Go Back.",
-            handler: () => {
-                this.keyboardMenu.setOptions( this.getOptions("root") )
-            }
+                label: "Back",
+                description: "Go Back.",
+                handler: () => {
+                    this.keyboardMenu.setOptions( this.getOptions("root") );
+                }
             }
         ];
-        }
+    }
 
     createElement() {
-        this.element = document.createElement("div")
-        this.element.classList.add("pause-menu")
+        this.element = document.createElement("div");
+        this.element.classList.add("pause-menu");
         this.element.innerHTML = (`
           <h2>Pause Menu</h2>
         `)
       }
 
     close() {
-        this.esc?.unbind()
-        this.keyboardMenu.end()
-        this.element.remove()
-        this.onComplete()
+        this.esc?.unbind();
+        this.keyboardMenu.end();
+        this.element.remove();
+        this.onComplete();
     }
 
     async init(container) {
-        this.createElement()
+        this.createElement();
         this.keyboardMenu = new KeyboardMenu({
             descriptionContainer: container
         })
         this.keyboardMenu.init(this.element);
-        this.keyboardMenu.setOptions(this.getOptions("root"))
+        this.keyboardMenu.setOptions(this.getOptions("root"));
 
-        container.appendChild(this.element)
+        container.appendChild(this.element);
 
-        utils.wait(200)
+        utils.wait(200);
         this.esc = new KeyPressListener("Escape", () => {
-          this.close()
+          this.close();
         })
     }
 }

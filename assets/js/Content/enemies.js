@@ -5,7 +5,7 @@ window.Enemies = {
         fighters: {
             "a": {
                 fighterId: "e001",
-                maxHp: 50,
+                maxHp: 10,
                 level: 2,
             },
         }

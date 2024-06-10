@@ -130,7 +130,7 @@ class Battle {
                     // utils.emitEvent("PlayerStateUpdated")
                 } 
                 this.element.remove()
-                this.onComplete()
+                this.onComplete(winner === "player")
             }
         })
         this.turnCycle.init()

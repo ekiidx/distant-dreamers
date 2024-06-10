@@ -41,7 +41,6 @@ class WorldEvent {
                 resolve()
             }
         }
-
         document.addEventListener("WalkingComplete", completeHandler)
     }
 
@@ -70,8 +69,8 @@ class WorldEvent {
     battle(resolve) {
         const battle = new Battle({
             enemy: Enemies[this.event.enemyId],
-            onComplete: () => {
-                resolve()
+            onComplete: (didWin) => {
+                resolve(didWin ? "BATTLE_WIN" : "BATTLE_LOSE")
             }
         })
         battle.init(document.querySelector(".game-container"))
@@ -88,6 +87,11 @@ class WorldEvent {
         })
         menu.init(document.querySelector(".game-container"))
     }
+
+    addStoryFlag(resolve) {
+        window.playerState.storyFlags[this.event.flag] = true
+        resolve()
+    } 
 
     init() {
         return new Promise(resolve => {

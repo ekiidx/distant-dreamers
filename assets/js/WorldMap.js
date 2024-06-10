@@ -55,7 +55,11 @@ class WorldMap {
             event: events[i],
             map: this,
           })
-          await eventHandler.init()
+          const result = await eventHandler.init()
+          //break out of loop if battle is lost
+          if (result === "BATTLE_LOSE") {
+            break
+          }
         }
     
         // when all events have played, set to false to continue on with the game
@@ -73,7 +77,13 @@ class WorldMap {
             return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
         })
         if (!this.isScenePlaying && match && match.talking.length) {
-            this.startScene(match.talking[0].events)
+
+            const relevantScenario = match.talking.find(scenario => {
+                return (scenario.required || []).every(sf => {
+                    return playerState.storyFlags[sf]
+                })
+            })
+            relevantScenario && this.startScene(relevantScenario.events)
         } 
     }
 
@@ -120,10 +130,19 @@ window.WorldMaps = {
                 ],
                 talking: [
                     {
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["BATTLE_1_COMPLETE"],
+                        events: [
+                            { type: "message", text: "Dang, you are strong.", faceHero: "npc1" }
+                        ]
+                    },
+                    {
                         events: [
                             { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
                             { type: "message", text: "You can press 'Enter' to talk to others like me."},
-                            { type: "battle", enemyId: "vicious" }
+                            { type: "battle", enemyId: "vicious" },
+                            { type: "message", text: "Dang, you are strong.", faceHero: "npc1" },
+                            { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
                         ]
                     }
                 ]
@@ -132,12 +151,23 @@ window.WorldMaps = {
                 x: utils.withGrid(2),
                 y: utils.withGrid(8),
                 src: "assets/images/characters/npc1.png",
-                // behaviorLoop: [
-                //     { type: "walk", direction: "right" },
-                //     { type: "walk", direction: "up" },
-                //     { type: "walk", direction: "left" },
-                //     { type: "walk", direction: "down" },
-                // ]
+                behaviorLoop: [
+                    // { type: "stand", direction: "down" },
+                    { type: "walk", direction: "right" },
+                    // { type: "stand", direction: "down" },
+                    { type: "walk", direction: "up" },
+                    // { type: "stand", direction: "left", time: 800 },
+                    { type: "walk", direction: "left" },
+                    // { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "down" },
+                ],
+                talking: [
+                    {
+                        events: [
+                            { type: "message", text: "That door down there takes you another room.", faceHero: "npc2" },
+                        ]
+                    }
+                ]
             })
         },
         walls: {

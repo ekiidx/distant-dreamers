@@ -8,7 +8,7 @@ class TitleScreen {
       return [
         { 
           label: "New Game",
-          description: "Start a new adventure.",
+          description: "",
           handler: () => {
             this.close();
             resolve();
@@ -16,7 +16,7 @@ class TitleScreen {
         },
         safeFile ? {
           label: "Continue Game",
-          description: "Resume your adventure.",
+          description: "",
           handler: () => {
             this.close();
             resolve(safeFile);
@@ -30,7 +30,7 @@ class TitleScreen {
       this.element = document.createElement("div");
       this.element.classList.add("title-screen");
       this.element.innerHTML = (`
-        <img class="title-screen-logo" src="/assets/images/" alt="Distant Dreamers" />
+        <img class="title-screen-logo" src="/assets/images/distant-dreamers-logo.png" alt="Distant Dreamers" />
       `)
     }
   

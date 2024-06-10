@@ -20,12 +20,12 @@ body {
     position: relative;
     width: 352px;
     height: 198px;
-    border: 1px solid #fff;
     margin: 0 auto;
     transform: scale(3) translateY(50%);
 }
 .game-container canvas {
     image-rendering: pixelated;
+    background: #1e1820;
 }
 /* Messages */
 .message-box {
@@ -376,12 +376,13 @@ body {
   right: 0;
   top: 0;
   bottom: 0;
-  background: #000;
+  background: #1e1820;
 }
 .title-screen-logo {
   display: block;
   margin: 0 auto;
-  width: 128px;
+  padding-top: 1.45rem;
+  width: 120px;
   image-rendering: pixelated;
 }
 .title-screen .keyboard-menu {

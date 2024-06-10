@@ -147,10 +147,10 @@ window.WorldMaps = {
                 y: utils.withGrid(9),
                 src: "assets/images/characters/npc1.png",
                 behaviorLoop: [
-                    { type: "stand", direction: "left", time: 800 },
-                    { type: "stand", direction: "up", time: 800 },
-                    { type: "stand", direction: "right", time: 1200 },
-                    { type: "stand", direction: "left", time: 300 },
+                    { type: "stand", direction: "left", time: 3800 },
+                    { type: "stand", direction: "up", time: 1800 },
+                    { type: "stand", direction: "right", time: 3200 },
+                    { type: "stand", direction: "left", time: 4300 },
                 ],
                 talking: [
                     {
@@ -164,6 +164,7 @@ window.WorldMaps = {
                         events: [
                             { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
                             { type: "message", text: "You can press 'Enter' to talk to others like me."},
+                            { type: "message", text: "Some of us will even battle you!"},
                             { type: "battle", enemyId: "vicious" },
                             { type: "message", text: "Dang, you are strong.", faceHero: "npc1" },
                             { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
@@ -184,10 +185,8 @@ window.WorldMaps = {
                     }
                 ],
                 behaviorLoop: [
-                    { type: "stand", direction: "left", time: 800 },
-                    { type: "stand", direction: "up", time: 800 },
-                    { type: "stand", direction: "right", time: 1200 },
-                    { type: "stand", direction: "left", time: 300 },
+                    { type: "stand", direction: "up", time: 3000 },
+                    { type: "stand", direction: "right", time: 3800 },
                 ],
             }
         },

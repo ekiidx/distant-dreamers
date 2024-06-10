@@ -30,7 +30,7 @@ class TitleScreen {
       this.element = document.createElement("div");
       this.element.classList.add("title-screen");
       this.element.innerHTML = (`
-        <img class="title-screen-logo" src="/assets/images/distant-dreamers-logo.png" alt="Distant Dreamers" />
+        <img class="title-screen-logo" src="assets/images/distant-dreamers-logo.png" alt="Distant Dreamers" />
       `)
     }
   

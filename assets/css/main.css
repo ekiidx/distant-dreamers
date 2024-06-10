@@ -95,7 +95,7 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    background-image: url(/assets/images/maps/battle_room.png);
+    background-image: url(../../assets/images/maps/battle_room.png);
     background-size: cover;
     image-rendering: pixelated;
 }
@@ -107,7 +107,7 @@ body {
     width: 32px;
     height: 32px;
     overflow: hidden;
-    background: url(/assets/images/characters/shadow.png) no-repeat no-repeat;
+    background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
 }
 .battle-enemy {
     top: 42px;
@@ -117,7 +117,7 @@ body {
     width: 32px;
     height: 32px;
     overflow: hidden;
-    background: url(/assets/images/characters/shadow.png) no-repeat no-repeat;
+    background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
 }
 .battle-hero img {
     pointer-events: none;
@@ -130,7 +130,7 @@ body {
 .enemy {
     width: 67px;
     height: 14px;
-    background: url(/assets/images/ui/enemy-plate.png) no-repeat no-repeat;
+    background: url(../../assets/images/ui/enemy-plate.png) no-repeat no-repeat;
     position: absolute;
   }
   .battle .enemy {

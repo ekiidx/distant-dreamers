@@ -33,11 +33,13 @@ class Message {
     }
 
     done() {
+        // If typwriterText is done remove and unbind element
         if (this.typewriterText.isDone) {
             this.element.remove();
             this.actionListener.unbind();
             this.onComplete();
         } else {
+            // If not warp typewriterText to the end.
             this.typewriterText.warpToDone();
         }
     }

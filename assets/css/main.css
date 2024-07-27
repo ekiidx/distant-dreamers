@@ -99,34 +99,34 @@ body {
     background-size: cover;
     image-rendering: pixelated;
 }
-.battle-hero {
+.fighter-Vash {
     bottom: 57px;
     left: 1px;
     position: absolute;
-    transform: scale(2);
+    transform: scale(1.5);
     width: 32px;
     height: 32px;
     overflow: hidden;
     background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
 }
-.battle-enemy {
+.fighter-Enemy {
     top: 42px;
     right: -1px;
     position: absolute;
-    transform: scale(2);
+    transform: scale(1.5);
     width: 32px;
     height: 32px;
     overflow: hidden;
     background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
 }
-.battle-hero img {
+/* .battle-hero img {
     pointer-events: none;
     transform: translateY(-32px);
 }
 .battle-enemy img {
     pointer-events: none;
     transform: translateY(-96px);
-}
+} */
 .enemy {
     width: 67px;
     height: 14px;
@@ -150,20 +150,20 @@ body {
     top: 28px;
     right: 77px;
   }
-  .enemy-crop {
+  /* .enemy-crop {
     position: absolute;
     bottom: 1px;
     left:3px;
     width: 22px;
     height: 12px;
     overflow:hidden;
-  }
-  .enemy-character {
+  } */
+  /* .enemy-character {
     display:block;
     position: absolute;
     left: -11px;
     bottom: -7px;
-  }
+  } */
   .battle .enemy-crop {
     display:none;
   }

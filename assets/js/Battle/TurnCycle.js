@@ -65,7 +65,7 @@ class TurnCycle {
         }
       }
 
-      // Do we having a winning team?
+      // Do we have a winning team?
       const winner = this.getWinningTeam();
       if (winner) {
         await this.onNewEvent({

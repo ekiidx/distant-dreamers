@@ -4,7 +4,7 @@ class BattleMenu {
         this.enemy = enemy;
         this.onComplete = onComplete;
 
-        let quantityMap = {}
+        let quantityMap = {};
         items.forEach(item => {
             if (item.team === caster.team ) {
 
@@ -54,7 +54,7 @@ class BattleMenu {
             ],
             attacks: [
                 ...this.caster.actions.map(key => {
-                    const action = Actions[key]
+                    const action = Actions[key];
                     return {
                         label: action.name,
                         description: action.description,
@@ -67,12 +67,12 @@ class BattleMenu {
             ],
             items: [
                 ...this.items.map(item => {
-                    const action = Actions[item.actionId]
+                    const action = Actions[item.actionId];
                     return {
                         label: action.name,
                         description: action.description,
                         right: () => {
-                            return "x"+item.quantity
+                            return "x"+item.quantity;
                         },
                         handler: () => {
                             this.menuSubmit(action, item.instanceId)

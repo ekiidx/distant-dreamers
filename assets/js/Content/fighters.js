@@ -10,16 +10,16 @@ window.Fighters = {
     name: "Vash",
     description: "Hero of the game.",
     type: FighterTypes.normal,
-    src: "/",
-    icon: "/",
+    src: "assets/images/characters/vash_battle.png",
+    icon: "assets/images/characters/hero.png",
     actions: [ "strike", "fear", "regen" ]
   },
   "e001": {
     name: "Enemy",
     description: "Enemy of the game.",
     type: FighterTypes.normal,
-    src: "/",
-    icon: "/",
+    src: "assets/images/characters/enemy_battle.png",
+    icon: "assets/images/characters/enemy_battle.png",
     actions: [ "strike" ]
   }
 }

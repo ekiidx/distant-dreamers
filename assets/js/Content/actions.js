@@ -1,6 +1,7 @@
 window.Actions = {
     strike: {
         name: "Strike",
+        description: "Hit the enemy.",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "animation", animation: "spin"},
@@ -10,6 +11,7 @@ window.Actions = {
     },
     regen: {
         name: "Regen",
+        description: "Restore 10 HP for 3 rounds.",
         targetType: "friendly",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
@@ -19,6 +21,7 @@ window.Actions = {
     },
     fear: {
         name: "Fear",
+        description: "1/3 chance enemy scared stiff for 3 rounds.",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "animation", animation: "glob", color: "#dddddd" },

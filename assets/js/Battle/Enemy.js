@@ -32,23 +32,19 @@ class Enemy {
         this.hudElement.innerHTML = (`
             <p class="enemy-name">${this.name}</p>
             <p class="enemy-level"></p>
-            <div class="enemy-crop">
+            <!-- <div class="enemy-crop">
                 <img class="enemy-character" alt="${this.name}" src="${this.src}">
             </div>
-            <img class="enemy-type" src="${this.icon}" alt="${this.type}">
+                <img class="enemy-type" src="${this.icon}" alt="${this.type}"> -->
             <svg viewBox="0 0 26 3" class="enemy-hp-container">
               <rect x=0 y=0 width="0%" height=1 fill="#82ff71" />
               <rect x=0 y=1 width="0%" height=2 fill="#3ef126" />
-            </svg>
-            <svg viewBox="0 0 26 2" class="enemy-xp-container">
-              <rect x=0 y=0 width="0%" height=1 fill="#66A8DE" />
-              <rect x=0 y=1 width="0%" height=1 fill="#66A8DE" />
             </svg>
             <p class="enemy-status"></p>
         `);
 
         this.fighterElement = document.createElement("img");
-        this.fighterElement.classList.add("fighter");
+        this.fighterElement.classList.add("fighter-" + this.name ); 
         this.fighterElement.setAttribute("src", this.src );
         this.fighterElement.setAttribute("alt", this.name );
         this.fighterElement.setAttribute("data-team", this.team );

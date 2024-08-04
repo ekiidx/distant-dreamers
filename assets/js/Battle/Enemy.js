@@ -40,6 +40,10 @@ class Enemy {
               <rect x=0 y=0 width="0%" height=1 fill="#82ff71" />
               <rect x=0 y=1 width="0%" height=2 fill="#3ef126" />
             </svg>
+            <svg viewBox="0 0 26 2" class="enemy-xp-container">
+              <rect x=0 y=0 width="0%" height=1 fill="#ffd76a" />
+              <rect x=0 y=1 width="0%" height=2 fill="#ffc934" />
+            </svg>
             <p class="enemy-status"></p>
         `);
 

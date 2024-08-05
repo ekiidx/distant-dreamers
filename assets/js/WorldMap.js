@@ -228,9 +228,7 @@ window.WorldMaps = {
             [utils.asGridCoord(6,10)] : true,
             [utils.asGridCoord(5,10)] : true,
             [utils.asGridCoord(4,10)] : true,
-            [utils.asGridCoord(4,11)] : true,
-            [utils.asGridCoord(3,12)] : true,
-            [utils.asGridCoord(2,11)] : true,
+            [utils.asGridCoord(3,11)] : true,
             [utils.asGridCoord(2,10)] : true,
             [utils.asGridCoord(1,10)] : true,
             [utils.asGridCoord(0,9)] : true,
@@ -263,6 +261,32 @@ window.WorldMaps = {
                 isPlayerControlled: true,
                 x: utils.withGrid(5),
                 y: utils.withGrid(10),
+                // direction: "up"
+            },
+            boss: {
+                type: "Character",
+                x: utils.withGrid(8),
+                y: utils.withGrid(3),
+                src: "assets/images/characters/boss.png",
+                talking: [
+                    {
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["BATTLE_1_COMPLETE"],
+                        events: [
+                            { type: "message", text: "Dang, you are strong.", faceHero: "boss" }
+                        ]
+                    },
+                    {
+                        events: [
+                            { type: "message", text: "I am the boss.", faceHero: "boss"},
+                            { type: "message", text: "You can press 'Enter' to talk to others like me."},
+                            { type: "message", text: "Some of us will even battle you!"},
+                            { type: "battle", enemyId: "vicious" },
+                            { type: "message", text: "Dang, you are strong.", faceHero: "boss" },
+                            { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
+                        ]
+                    }
+                ]
                 // direction: "up"
             },
             // npc1: new Character({
@@ -314,9 +338,7 @@ window.WorldMaps = {
             [utils.asGridCoord(6,10)] : true,
             [utils.asGridCoord(5,10)] : true,
             [utils.asGridCoord(4,10)] : true,
-            [utils.asGridCoord(4,11)] : true,
-            [utils.asGridCoord(3,12)] : true,
-            [utils.asGridCoord(2,11)] : true,
+            [utils.asGridCoord(3,11)] : true,
             [utils.asGridCoord(2,10)] : true,
             [utils.asGridCoord(1,10)] : true,
             [utils.asGridCoord(0,9)] : true,

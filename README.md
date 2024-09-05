@@ -6,3 +6,4 @@ Javascript based RPG style game. I was inspired by games like stardew valley and
 
 - [ ] Add music
 - [ ] Add Game Over screen
+- [ ] Add Character menu

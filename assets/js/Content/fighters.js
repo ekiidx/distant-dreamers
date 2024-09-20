@@ -1,8 +1,8 @@
 window.FighterTypes = {
   normal: "normal",
-  spicy: "fire",
-  veggie: "ice",
-  fungi: "lightning",
+  fire: "fire",
+  ice: "ice",
+  lightning: "lightning",
 }
 
 window.Fighters = {
@@ -16,10 +16,18 @@ window.Fighters = {
   },
   "e001": {
     name: "Enemy",
-    description: "Enemy of the game.",
+    description: "A normal enemy.",
     type: FighterTypes.normal,
     src: "assets/images/characters/enemy_battle.png",
     icon: "assets/images/characters/enemy_battle.png",
+    actions: [ "strike" ]
+  },
+  "b001": {
+    name: "RedBoss",
+    description: "The Red Boss.",
+    type: FighterTypes.fire,
+    src: "assets/images/characters/boss_battle.png",
+    icon: "assets/images/characters/boss_battle.png",
     actions: [ "strike" ]
   }
 }

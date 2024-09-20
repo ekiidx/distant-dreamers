@@ -104,15 +104,33 @@ class Enemy {
     }
 
     decrementStatus() {
-        if (this.status?.expiresIn > 0) {
-            this.status.expiresIn -= 1
-            if (this.status.expiresIn === 0) {
-                this.update({
-                    status: null
-                })
-                return {
-                    type: "textMessage",
-                    text: "regen has stopped."
+
+        if(this.status?.type === "fear") {
+            if (this.status?.expiresIn > 0) {
+                this.status.expiresIn -= 1
+                if (this.status.expiresIn === 0) {
+                    this.update({
+                        status: null
+                    })
+                    return {
+                        type: "textMessage",
+                        text: "Fear has stopped."
+                    }
+                }   
+            }
+        }
+
+        if(this.status?.type === "regen") {
+            if (this.status?.expiresIn > 0) {
+                this.status.expiresIn -= 1
+                if (this.status.expiresIn === 0) {
+                    this.update({
+                        status: null
+                    })
+                    return {
+                        type: "textMessage",
+                        text: "Regen has stopped."
+                    }
                 }
             }
         }

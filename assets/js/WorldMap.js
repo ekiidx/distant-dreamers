@@ -165,7 +165,7 @@ window.WorldMaps = {
                             { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
                             { type: "message", text: "You can press 'Enter' to talk to others like me."},
                             { type: "message", text: "Some of us will even battle you!"},
-                            { type: "battle", enemyId: "vicious" },
+                            { type: "battle", enemyId: "enemy_1" },
                             { type: "message", text: "Dang, you are strong.", faceHero: "npc1" },
                             { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
                         ]
@@ -271,19 +271,17 @@ window.WorldMaps = {
                 talking: [
                     {
                         // use array to add multiple events that need to be completed in order for trigger
-                        required: ["BATTLE_1_COMPLETE"],
+                        required: ["BOSS_BATTLE_1_COMPLETE"],
                         events: [
-                            { type: "message", text: "Dang, you are strong.", faceHero: "boss" }
+                            { type: "message", text: "You have defeated me!", faceHero: "boss" }
                         ]
                     },
                     {
                         events: [
-                            { type: "message", text: "I am the boss.", faceHero: "boss"},
-                            { type: "message", text: "You can press 'Enter' to talk to others like me."},
-                            { type: "message", text: "Some of us will even battle you!"},
-                            { type: "battle", enemyId: "vicious" },
-                            { type: "message", text: "Dang, you are strong.", faceHero: "boss" },
-                            { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
+                            { type: "message", text: "I am the boss. Get ready to fight!", faceHero: "boss"},
+                            { type: "battle", enemyId: "boss_1" },
+                            { type: "message", text: "You are truly strong. A worthy opponent indeed.", faceHero: "boss" },
+                            { type: "addStoryFlag", flag: "BOSS_BATTLE_1_COMPLETE" }
                         ]
                     }
                 ]

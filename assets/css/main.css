@@ -119,6 +119,16 @@ body {
     overflow: hidden;
     background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
 }
+.fighter-RedBoss {
+  top: 42px;
+  right: -1px;
+  position: absolute;
+  transform: scale(1.5);
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
+}
 /* .battle-hero img {
     pointer-events: none;
     transform: translateY(-32px);

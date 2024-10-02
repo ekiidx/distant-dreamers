@@ -45,6 +45,7 @@ class WorldEvent {
     }
 
     message(resolve) {
+        // Change character position to face hero before speaking
         if (this.event.faceHero) {
             const obj = this.map.gameObjects[this.event.faceHero];
             obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction);
@@ -76,13 +77,21 @@ class WorldEvent {
     }
 
     battle(resolve) {
+
+        // const sceneTransition = new SceneTransition();
+        // sceneTransition.init(document.querySelector(".game-container"), () => {
+        //     // resolve();
+        //     // sceneTransition.fadeOut();
+        // });
+        // sceneTransition.init( document.querySelector(".battle"));
+
         const battle = new Battle({
             enemy: Enemies[this.event.enemyId],
             onComplete: (didWin) => {
                 resolve(didWin ? "BATTLE_WIN" : "BATTLE_LOSE")
             }
         })
-        battle.init(document.querySelector(".game-container"))
+        battle.init(document.querySelector(".game-container"));
     }
 
     pause(resolve) {

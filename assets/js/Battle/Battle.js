@@ -42,7 +42,7 @@ class Battle {
             this.addCombatant("e_"+key, "enemy", this.enemy.fighters[key])
         });
 
-        // Start empty
+        // Start empty or with items
         this.items = [
             // { actionId: "item_recoverStatus", instanceId: "p1", team: "player" },
             // { actionId: "item_recoverStatus", instanceId: "p2", team: "player" },
@@ -92,6 +92,14 @@ class Battle {
         this.createElement();
         container.appendChild(this.element);
 
+        // const sceneTransition = new SceneTransition();
+        // sceneTransition.init(document.querySelector(".game-container"), () => {
+        //     // resolve();
+        //     sceneTransition.fadeOut();
+        // });
+        // sceneTransition.init( document.querySelector(".game-container"));
+
+
         Object.keys(this.combatants).forEach(key => {
             let combatant = this.combatants[key];
             combatant.id = key;
@@ -129,6 +137,7 @@ class Battle {
                     //Send signal to update
                     // utils.emitEvent("PlayerStateUpdated");
                 } 
+                // this removes the battle screen and shows the world map
                 this.element.remove();
                 this.onComplete(winner === "player");
             }

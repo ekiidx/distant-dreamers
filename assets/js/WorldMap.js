@@ -90,7 +90,7 @@ class WorldMap {
         // Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
       }
 
-    // Check is there is action to be taken at a space
+    // Check if there is action to be taken at a space
     checkForActionScene() {
         const hero = this.gameObjects["hero"]
         const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction)

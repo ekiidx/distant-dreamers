@@ -2,6 +2,7 @@ class SceneTransition {
     constructor() {
         this.element = null;
     }
+    // adds div with .transition class onto .game-container
     createElement() {
         this.element = document.createElement("div");
         this.element.classList.add("transition");

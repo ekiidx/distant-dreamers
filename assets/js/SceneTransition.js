@@ -15,6 +15,11 @@ class SceneTransition {
         }, { once: true })
     }
 
+    battleTransition(container) {
+        this.createElement();
+        container.appendChild(this.element);
+    }
+
     init(container, callback) {
         this.createElement();
         container.appendChild(this.element);

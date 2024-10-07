@@ -1,6 +1,6 @@
 window.Enemies = {
     "enemy_1": {
-        name: "Enemy 1",
+        name: "Sage",
         src: "/",
         fighters: {
             "a": {

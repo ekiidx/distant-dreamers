@@ -130,6 +130,127 @@ class WorldMap {
 }
 
 window.WorldMaps = {
+    BlackRoom: {
+        id: "BlackRoom",
+        lowerSrc: "assets/images/maps/black_room_lower.png",
+        upperSrc: "assets/images/maps/black_room_upper.png",
+        configObjects: {
+            hero: {
+                type: "Character",
+                isPlayerControlled: false,
+                x: utils.withGrid(5),
+                y: utils.withGrid(6),
+            },
+            npc1: {
+                type: "Character",
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
+                src: "assets/images/characters/npc1.png",
+                behaviorLoop: [
+                    { type: "stand", direction: "left", time: 3800 },
+                    { type: "stand", direction: "up", time: 1800 },
+                    { type: "stand", direction: "right", time: 3200 },
+                    { type: "stand", direction: "left", time: 4300 },
+                ],
+                talking: [
+                    {
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["BATTLE_1_COMPLETE"],
+                        events: [
+                            { type: "message", text: "Dang, you are strong.", faceHero: "npc1" }
+                        ]
+                    },
+                    {
+                        events: [
+                            { type: "message", text: "It's good to meet you.", faceHero: "npc1"},
+                            { type: "message", text: "You can press 'Enter' to talk to others like me."},
+                            { type: "message", text: "Some of us will even battle you!"},
+                            { type: "battle", enemyId: "enemy_1" },
+                            { type: "message", text: "Dang, you are strong.", faceHero: "npc1" },
+                            { type: "addStoryFlag", flag: "BATTLE_1_COMPLETE" }
+                        ]
+                    }
+                ]
+            },
+            npc2: {
+                type: "Character",
+                x: utils.withGrid(2),
+                y: utils.withGrid(8),
+                src: "assets/images/characters/npc1.png",
+                talking: [
+                    {
+                        events: [
+                            { type: "message", text: "That door down there takes you another room.", faceHero: "npc2" },
+                        ]
+                    }
+                ],
+                behaviorLoop: [
+                    { type: "stand", direction: "up", time: 3000 },
+                    { type: "stand", direction: "right", time: 3800 },
+                ],
+            }
+        },
+        walls: {
+            //"16,16": true
+            [utils.asGridCoord(0,3)] : true,
+            [utils.asGridCoord(0,4)] : true,
+            [utils.asGridCoord(0,5)] : true,
+            [utils.asGridCoord(0,6)] : true,
+            [utils.asGridCoord(0,7)] : true,
+            [utils.asGridCoord(1,2)] : true,
+            [utils.asGridCoord(2,2)] : true,
+            [utils.asGridCoord(3,2)] : true,
+            [utils.asGridCoord(4,2)] : true,
+            [utils.asGridCoord(5,2)] : true,
+            [utils.asGridCoord(6,2)] : true,
+            [utils.asGridCoord(6,3)] : true,
+            [utils.asGridCoord(7,3)] : true,
+            [utils.asGridCoord(7,2)] : true,
+            [utils.asGridCoord(7,1)] : true,
+            [utils.asGridCoord(8,0)] : true,
+            [utils.asGridCoord(9,1)] : true,
+            [utils.asGridCoord(9,2)] : true,
+            [utils.asGridCoord(9,3)] : true,
+            [utils.asGridCoord(10,2)] : true,
+            [utils.asGridCoord(11,2)] : true,
+            [utils.asGridCoord(12,3)] : true,
+            [utils.asGridCoord(12,4)] : true,
+            [utils.asGridCoord(12,5)] : true,
+            [utils.asGridCoord(12,6)] : true,
+            [utils.asGridCoord(12,7)] : true,
+            [utils.asGridCoord(12,8)] : true,
+            [utils.asGridCoord(12,9)] : true,
+            [utils.asGridCoord(11,10)] : true,
+            [utils.asGridCoord(10,10)] : true,
+            [utils.asGridCoord(9,10)] : true,
+            [utils.asGridCoord(8,10)] : true,
+            [utils.asGridCoord(7,10)] : true,
+            [utils.asGridCoord(6,10)] : true,
+            [utils.asGridCoord(5,10)] : true,
+            [utils.asGridCoord(4,10)] : true,
+            [utils.asGridCoord(3,11)] : true,
+            [utils.asGridCoord(2,10)] : true,
+            [utils.asGridCoord(1,10)] : true,
+            [utils.asGridCoord(0,9)] : true,
+            [utils.asGridCoord(0,8)] : true,
+        },
+        sceneSpaces: {
+            [utils.asGridCoord(3,10)] : [
+                {
+                    events: [
+                        // {who: "npc1", type: "walk", direction: "up"},
+                        {
+                            type: "changeMap", 
+                            map: "TestRoom2",
+                            x: utils.withGrid(3),
+                            y: utils.withGrid(10),
+                            direction: "up"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
     TestRoom: {
         id: "TestRoom",
         lowerSrc: "assets/images/maps/test_room_lower.png",
@@ -188,7 +309,11 @@ window.WorldMaps = {
                     { type: "stand", direction: "up", time: 3000 },
                     { type: "stand", direction: "right", time: 3800 },
                 ],
-            }
+            },
+            // collectableItem: new Collectable ({
+            //     x: utils.withGrid(4),
+            //     y: utils.withGrid(10)
+            // }),
         },
         walls: {
             //"16,16": true

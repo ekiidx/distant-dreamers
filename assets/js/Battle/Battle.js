@@ -76,8 +76,8 @@ class Battle {
     }
 
     createElement() {
-        this.element = document.createElement("div")
-        this.element.classList.add("battle")
+        this.element = document.createElement("div");
+        this.element.classList.add("battle");
         // this.element.innerHTML = (`
         //     <div class="battle-hero">
         //         <img src="${'assets/images/characters/hero.png'}">
@@ -89,8 +89,16 @@ class Battle {
     }
 
     init(container) {
+
+        const battleTransition = document.querySelector(".transition");
+        battleTransition.classList.add("fade-out");
+
         this.createElement();
         container.appendChild(this.element);
+        // this.element.classList.remove("transition");
+        battleTransition.addEventListener("animationend", () => {
+            battleTransition.remove();
+        });
 
         // const sceneTransition = new SceneTransition();
         // sceneTransition.init(document.querySelector(".game-container"), () => {

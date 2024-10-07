@@ -101,11 +101,16 @@ class World {
 
         // Create new save
         this.save = new Save();
-
+ 
         // Show the title screen
         this.titleScreen = new TitleScreen({
             save: this.save
-        })
+        });
+
+        // this.newGameScene = new NewGameScene ({
+        //     save: this.save
+        // }); 
+
         const useSaveFile = await this.titleScreen.init(container);
 
         //Potentially load saved data
@@ -122,12 +127,13 @@ class World {
         }
 
         // Fire the hud
-        // this.hud = new Hud()
+        // this.hud = new Hud();
         // this.hud.init(container);
 
         // Start the first map
         this.startMap(window.WorldMaps[this.save.mapId], initialHeroState);
-
+        console.log(this.save.mapId);
+     
         // Create controls
         this.bindActionInput();
         this.bindHeroPositionCheck();
@@ -138,15 +144,16 @@ class World {
         // Start the main game loop
         this.startGameLoop()
 
-        // this.map.startScene([
-        //     // { type: "message", text: "Welcome to Distant Dreamers!"}
-        //     // { type: "changeMap", map: "TestRoom" }
-        //     { type: "battle", enemyId: "vicious" }
+        this.map.startScene([
+        //     // { type: "message", text: "Welcome to Distant Dreamers!"},
+                { type: "changeMap", map: "TestRoom", x: utils.withGrid(7), y: utils.withGrid(9), direction: "down" },
+        //     // { type: "changeMap", map: "TestRoom2" },
+        //     // { type: "battle", enemyId: "enemy_1" },
         //     // { who: "hero", type: "walk",  direction: "down" },
         //     // { who: "hero", type: "walk",  direction: "down" },
         //     // { who: "npc1", type: "walk",  direction: "left" },
         //     // { who: "npc1", type: "walk",  direction: "left" },
         //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
-        //   ])
+          ])
     }
 }

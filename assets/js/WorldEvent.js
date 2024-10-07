@@ -77,12 +77,8 @@ class WorldEvent {
     }
 
     battle(resolve) {
-
-        // const sceneTransition = new SceneTransition();
-        // sceneTransition.init(document.querySelector(".game-container"), () => {
-        //     // resolve();
-        //     // sceneTransition.fadeOut();
-        // });
+        const sceneTransition = new SceneTransition();
+        sceneTransition.battleTransition(document.querySelector(".game-container"));
         // sceneTransition.init( document.querySelector(".battle"));
 
         const battle = new Battle({

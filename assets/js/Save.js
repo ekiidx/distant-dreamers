@@ -1,6 +1,6 @@
 class Save {
     constructor() {
-      this.mapId = "TestRoom";
+      this.mapId = "TestRoom2";
       this.startingHeroX = 0;
       this.startingHeroY = 0;
       this.startingHeroDirection = "down";

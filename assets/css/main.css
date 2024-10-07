@@ -77,6 +77,7 @@ body {
     background: #ffffff;
     opacity: 0;
     animation: transition-fade-in 1.2s forwards;
+    z-index: 1000;
 }
 .transition.fade-out {
     animation: transition-fade-out 1.2s forwards;
@@ -412,4 +413,12 @@ body {
   color: #fff;
   border: 0;
   text-align: center;
+}
+.new-game-scene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #1e1820;
 }

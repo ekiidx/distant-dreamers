@@ -1,5 +1,8 @@
 class Battle {
-    constructor({ enemy, onComplete }) {
+    constructor({
+        enemy,
+        onComplete
+    }) {
 
         this.enemy = enemy;
         this.onComplete = onComplete;
@@ -39,7 +42,7 @@ class Battle {
         });
         // Add enemy team
         Object.keys(this.enemy.fighters).forEach(key => {
-            this.addCombatant("e_"+key, "enemy", this.enemy.fighters[key])
+            this.addCombatant("e_" + key, "enemy", this.enemy.fighters[key])
         });
 
         // Start empty or with items
@@ -53,26 +56,26 @@ class Battle {
         //Add in player items
         window.playerState.items.forEach(item => {
             this.items.push({
-            ...item,
-            team: "player"
+                ...item,
+                team: "player"
             })
         })
-  
-      this.usedInstanceIds = {};
+
+        this.usedInstanceIds = {};
     }
 
     addCombatant(id, team, config) {
-            this.combatants[id] = new Enemy({
-                // Add base fighter
-                ...Fighters[config.fighterId],
-                // state override
-                ...config,
-                team,
-                isPlayerControlled: team === "player"
-            }, this)
+        this.combatants[id] = new Enemy({
+            // Add base fighter
+            ...Fighters[config.fighterId],
+            // state override
+            ...config,
+            team,
+            isPlayerControlled: team === "player"
+        }, this)
 
-            // Populate first active fighter
-            this.activeCombatants[team] = this.activeCombatants[team] || id
+        // Populate first active fighter
+        this.activeCombatants[team] = this.activeCombatants[team] || id
     }
 
     createElement() {
@@ -112,7 +115,7 @@ class Battle {
             let combatant = this.combatants[key];
             combatant.id = key;
             combatant.init(this.element)
-        })
+        });
 
         this.turnCycle = new TurnCycle({
             battle: this,
@@ -137,15 +140,27 @@ class Battle {
                         }
                     })
 
-                    // Get rid of player items
+                    // award the item to player
+                    this.itemsWin = 
+                        { actionId: "item_recoverHp", instanceId: "item" + window.playerState.items.length + 1 }
+
+                    console.log(window.playerState.items);
+                    //Add in player items
+                    window.playerState.items.push(this.itemsWin);
+
+                    // Give back player items at end of battle to playerState
                     playerState.items = playerState.items.filter(item => {
                         return !this.usedInstanceIds[item.instanceId]
                     })
 
                     //Send signal to update
-                    // utils.emitEvent("PlayerStateUpdated");
-                } 
+                    utils.emitEvent("PlayerStateUpdated");
+                }
                 // this removes the battle screen and shows the world map
+                // Fires when the sound finishes playing.
+                window.sfx.winner.on('end', function(){
+                    window.sfx.testRoom.play();
+                });
                 this.element.remove();
                 this.onComplete(winner === "player");
             }

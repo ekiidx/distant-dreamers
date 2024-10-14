@@ -11,11 +11,11 @@ class Enemy {
         const percent = this.hp / this.maxHp * 100;
         return percent > 0 ? percent : 0;
     }
-    
+
     get xpPercent() {
         return this.xp / this.maxXp * 100;
     }
-    
+
     get isActive() {
         return this.battle?.activeCombatants[this.team] === this.id
     }
@@ -23,7 +23,7 @@ class Enemy {
     get givesXp() {
         return this.level * 20;
     }
-    
+
     createElement() {
         this.hudElement = document.createElement("div");
         this.hudElement.classList.add("enemy");
@@ -48,28 +48,29 @@ class Enemy {
         `);
 
         this.fighterElement = document.createElement("img");
-        this.fighterElement.classList.add("fighter-" + this.name ); 
-        this.fighterElement.setAttribute("src", this.src );
-        this.fighterElement.setAttribute("alt", this.name );
-        this.fighterElement.setAttribute("data-team", this.team );
+        this.fighterElement.classList.add("fighter-" + this.name);
+        this.fighterElement.setAttribute("src", this.src);
+        this.fighterElement.setAttribute("alt", this.name);
+        this.fighterElement.setAttribute("data-team", this.team);
 
         this.hpFills = this.hudElement.querySelectorAll(".enemy-hp-container > rect");
         this.xpFills = this.hudElement.querySelectorAll(".enemy-xp-container > rect");
     }
-    update(changes={}) {
+    
+    update(changes = {}) {
         //Update anything incoming
         Object.keys(changes).forEach(key => {
-          this[key] = changes[key]
+            this[key] = changes[key]
         });
-    
+
         //Update active flag to show the correct hud
         this.hudElement.setAttribute("data-active", this.isActive);
         this.fighterElement.setAttribute("data-active", this.isActive);
-    
+
         //Update HP & XP percent fills
         this.hpFills.forEach(rect => rect.style.width = `${this.hpPercent}%`);
         this.xpFills.forEach(rect => rect.style.width = `${this.xpPercent}%`);
-    
+
         //Update level on screen
         this.hudElement.querySelector(".enemy-level").innerText = this.level;
 
@@ -85,19 +86,26 @@ class Enemy {
     }
 
     getReplacedEvents(originalEvents) {
-        if(this.status?.type === "fear" && utils.randomFromArray([true, false, false])) {
-            return [
-                { type: "textMessage", text: `${this.name} scared stiff!` },
-            ]
+        if (this.status?.type === "fear" && utils.randomFromArray([true, false, false])) {
+            return [{
+                type: "textMessage",
+                text: `${this.name} scared stiff!`
+            }, ]
         }
         return originalEvents;
     }
 
     getPostEvents() {
-        if(this.status?.type === "regen") {
-            return [
-                { type: "textMessage", text: "Healing!" },
-                { type: "stateChange", recover: 5, onCaster: true }
+        if (this.status?.type === "regen") {
+            return [{
+                    type: "textMessage",
+                    text: "Healing!"
+                },
+                {
+                    type: "stateChange",
+                    recover: 5,
+                    onCaster: true
+                }
             ]
         }
         return [];
@@ -105,7 +113,7 @@ class Enemy {
 
     decrementStatus() {
 
-        if(this.status?.type === "fear") {
+        if (this.status?.type === "fear") {
             if (this.status?.expiresIn > 0) {
                 this.status.expiresIn -= 1
                 if (this.status.expiresIn === 0) {
@@ -116,11 +124,11 @@ class Enemy {
                         type: "textMessage",
                         text: "Fear has stopped."
                     }
-                }   
+                }
             }
         }
 
-        if(this.status?.type === "regen") {
+        if (this.status?.type === "regen") {
             if (this.status?.expiresIn > 0) {
                 this.status.expiresIn -= 1
                 if (this.status.expiresIn === 0) {

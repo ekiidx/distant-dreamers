@@ -1,31 +1,34 @@
 class WorldEvent {
-    constructor({ map, event}) {
+    constructor({
+        map,
+        event
+    }) {
         this.map = map;
         this.event = event;
     }
 
     stand(resolve) {
-        const who = this.map.gameObjects[ this.event.who ];
+        const who = this.map.gameObjects[this.event.who];
         who.startBehavior({
-          map: this.map
+            map: this.map
         }, {
-          type: "stand",
-          direction: this.event.direction,
-          time: this.event.time
+            type: "stand",
+            direction: this.event.direction,
+            time: this.event.time
         })
-    
+
         //Set up a handler to complete when correct char is done standing, then resolve the event
         const completeHandler = e => {
             if (e.detail.whoId === this.event.who) {
-            document.removeEventListener("StandComplete", completeHandler);
-            resolve()
+                document.removeEventListener("StandComplete", completeHandler);
+                resolve()
             }
         }
         document.addEventListener("StandComplete", completeHandler);
     }
 
     walk(resolve) {
-        const who = this.map.gameObjects[ this.event.who ];
+        const who = this.map.gameObjects[this.event.who];
         who.startBehavior({
             map: this.map
         }, {
@@ -59,6 +62,39 @@ class WorldEvent {
 
     changeMap(resolve) {
 
+        if(!window.sfx.testRoom.playing() === true)
+            {
+                window.sfx.testRoom.play();
+            }
+
+        // if (Howler._howls[0].src == 'assets/music/testroom.wav') {
+        //     console.log('weeeee');
+        // }
+
+        // function isTrackPlaying(filename) {
+        //     // assume the track is not playing
+        //     let playing = false;
+          
+        //     // Retrieve the currently active track listing from the playlist
+        //     const track = Howler.playlist[index];
+          
+        //     // is it the track we are looking for?
+        //     if(track.file == filename) {
+        //       // has it been initialised, and is it playing?
+        //       playing = track.howl && track.howl.playing(); 
+        //     }
+          
+        //     return playing;
+        //   }
+
+        //   function checksound() {
+        //     if(isTrackPlaying('testRoom')){
+        //         window.sfx.testRoom.play();
+        //     }    
+        //  }
+
+        // checksound();
+
         // Deactive all objects
         Object.values(this.map.gameObjects).forEach(obj => {
             obj.isMounted = false;
@@ -77,9 +113,11 @@ class WorldEvent {
     }
 
     battle(resolve) {
+
+        window.sfx.testRoom.stop();
+        window.sfx.battle.play();
         const sceneTransition = new SceneTransition();
         sceneTransition.battleTransition(document.querySelector(".game-container"));
-        // sceneTransition.init( document.querySelector(".battle"));
 
         const battle = new Battle({
             enemy: Enemies[this.event.enemyId],
@@ -92,11 +130,14 @@ class WorldEvent {
 
     pause(resolve) {
         this.map.isPaused = true;
+
+        window.sfx.testRoom.volume(.3);
         const menu = new PauseMenu({
             save: this.map.world.save,
             onComplete: () => {
                 resolve();
                 this.map.isPaused = false;
+                window.sfx.testRoom.volume(1);
                 this.map.world.startGameLoop();
             }
         });
@@ -106,7 +147,7 @@ class WorldEvent {
     addStoryFlag(resolve) {
         window.playerState.storyFlags[this.event.flag] = true;
         resolve();
-    } 
+    }
 
     init() {
         return new Promise(resolve => {

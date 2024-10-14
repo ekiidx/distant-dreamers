@@ -101,15 +101,11 @@ class World {
 
         // Create new save
         this.save = new Save();
- 
+
         // Show the title screen
         this.titleScreen = new TitleScreen({
             save: this.save
         });
-
-        // this.newGameScene = new NewGameScene ({
-        //     save: this.save
-        // }); 
 
         const useSaveFile = await this.titleScreen.init(container);
 
@@ -133,11 +129,11 @@ class World {
         // Start the first map
         this.startMap(window.WorldMaps[this.save.mapId], initialHeroState);
         console.log(this.save.mapId);
-     
+
         // Create controls
         this.bindActionInput();
         this.bindHeroPositionCheck();
-        
+
         this.directionInput = new PlayerInput();
         this.directionInput.init();
 
@@ -145,15 +141,21 @@ class World {
         this.startGameLoop()
 
         this.map.startScene([
-        //     // { type: "message", text: "Welcome to Distant Dreamers!"},
-                { type: "changeMap", map: "TestRoom", x: utils.withGrid(7), y: utils.withGrid(9), direction: "down" },
-        //     // { type: "changeMap", map: "TestRoom2" },
-        //     // { type: "battle", enemyId: "enemy_1" },
-        //     // { who: "hero", type: "walk",  direction: "down" },
-        //     // { who: "hero", type: "walk",  direction: "down" },
-        //     // { who: "npc1", type: "walk",  direction: "left" },
-        //     // { who: "npc1", type: "walk",  direction: "left" },
-        //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
-          ])
+            //     // { type: "message", text: "Welcome to Distant Dreamers!"},
+            {
+                type: "changeMap",
+                map: "TestRoom",
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
+                direction: "down"
+            },
+            //     // { type: "changeMap", map: "TestRoom2" },
+            //     // { type: "battle", enemyId: "enemy_1" },
+            //     // { who: "hero", type: "walk",  direction: "down" },
+            //     // { who: "hero", type: "walk",  direction: "down" },
+            //     // { who: "npc1", type: "walk",  direction: "left" },
+            //     // { who: "npc1", type: "walk",  direction: "left" },
+            //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
+        ])
     }
 }

@@ -1,12 +1,17 @@
 class BattleMenu {
-    constructor({ caster, enemy, onComplete, items }) {
+    constructor({
+        caster,
+        enemy,
+        onComplete,
+        items
+    }) {
         this.caster = caster;
         this.enemy = enemy;
         this.onComplete = onComplete;
 
         let quantityMap = {};
         items.forEach(item => {
-            if (item.team === caster.team ) {
+            if (item.team === caster.team) {
 
                 let existing = quantityMap[item.actionId];
                 if (existing) {
@@ -33,8 +38,7 @@ class BattleMenu {
         };
 
         return {
-            root: [
-                {
+            root: [{
                     label: "Fight",
                     description: "Choose an attack",
                     handler: () => {
@@ -72,7 +76,7 @@ class BattleMenu {
                         label: action.name,
                         description: action.description,
                         right: () => {
-                            return "x"+item.quantity;
+                            return "x" + item.quantity;
                         },
                         handler: () => {
                             this.menuSubmit(action, item.instanceId)
@@ -96,7 +100,7 @@ class BattleMenu {
     }
 
     decide() {
-        this.menuSubmit(Actions[ this.caster.actions[0] ]);
+        this.menuSubmit(Actions[this.caster.actions[0]]);
     }
 
     showMenu(container) {
@@ -110,7 +114,7 @@ class BattleMenu {
             // Show Menu
             this.showMenu(container)
         } else {
-        this.decide()
+            this.decide()
         }
     }
 }

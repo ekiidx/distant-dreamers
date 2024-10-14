@@ -30,7 +30,7 @@ class PlayerState {
         this.storyFlags = {
             // "DID_SOMETHING": true,
             // "DEAFEATED_FIRST_BOSS": true
-            TEST_EVENT: true
+            // TEST_EVENT: true
         };
     }
 

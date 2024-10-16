@@ -53,10 +53,12 @@ class TurnCycle {
             })
 
             window.sfx.battle.stop();
+            window.sfx.winner.volume(.7).play();
+            window.sfx.winner.on('end', function(){
+                window.sfx.testRoom.volume(.7).play();
+            });
 
             if (submission.target.team === "enemy") {
-
-                window.sfx.winner.play();
 
                 const playerActiveId = this.battle.activeCombatants.player;
                 const xp = submission.target.givesXp;

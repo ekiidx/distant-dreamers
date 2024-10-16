@@ -2,6 +2,7 @@ window.Actions = {
     strike: {
         name: "Strike",
         description: "Hit the enemy.",
+        sound: "strike1",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "animation", animation: "spin"},
@@ -13,6 +14,7 @@ window.Actions = {
         name: "Regen",
         description: "Restore 10 HP for 3 rounds.",
         targetType: "friendly",
+        sound: "regen",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "stateChange", status: { type: "regen", expiresIn: 3 } }
@@ -22,6 +24,7 @@ window.Actions = {
     fear: {
         name: "Fear",
         description: "1/3 chance enemy scared stiff for 3 rounds.",
+        sound: "fear",
         success: [
             { type: "textMessage", text: "{CASTER} uses {ACTION}!" },
             { type: "animation", animation: "glob", color: "#dddddd" },
@@ -43,6 +46,7 @@ window.Actions = {
         name: "Potion",
         description: "Heal 30 HP.",
         targetType: "friendly",
+        sound: "regen",
         success: [
             { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
             { type: "stateChange", recover: 30 },

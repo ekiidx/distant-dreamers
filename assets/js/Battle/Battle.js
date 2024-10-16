@@ -158,9 +158,6 @@ class Battle {
                 }
                 // this removes the battle screen and shows the world map
                 // Fires when the sound finishes playing.
-                window.sfx.winner.on('end', function(){
-                    window.sfx.testRoom.play();
-                });
                 this.element.remove();
                 this.onComplete(winner === "player");
             }

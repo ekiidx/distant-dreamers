@@ -2,9 +2,10 @@
 
 ![Distant Dreamers title logo](/assets/images/distant-dreamers-logo.png)
 <br/>
-Javascript based RPG style game. I was inspired by games like stardew valley and final fantasy. I thought it would be interesting to try and combine the two.
+Javascript based RPG style game. I was inspired by games like stardew valley and final fantasy. I thought it would be interesting to try and combine the two while trying to learn more advanced game engine techniques.
 
-- [ ] Add music
+- [x] Add music
+- [x] Add Sound Effects
 - [ ] Add Game Over screen
 - [ ] Add Character menu
 - [ ] Add Equipment & Weapons

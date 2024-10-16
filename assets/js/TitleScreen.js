@@ -12,8 +12,8 @@ class TitleScreen {
           handler: () => {
             this.close();
             window.sfx.title.stop();
-            window.sfx.bells.play();
-            window.sfx.whoosh.play();
+            window.sfx.bells.volume(.6).play();
+            window.sfx.whoosh.volume(.7).play();
             resolve();
           }
         },
@@ -23,8 +23,8 @@ class TitleScreen {
           handler: () => {
             this.close();
             window.sfx.title.stop();
-            window.sfx.bells.play();
-            window.sfx.whoosh.play();
+            window.sfx.bells.volume(.6).play();
+            window.sfx.whoosh.volume(.7).play();
             resolve(saveFile);
           }
         } : null
@@ -50,7 +50,7 @@ class TitleScreen {
 
         this.createElement();
         container.appendChild(this.element);
-        window.sfx.title.play();
+        window.sfx.title.volume(.8).play();
         this.keyboardMenu = new KeyboardMenu();
         this.keyboardMenu.init(this.element);
         this.keyboardMenu.setOptions(this.getOptions(resolve));

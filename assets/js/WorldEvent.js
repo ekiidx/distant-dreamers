@@ -64,7 +64,7 @@ class WorldEvent {
 
         if(!window.sfx.testRoom.playing() === true)
             {
-                window.sfx.testRoom.play();
+                window.sfx.testRoom.volume(.7).play();
             }
 
         // if (Howler._howls[0].src == 'assets/music/testroom.wav') {
@@ -115,7 +115,7 @@ class WorldEvent {
     battle(resolve) {
 
         window.sfx.testRoom.stop();
-        window.sfx.battle.play();
+        window.sfx.battle.volume(.7).play();
         const sceneTransition = new SceneTransition();
         sceneTransition.battleTransition(document.querySelector(".game-container"));
 
@@ -131,13 +131,13 @@ class WorldEvent {
     pause(resolve) {
         this.map.isPaused = true;
 
-        window.sfx.testRoom.volume(.3);
+        window.sfx.testRoom.volume(.2);
         const menu = new PauseMenu({
             save: this.map.world.save,
             onComplete: () => {
                 resolve();
                 this.map.isPaused = false;
-                window.sfx.testRoom.volume(1);
+                window.sfx.testRoom.volume(.7);
                 this.map.world.startGameLoop();
             }
         });

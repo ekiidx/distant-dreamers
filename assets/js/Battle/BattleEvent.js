@@ -31,6 +31,20 @@ class BattleEvent {
         } = this.event;
         let who = this.event.onCaster ? caster : target;
 
+        // SFX actions
+        if(action.sound === 'strike1') {
+            window.sfx.strike1.play();
+        }
+        // if(action.sound === 'strike2') {
+        //     window.sfx.strike2.play();
+        // }
+        if(action.sound === 'regen') {
+            window.sfx.regen.play();
+        }
+        if(action.sound === 'fear') {
+            window.sfx.fear.play();
+        }
+
         if (damage) {
             //modify the target to have less HP
             target.update({
@@ -39,6 +53,7 @@ class BattleEvent {
 
             //start blinking
             target.fighterElement.classList.add("battle-damage-blink");
+            // window.sfx.strike1.play();
         }
 
         if (recover) {
@@ -92,6 +107,11 @@ class BattleEvent {
             combatant
         } = this.event;
         const step = () => {
+
+            if (!window.sfx.levelUpLoop.playing()) {
+                window.sfx.levelUpLoop.play();
+            }
+
             if (amount > 0) {
                 amount -= 1;
                 combatant.xp += 1;
@@ -107,6 +127,8 @@ class BattleEvent {
                 requestAnimationFrame(step);
                 return;
             }
+            window.sfx.levelUpLoop.stop();
+            window.sfx.levelUpLoopEnd.play();    
             resolve();
         }
         requestAnimationFrame(step);

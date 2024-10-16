@@ -15,7 +15,7 @@ window.Fighters = {
     actions: [ "strike", "fear", "regen" ]
   },
   "e001": {
-    name: "Enemy",
+    name: "Sage",
     description: "A normal enemy.",
     type: FighterTypes.normal,
     src: "assets/images/characters/enemy_battle.png",

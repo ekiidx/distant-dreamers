@@ -53,12 +53,17 @@ class TurnCycle {
             })
 
             window.sfx.battle.stop();
-            window.sfx.winner.volume(.7).play();
-            window.sfx.winner.on('end', function(){
-                window.sfx.testRoom.volume(.7).play();
-            });
+
+            if (submission.target.team === "player") {
+                window.sfx.gameOver.volume(.8).play();
+            }
 
             if (submission.target.team === "enemy") {
+
+                window.sfx.winner.volume(.7).play();
+                window.sfx.winner.on('end', function(){
+                    window.sfx.testRoom.volume(.7).play();
+                });
 
                 const playerActiveId = this.battle.activeCombatants.player;
                 const xp = submission.target.givesXp;
@@ -83,7 +88,18 @@ class TurnCycle {
 
         // Do we have a winning team?
         const winner = this.getWinningTeam();
-        if (winner) {
+
+        if (winner === "enemy") {
+            await this.onNewEvent({
+                type: "textMessage",
+                text: "You were annihilated..."
+            })
+            // End Battle
+            this.onWinner(winner);
+            return;
+        }
+
+        if (winner === "player") {
             await this.onNewEvent({
                 type: "textMessage",
                 text: "Winner!"

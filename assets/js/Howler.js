@@ -87,4 +87,11 @@ window.sfx = {
         // volume: 0.5
     }),
 
+    gameOver: new Howl({
+        src: [
+            'assets/music/gameover.mp3'
+        ],
+        // volume: 0.5
+    }),
+
 }

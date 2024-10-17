@@ -110,7 +110,6 @@ class Battle {
         // });
         // sceneTransition.init( document.querySelector(".game-container"));
 
-
         Object.keys(this.combatants).forEach(key => {
             let combatant = this.combatants[key];
             combatant.id = key;
@@ -121,11 +120,16 @@ class Battle {
             battle: this,
             onNewEvent: event => {
                 return new Promise(resolve => {
-                    const battleEvent = new BattleEvent(event, this)
+                    const battleEvent = new BattleEvent(event, this);
                     battleEvent.init(resolve);
                 })
             },
             onWinner: winner => {
+
+                if (winner !== "player") {
+                    this.element.remove();
+                    this.onComplete(false);
+                }
 
                 if (winner === "player") {
                     const playerState = window.playerState;
@@ -155,11 +159,11 @@ class Battle {
 
                     //Send signal to update
                     utils.emitEvent("PlayerStateUpdated");
+
+                    // this removes the battle screen and shows the world map
+                    this.element.remove();
+                    this.onComplete(winner === "player");
                 }
-                // this removes the battle screen and shows the world map
-                // Fires when the sound finishes playing.
-                this.element.remove();
-                this.onComplete(winner === "player");
             }
         })
         this.turnCycle.init();

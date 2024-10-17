@@ -1,4 +1,4 @@
-  // Make sure holding key press continuously fire
+// Make sure holding key press continuously fire
 class KeyPressListener {
     constructor (keyCode, callback) {
         let keySafe = true;

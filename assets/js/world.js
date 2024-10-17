@@ -9,6 +9,7 @@ class World {
     startGameLoop() {
         const step = () => {
 
+            // console.log("stepping");
             // Clear the frame
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -37,13 +38,30 @@ class World {
             // Draw Upper Layer
             this.map.drawUpperImage(this.ctx, cameraCharacter);
 
+            // if (this.map.isGameOver) {
+            //     // Show the title screen
+            //     this.gameOver = new GameOver({});
+            //     this.gameOver.init(document.querySelector(".game-container"));
+            // }
+
+            // Continue Loop if Game is not paused
             if (!this.map.isPaused) {
-                // Fire next frame
-                requestAnimationFrame(() => {
-                    step();
-                })
+                if(!this.map.isGameOver) {
+                    // Fire next frame
+                    requestAnimationFrame(() => {
+                        step();
+                    })
+                }
+            }
+            if(this.map.isGameOver) {
+                if (!this.map.isScenePlaying) {
+                    this.map.startScene([{
+                        type: "gameOver"
+                    }])
+                }
             }
         }
+        // Call itself for the first time and begin the loop
         step();
     }
 
@@ -60,6 +78,13 @@ class World {
                 }])
             }
         })
+        // new KeyPressListener("Space", () => {
+        //     if (!this.map.isScenePlaying) {
+        //         this.map.startScene([{
+        //             type: "gameOver"
+        //         }])
+        //     }
+        // })
     }
 
     bindHeroPositionCheck() {
@@ -92,11 +117,9 @@ class World {
         this.save.startingHeroX = this.map.gameObjects.hero.x;
         this.save.startingHeroY = this.map.gameObjects.hero.y;
         this.save.startingHeroDirection = this.map.gameObjects.hero.direction;
-
-        // console.log(this.map.walls)
     }
+    
     async init() {
-
         const container = document.querySelector(".game-container");
 
         // Create new save
@@ -107,7 +130,16 @@ class World {
             save: this.save
         });
 
+        // Show the title screen
+        this.newGameScene = new NewGameScene({
+        });
+
+        // Show the Game Over screen
+        this.gameOver = new GameOver({
+        });
+
         const useSaveFile = await this.titleScreen.init(container);
+        await this.newGameScene.init(container);
 
         //Potentially load saved data
         let initialHeroState = null;
@@ -128,8 +160,7 @@ class World {
 
         // Start the first map
         this.startMap(window.WorldMaps[this.save.mapId], initialHeroState);
-        console.log(this.save.mapId);
-
+    
         // Create controls
         this.bindActionInput();
         this.bindHeroPositionCheck();
@@ -138,24 +169,24 @@ class World {
         this.directionInput.init();
 
         // Start the main game loop
-        this.startGameLoop()
+        this.startGameLoop();
 
-        this.map.startScene([
-            //     // { type: "message", text: "Welcome to Distant Dreamers!"},
-            {
-                type: "changeMap",
-                map: "TestRoom",
-                x: utils.withGrid(5),
-                y: utils.withGrid(6),
-                direction: "down"
-            },
-            //     // { type: "changeMap", map: "TestRoom2" },
-            //     // { type: "battle", enemyId: "enemy_1" },
-            //     // { who: "hero", type: "walk",  direction: "down" },
-            //     // { who: "hero", type: "walk",  direction: "down" },
-            //     // { who: "npc1", type: "walk",  direction: "left" },
-            //     // { who: "npc1", type: "walk",  direction: "left" },
-            //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
-        ])
+        // this.map.startScene([
+        //     //     // { type: "message", text: "Welcome to Distant Dreamers!"},
+        //     {
+        //         type: "changeMap",
+        //         map: "TestRoom",
+        //         x: utils.withGrid(5),
+        //         y: utils.withGrid(6),
+        //         direction: "down"
+        //     },
+        //     //     // { type: "changeMap", map: "TestRoom2" },
+        //     //     // { type: "battle", enemyId: "enemy_1" },
+        //     //     // { who: "hero", type: "walk",  direction: "down" },
+        //     //     // { who: "hero", type: "walk",  direction: "down" },
+        //     //     // { who: "npc1", type: "walk",  direction: "left" },
+        //     //     // { who: "npc1", type: "walk",  direction: "left" },
+        //     //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
+        // ])
     }
 }

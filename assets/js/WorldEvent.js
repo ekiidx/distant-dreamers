@@ -61,39 +61,18 @@ class WorldEvent {
     }
 
     changeMap(resolve) {
-
-        if(!window.sfx.testRoom.playing() === true)
-            {
+   
+        console.log(this.event);
+        if (this.event.map === 'TestRoom') {
+            if(!window.sfx.testRoom.playing() === true) {
                 window.sfx.testRoom.volume(.7).play();
             }
-
-        // if (Howler._howls[0].src == 'assets/music/testroom.wav') {
-        //     console.log('weeeee');
-        // }
-
-        // function isTrackPlaying(filename) {
-        //     // assume the track is not playing
-        //     let playing = false;
-          
-        //     // Retrieve the currently active track listing from the playlist
-        //     const track = Howler.playlist[index];
-          
-        //     // is it the track we are looking for?
-        //     if(track.file == filename) {
-        //       // has it been initialised, and is it playing?
-        //       playing = track.howl && track.howl.playing(); 
-        //     }
-          
-        //     return playing;
-        //   }
-
-        //   function checksound() {
-        //     if(isTrackPlaying('testRoom')){
-        //         window.sfx.testRoom.play();
-        //     }    
-        //  }
-
-        // checksound();
+        }
+        if (this.event.map === 'TestRoom2') {
+            if(!window.sfx.testRoom.playing() === true) {
+                window.sfx.testRoom.volume(.7).play();
+            }
+        }
 
         // Deactive all objects
         Object.values(this.map.gameObjects).forEach(obj => {
@@ -122,16 +101,36 @@ class WorldEvent {
         const battle = new Battle({
             enemy: Enemies[this.event.enemyId],
             onComplete: (didWin) => {
-                resolve(didWin ? "BATTLE_WIN" : "BATTLE_LOSE")
+                if (didWin === false) {
+                    this.map.isGameOver = true;
+                }
+                resolve(didWin ? "BATTLE_WIN" : "BATTLE_LOSE");
             }
         })
         battle.init(document.querySelector(".game-container"));
+    }
+
+    gameOver(resolve) {
+        console.log("game over");
+        this.map.isGameOver = true;
+
+        const gameOver = new GameOver({
+            // save: this.map.world.save,
+            onComplete: () => {
+                resolve();
+                this.map.isGameOver = false;
+                // window.sfx.testRoom.volume(.7);
+                this.map.world.startGameLoop();
+            }
+        });
+        gameOver.init(document.querySelector(".game-container"));
     }
 
     pause(resolve) {
         this.map.isPaused = true;
 
         window.sfx.testRoom.volume(.2);
+        
         const menu = new PauseMenu({
             save: this.map.world.save,
             onComplete: () => {

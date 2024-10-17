@@ -15,6 +15,7 @@ class WorldMap {
 
         this.isScenePlaying = false;
         this.isPaused = false;
+        this.isGameOver = false;
     }
 
     drawLowerImage(ctx, cameraCharacter) {
@@ -85,6 +86,8 @@ class WorldMap {
             const result = await eventHandler.init();
             //break out of loop if battle is lost
             if (result === "BATTLE_LOSE") {
+                // this.isGameOver = true;
+                // gameOver();
                 break;
             }
         }
@@ -94,6 +97,14 @@ class WorldMap {
         // Reset NPCs to do idle behavior
         // Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
     }
+
+    // async gameOver() {
+    //     console.log("this game over");
+    //     // Show the Game Over screen
+    //     this.gameOver = new GameOver({
+    //     });
+    //     await this.gameOver.init(document.querySelector(".game-container"));
+    // }
 
     // Check if there is action to be taken at a space
     checkForActionScene() {

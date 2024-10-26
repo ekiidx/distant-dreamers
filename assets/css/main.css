@@ -96,7 +96,7 @@ body {
     right: 0;
     top: 0;
     bottom: 0;
-    background-image: url(../../assets/images/maps/battle_room.png);
+    background-image: url(../../assets/img/maps/battle_room.png);
     background-size: cover;
     image-rendering: pixelated;
 }
@@ -108,7 +108,7 @@ body {
     width: 32px;
     height: 32px;
     overflow: hidden;
-    background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
+    background: url(../../assets/img/characters/shadow.png) no-repeat no-repeat;
 }
 .fighter-Sage {
     top: 42px;
@@ -118,7 +118,7 @@ body {
     width: 32px;
     height: 32px;
     overflow: hidden;
-    background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
+    background: url(../../assets/img/characters/shadow.png) no-repeat no-repeat;
 }
 .fighter-RedBoss {
   top: 42px;
@@ -128,7 +128,7 @@ body {
   width: 32px;
   height: 32px;
   overflow: hidden;
-  background: url(../../assets/images/characters/shadow.png) no-repeat no-repeat;
+  background: url(../../assets/img/characters/shadow.png) no-repeat no-repeat;
 }
 /* .battle-hero img {
     pointer-events: none;
@@ -141,7 +141,7 @@ body {
 .enemy {
     width: 67px;
     height: 14px;
-    background: url(../../assets/images/ui/enemy-plate.png) no-repeat no-repeat;
+    background: url(../../assets/img/ui/enemy-plate.png) no-repeat no-repeat;
     position: absolute;
   }
   .battle .enemy {
@@ -180,8 +180,8 @@ body {
   }
   .enemy-name {
     position: absolute;
-    left:-2px;
-    top:-8px;
+    left:19px;
+    top:-4px;
     white-space: nowrap;
     background: var(--menu-background);
     color: #fff;
@@ -216,11 +216,11 @@ body {
   }
   .enemy-level {
     position: absolute;
-    font-size: 12px;
-    right: 2px;
-    top: -1px;
-    width: 17px;
-    height: 12px;
+    font-size: 6px;
+    right: 10px;
+    top: -2px;
+    width: 9px;
+    height: 8px;
     display:flex;
     align-items: center;
     justify-content: center;

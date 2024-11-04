@@ -7,6 +7,9 @@ class WorldMap {
         this.sceneSpaces = config.sceneSpaces || {};
         this.walls = config.walls || {};
 
+        this.wallImage = new Image();
+        this.wallImage.src =  "assets/img/wall.png";
+
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
 
@@ -16,6 +19,20 @@ class WorldMap {
         this.isScenePlaying = false;
         this.isPaused = false;
         this.isGameOver = false;
+    }
+
+    // Draw Bounding walls in red
+    drawWalls(ctx, cameraCharacter) {
+        const redWalls = Object.keys(this.walls);
+        for ( let x = 0; x < redWalls.length; x++) {
+            
+            let splitRedWalls = redWalls[x].split(",");
+            ctx.drawImage(
+                this.wallImage,
+                Number(splitRedWalls[0]) + utils.withGrid(10.5) - cameraCharacter.x,
+                Number(splitRedWalls[1]) + utils.withGrid(6) - cameraCharacter.y
+            )
+        }
     }
 
     drawLowerImage(ctx, cameraCharacter) {
@@ -66,11 +83,11 @@ class WorldMap {
                 instance = new Character(object);
             }
 
+            // Add items / shops here
             if (object.type === "Chest") {
                 instance = new Collectable(object);
             }
-            // Add items / shops here
-
+            
             this.gameObjects[key] = instance;
             this.gameObjects[key].id = key;
             instance.mount(this);

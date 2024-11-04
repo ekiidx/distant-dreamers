@@ -10,7 +10,7 @@ class World {
         const step = () => {
 
             let character = playerState.fighters["p1"];
-            console.log(character["hp"]);
+            // console.log(character["hp"]);
 
             // console.log("stepping");
             // Clear the frame
@@ -41,6 +41,9 @@ class World {
             // Draw Upper Layer
             this.map.drawUpperImage(this.ctx, cameraCharacter);
 
+            // Draw wall boundaries in red
+            this.map.drawWalls(this.ctx, cameraCharacter);
+
             // if (this.map.isGameOver) {
             //     // Show the title screen
             //     this.gameOver = new GameOver({});
@@ -56,6 +59,7 @@ class World {
                     })
                 }
             }
+            // Game Over
             if(this.map.isGameOver) {
                 if (!this.map.isScenePlaying) {
                     this.map.startScene([{

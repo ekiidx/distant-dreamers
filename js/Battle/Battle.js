@@ -103,13 +103,6 @@ class Battle {
             battleTransition.remove();
         });
 
-        // const sceneTransition = new SceneTransition();
-        // sceneTransition.init(document.querySelector(".game-container"), () => {
-        //     // resolve();
-        //     sceneTransition.fadeOut();
-        // });
-        // sceneTransition.init( document.querySelector(".game-container"));
-
         Object.keys(this.combatants).forEach(key => {
             let combatant = this.combatants[key];
             combatant.id = key;
@@ -145,10 +138,8 @@ class Battle {
                     })
 
                     // award the item to player
-                    this.itemsWin = 
-                        { actionId: "item_recoverHp", instanceId: "item" + window.playerState.items.length + 1 }
+                    this.itemsWin = { actionId: "item_recoverHp", instanceId: "item" + window.playerState.items.length + 1 }
 
-                    // console.log(window.playerState.items);
                     //Add in player items
                     window.playerState.items.push(this.itemsWin);
 

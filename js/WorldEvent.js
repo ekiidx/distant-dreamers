@@ -150,8 +150,8 @@ class WorldEvent {
             item: this.event.item,
             onComplete: () => resolve()
         })
-        console.log("inside of getItem event");
-        console.log(getItem.item);
+        // console.log("inside of getItem event");
+        // console.log(getItem.item);
         getItem.init();
     }
 

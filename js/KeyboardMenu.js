@@ -53,7 +53,6 @@ class KeyboardMenu {
     }
 
     end() {
-
         //Remove menu and description element
         this.element.remove();
         this.descriptionElement.remove();
@@ -83,6 +82,5 @@ class KeyboardMenu {
             })
             nextButton?.focus();
         })
-       
     }
 }

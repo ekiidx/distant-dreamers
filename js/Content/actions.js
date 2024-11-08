@@ -37,6 +37,7 @@ window.Actions = {
         name: "Remedy",
         description: "Remove all status.",
         targetType: "friendly",
+        sound: "regen",
         success: [
             { type: "textMessage", text: "{CASTER} uses a {ACTION}!" },
             { type: "stateChange", status: null },

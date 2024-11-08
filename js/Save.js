@@ -1,9 +1,9 @@
 class Save {
     constructor() {
-      this.mapId = "Street";
-      this.startingHeroX = 17;
-      this.startingHeroY = 50;
-      this.startingHeroDirection = "down";
+      this.mapId = "Intro";
+      this.startingHeroX = 6;
+      this.startingHeroY = 10;
+      this.startingHeroDirection = "up";
       this.saveFileKey = "Distant_Dreamers_SaveFile_1";
     }
   

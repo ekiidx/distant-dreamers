@@ -68,7 +68,6 @@ class Character extends GameObject {
 
             if (this.standBehaviorTimeout) {
                 clearTimeout(this.standBehaviorTimeout);
-                // console.log("xlear")
               }
 
             this.standBehaviorTimeout = setTimeout(() => {

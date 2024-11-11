@@ -7,6 +7,8 @@ window.Enemies = {
                 fighterId: "e001",
                 maxHp: 10,
                 level: 2,
+                strength: 2,
+                defense: 2,
                 items: [
                     { actionId: "item_recoverHp", instanceId: "item1" },
                 ],
@@ -21,6 +23,8 @@ window.Enemies = {
                 fighterId: "b001",
                 maxHp: 100,
                 level: 3,
+                strength: 3,
+                defense: 3,
             }
         }
     }

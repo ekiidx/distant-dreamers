@@ -10,7 +10,6 @@ class Hud {
     }
 
     createElement() {
-
         if (this.element) {
             this.element.remove();
             this.scoreboards = [];
@@ -20,7 +19,8 @@ class Hud {
         this.element.classList.add("hud");
 
         const {playerState} = window;
-            playerState.lineup.forEach(key => {
+
+        playerState.lineup.forEach(key => {
             const fighter = playerState.fighters[key];
             const scoreboard = new Enemy({
                 id: key,
@@ -29,12 +29,13 @@ class Hud {
                 // gives us HP / XP ..etc
                 ...fighter,
             }, null)
-            scoreboard.createElement();
-            this.scoreboards.push(scoreboard);
-            this.element.appendChild(scoreboard.hudElement);
+                scoreboard.createElement();
+                this.scoreboards.push(scoreboard);
+                this.element.appendChild(scoreboard.hudElement);
         })
-        this.update();
+    this.update();
     }
+    
     init(container) {
         this.createElement();
         container.appendChild(this.element);

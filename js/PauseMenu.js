@@ -8,36 +8,19 @@ class PauseMenu {
     getOptions(screenKey) {
         // Show the first page of options
         if (screenKey === "root") {
-            const lineupFighters = playerState.lineup.map(id => {
-               
-                const {fighterId} = playerState.fighters[id];
-                const base = Fighters[fighterId];
-                
-                return {
-                    label: base.name,
-                    description: base.description,
+            return [
+                {
+                    label: "Status",
+                    description: "Check Status.",
                     handler: () => {
-                        // this.keyboardMenu.setOptions( this.getOptions(id) )
                         this.keyboardMenu.setOptions( this.getOptions("status") )
                     }
-                }
-            })        
-        
-            return [
-                // show lineup of fighters
-                ...lineupFighters,
+                },
                 {
                     label: "Items",
                     description: "Check inventory.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("items") )
-                    }
-                },
-                {
-                    label: "Equipment",
-                    description: "Equip items.",
-                    handler: () => {
-                        this.keyboardMenu.setOptions( this.getOptions("equip") )
                     }
                 },
                 {
@@ -59,21 +42,21 @@ class PauseMenu {
         }
 
         if (screenKey === "items") {
-                let quantityMap = {};
-                this.items.forEach(item => {
+            let quantityMap = {};
+            this.items.forEach(item => {
 
-                    let existing = quantityMap[item.actionId];
-                    if (existing) {
-                        existing.quantity += 1;
-                    } else {
-                        quantityMap[item.actionId] = {
-                            actionId: item.actionId,
-                            quantity: 1,
-                            instanceId: item.instanceId,
-                        }
+                let existing = quantityMap[item.actionId];
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    quantityMap[item.actionId] = {
+                        actionId: item.actionId,
+                        quantity: 1,
+                        instanceId: item.instanceId,
                     }
-                })
-                const items = Object.values(quantityMap);
+                }
+            })
+            const items = Object.values(quantityMap);
 
             return [
                 ...items.map(item => {
@@ -89,26 +72,6 @@ class PauseMenu {
                         }
                     }
                 }),
-
-                {
-                    label: "Back",
-                    description: "Go Back.",
-                    handler: () => {
-                        this.keyboardMenu.setOptions( this.getOptions("root") );
-                    }
-                }
-            ]
-        }
-
-        if (screenKey === "equip") {
-            return [
-                {
-                    label: "Test",
-                    description: "Test",
-                    handler: () => {
-                        //
-                    }
-                },
                 {
                     label: "Back",
                     description: "Go Back.",
@@ -120,12 +83,67 @@ class PauseMenu {
         }
 
         if (screenKey === "status") {
+             // show lineup of fighters
+            const lineupFighters = playerState.lineup.map(id => {
+                const {fighterId} = playerState.fighters[id];
+                const base = Fighters[fighterId];
+                
+                return {
+                    label: base.name,
+                    description: base.description,
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions(base.name) )
+                    }
+                }
+            })        
+            return [
+                ...lineupFighters,
+                {
+                    label: "Back",
+                    description: "Go Back.",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("root") );
+                    }
+                }
+            ]
+        }
+
+        if (screenKey === "Vash") {
+            const fighter = playerState.fighters["p1"]
             return [
                 {
-                    label: "Stats",
-                    description: "This will be character info.",
+                    label: "Level: " + fighter.level,
+                    description: "Player Level",
                     handler: () => {
-                        //
+                        this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                    }
+                },
+                {
+                    label: "HP: " + fighter.hp + "/ " + fighter.maxHp,
+                    description: "Player Health",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                    }
+                },
+                {
+                    label: "XP: " + fighter.xp,
+                    description: "Player Experience",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                    }
+                },
+                {
+                    label: "Strength: " + fighter.strength,
+                    description: "Player Strength",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                    }
+                },
+                {
+                    label: "Defense: " + fighter.defense,
+                    description: "Player Defense",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("Vash") );
                     }
                 },
                 {
@@ -179,14 +197,18 @@ class PauseMenu {
         this.element = document.createElement("div");
         this.element.classList.add("pause-menu");
         this.element.innerHTML = (`
-          <h2>Menu</h2>
-        `)
+                <h2>Menu</h2>
+        `);
+        this.flexMenu = document.createElement("div");
+        this.flexMenu.classList.add("flex-menu");
+
     }
 
     close() {
         this.esc?.unbind();
         this.keyboardMenu.end();
         this.element.remove();
+        this.hud.element.remove();
         this.onComplete();
     }
 
@@ -209,21 +231,32 @@ class PauseMenu {
                 }
             }
             window.sfx.regen.play();
+            this.hud.update();
             this.keyboardMenu.setOptions( this.getOptions("items") );
         }
     }
 
     async init(container) {
-
-        console.log(this.items);
         this.createElement();
+        // this attaches pause-menu to the main game container
+        container.appendChild(this.element);
+        this.element.appendChild(this.flexMenu);
+
+        // Creates new keyboard menu instance 
         this.keyboardMenu = new KeyboardMenu({
             descriptionContainer: container
         })
-        this.keyboardMenu.init(this.element);
+        // This is where keyboardMenu attaches to pause-menu
+        this.keyboardMenu.init(this.flexMenu);
         this.keyboardMenu.setOptions(this.getOptions("root"));
 
-        container.appendChild(this.element);
+        this.node = document.createElement("div");
+        this.node.classList.add("status-menu");
+        this.flexMenu.appendChild(this.node);
+
+        // Fire the hud
+        this.hud = new HudMenu();
+        this.hud.init(this.node);
 
         utils.wait(200);
         this.esc = new KeyPressListener("Escape", () => {

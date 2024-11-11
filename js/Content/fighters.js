@@ -11,7 +11,7 @@ window.Fighters = {
     description: "Hero of the game.",
     type: FighterTypes.normal,
     src: "assets/img/characters/vash_battle.png",
-    icon: "assets/img/characters/hero.png",
+    icon: "assets/img/characters/penny.png",
     actions: [ "strike", "fear", "regen" ]
   },
   "e001": {
@@ -31,3 +31,5 @@ window.Fighters = {
     actions: [ "strike" ]
   }
 }
+
+// base stats * level + equipment 

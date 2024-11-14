@@ -9,10 +9,9 @@ class World {
     startGameLoop() {
         const step = () => {
 
-            let character = playerState.fighters["p1"];
+            // let character = playerState.fighters["p1"];
             // console.log(character["hp"]);
 
-            // console.log("stepping");
             // Clear the frame
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -42,13 +41,7 @@ class World {
             this.map.drawUpperImage(this.ctx, cameraCharacter);
 
             // Draw wall boundaries in red
-            this.map.drawWalls(this.ctx, cameraCharacter);
-
-            // if (this.map.isGameOver) {
-            //     // Show the title screen
-            //     this.gameOver = new GameOver({});
-            //     this.gameOver.init(document.querySelector(".game-container"));
-            // }
+            // this.map.drawWalls(this.ctx, cameraCharacter);
 
             // Continue Loop if Game is not paused
             if (!this.map.isPaused) {
@@ -59,12 +52,23 @@ class World {
                     })
                 }
             }
+
             // Game Over
             if(this.map.isGameOver) {
                 if (!this.map.isScenePlaying) {
                     this.map.startScene([{
                         type: "gameOver"
                     }])
+                }
+            }
+        
+            // Checks if there are any storyFlags for the opening scene when loading a map
+            if (!this.map.isScenePlaying) {
+                if(this.map.openingScenes.events) {
+                    const object = window.playerState.storyFlags;
+                    if (!object.hasOwnProperty(this.save.mapId + "_COMPLETE")) {
+                        this.map.checkForOpeningScenes();
+                    } 
                 }
             }
         }
@@ -161,10 +165,6 @@ class World {
             }
         }
 
-        // Fire the hud
-        // this.hud = new Hud();
-        // this.hud.init(container);
-
         // Start the first map
         this.startMap(window.WorldMaps[this.save.mapId], initialHeroState);
     
@@ -178,22 +178,74 @@ class World {
         // Start the main game loop
         this.startGameLoop();
 
-        this.map.startScene([
-        //     //     // { type: "message", text: "Welcome to Distant Dreamers!"},
-            // {
-            //     type: "changeMap",
-            //     map: "Street",
-            //     x: utils.withGrid(17),
-            //     y: utils.withGrid(50),
-            //     direction: "down"
-            // },
-                { type: "changeMap", map: "TestRoom2", x: utils.withGrid(5), y: utils.withGrid(7), direction: "down"},
-                // { type: "battle", enemyId: "enemy_1" },
-        //     //     // { who: "hero", type: "walk",  direction: "down" },
-        //     //     // { who: "hero", type: "walk",  direction: "down" },
-        //     //     // { who: "npc1", type: "walk",  direction: "left" },
-        //     //     // { who: "npc1", type: "walk",  direction: "left" },
-        //     //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
-        ])
+        // console.log(window.playerState);
+
+    //     this.map.startScene([
+    //             { type: "changeMap", map: "Intro", x: utils.withGrid(4), y: utils.withGrid(10), direction: "up"},
+    //             // { type: "message", text: "Welcome to Distant Dreamers!"},
+    //             { who: "hero", type: "stand",  direction: "up" },
+    //             { who: "lucy", type: "stand",  direction: "left" },
+    //             { who: "chad", type: "stand",  direction: "left" },
+    //             { who: "reese", type: "stand",  direction: "left" },
+    //             { who: "reese2", type: "stand",  direction: "right" },
+    //             { who: "alexander", type: "stand",  direction: "up" },
+    //             { who: "paisley", type: "stand",  direction: "up" },
+              
+    //             // { type: "battle", enemyId: "enemy_1" },
+    //             { who: "penny", type: "message",  text: "Next!" },
+    //             { who: "penny", type: "message",  text: "I said NEXT!" },
+    //             { who: "penny", type: "message",  text: "Hey you!" },
+    //             { who: "penny", type: "message",  text: "Yeah you! Please approach my desk." },
+    //             { who: "hero", type: "walk",  direction: "up"},
+    //             { who: "hero", type: "walk",  direction: "up"},
+    //             { who: "hero", type: "walk",  direction: "right"},
+    //             { who: "hero", type: "stand",  direction: "up"},
+
+    //             // Line moves forward
+    //             { who: "lucy", type: "walk",  direction: "left" },
+    //             { who: "chad", type: "walk",  direction: "left" },
+    //             { who: "reese", type: "walk",  direction: "left" },
+    //             { who: "paisley", type: "walk",  direction: "up" },
+    //             { who: "alexander", type: "walk",  direction: "up" },
+    //             { who: "reese2", type: "walk",  direction: "right" },
+    //             { who: "reese2", type: "stand",  direction: "up" },
+
+    //             { who: "penny", type: "message",  text: "I have a task for you." },
+    //             { who: "penny", type: "message",  text: "Please follow me." },
+
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "walk",  direction: "left" },
+    //             { who: "penny", type: "walk",  direction: "left" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "stand",  direction: "down", time: 1000 },
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "walk",  direction: "up" },
+    //             { who: "penny", type: "message",  text: "Are you coming?" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "down" },
+    //             { who: "penny", type: "walk",  direction: "right" },
+    //             { who: "penny", type: "stand",  direction: "up" },
+           
+    //             // { type: "changeMap", map: "Room_1", x: utils.withGrid(4), y: utils.withGrid(10), direction: "up"},
+
+
+  
+    //     //     //     // { who: "npc1", type: "walk",  direction: "left" },
+    //     //     //     // { who: "npc1", type: "stand",  direction: "up", time: 800 },
+    //     ])
     }
 }

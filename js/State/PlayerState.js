@@ -29,6 +29,13 @@ class PlayerState {
             { actionId: "item_recoverHp", instanceId: "item2" },
             { actionId: "item_recoverHp", instanceId: "item3" },
         ]
+        this.weaponsInventory = [
+            { weaponId: "dagger", instanceId: "weapon1" },
+            { weaponId: "short_sword", instanceId: "weapon2" }
+        ]
+        this.weaponsEquipped = [ 
+            { weaponId: "dagger", instanceId: "weapon1" }
+        ]
         this.storyFlags = {
             // "DID_SOMETHING": true,
             // "DEAFEATED_FIRST_BOSS": true,

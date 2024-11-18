@@ -3,6 +3,8 @@ class PauseMenu {
         this.save = save;
         this.onComplete = onComplete;
         this.items = window.playerState.items;
+        this.weaponsInventory = window.playerState.weaponsInventory;
+        this.weaponsEquipped = window.playerState.weaponsEquipped;
     }
 
     getOptions(screenKey) {
@@ -21,6 +23,13 @@ class PauseMenu {
                     description: "Check inventory.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("items") )
+                    }
+                },
+                {
+                    label: "Weapons",
+                    description: "Weapon inventory.",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("weapons") )
                     }
                 },
                 {
@@ -72,6 +81,36 @@ class PauseMenu {
                         }
                     }
                 }),
+                {
+                    label: "Back",
+                    description: "Go Back.",
+                    handler: () => {
+                        this.keyboardMenu.setOptions( this.getOptions("root") );
+                    }
+                }
+            ]
+        }
+
+        if (screenKey === "weapons") {
+            return [
+                ...this.weaponsInventory.map(item => {
+                    const weapon = Weapons[item.weaponId];
+                    const weaponInstanceId = item.instanceId
+                    return {
+                        label: weapon.name,
+                        description: weapon.description,
+                        right: () => {
+                            if( weaponInstanceId === this.weaponsEquipped[0].instanceId) {
+                                return "(equipped)";
+                            } else {
+                                return "";
+                            }
+                        },
+                        handler: () => {
+                            this.weaponSubmit(item);
+                        }
+                    }
+               }),
                 {
                     label: "Back",
                     description: "Go Back.",
@@ -234,6 +273,13 @@ class PauseMenu {
             this.hud.update();
             this.keyboardMenu.setOptions( this.getOptions("items") );
         }
+    }
+
+    weaponSubmit(weaponsInventoryItem) {
+        this.weaponsEquipped.splice(0, 1);
+        this.weaponsEquipped.push(weaponsInventoryItem);
+        this.hud.updateWeapon(this.node);
+        this.keyboardMenu.setOptions(this.getOptions("weapons"));
     }
 
     async init(container) {

@@ -46,11 +46,28 @@ class BattleEvent {
         }
 
         if (damage) {
+            // (Damage Base * Weapon Damage) * (Caster Strength - Target Defense))
+            let defenseModifier = caster.strength - target.defense;
+
+            if (defenseModifier <= 0) {
+                defenseModifier = 1;
+            }
+            let weaponModifier = damage * window.Weapons[caster.weapon[0].weaponId].damage;
+         
             //modify the target to have less HP
             target.update({
-                hp: target.hp - (damage * caster.level)
-                
+                hp: target.hp - (weaponModifier * defenseModifier)
             })
+
+            console.log(caster.name + " damage base: " + damage);
+            console.log(caster.name + " weapon: " + (window.Weapons[caster.weapon[0].weaponId].damage));
+            console.log(caster.name + " str: " + caster.strength);
+            console.log(target.name + " def: " + target.defense);
+            console.log(caster.name + " weaponModifier: " + weaponModifier);
+            console.log(caster.name + " defenseModifier: " + defenseModifier);
+            console.log(caster.name + " damage total: " + (weaponModifier * defenseModifier));
+            console.log(target.name + " hp: " + target.hp + " / " + target.maxHp);
+
             //start blinking
             target.fighterElement.classList.add("battle-damage-blink");
             // window.sfx.strike1.play();

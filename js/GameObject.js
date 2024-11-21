@@ -38,8 +38,6 @@ class GameObject {
         }
 
         if (map.isScenePlaying) {
-
-            console.log("will retry", this.id)
             if (this.retryTimeout) {
                 clearTimeout(this.retryTimeout);
             }

@@ -1127,6 +1127,72 @@ window.WorldMaps = {
                 y: utils.withGrid(10),
                 direction: "up"
             },
+            npc1: {
+                type: "Character",
+                x: utils.withGrid(7),
+                y: utils.withGrid(9),
+                src: "assets/img/characters/npc1.png",
+                behaviorLoop: [{
+                        type: "stand",
+                        direction: "left",
+                        time: 3800
+                    },
+                    {
+                        type: "stand",
+                        direction: "up",
+                        time: 1800
+                    },
+                    {
+                        type: "stand",
+                        direction: "right",
+                        time: 3200
+                    },
+                    {
+                        type: "stand",
+                        direction: "left",
+                        time: 4300
+                    },
+                ],
+                talking: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["BATTLE_1_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang, you are strong.",
+                            faceHero: "npc1"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "It's good to meet you.",
+                                faceHero: "npc1"
+                            },
+                            {
+                                type: "message",
+                                text: "You can press 'Enter' to talk to others like me."
+                            },
+                            {
+                                type: "message",
+                                text: "Some of us will even battle you!"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang, you are strong.",
+                                faceHero: "npc1"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "BATTLE_1_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
         },
         walls: {
             //"16,16": true
@@ -1184,7 +1250,7 @@ window.WorldMaps = {
         },
         openingScenes: {
             events: [
-                { type: "message",  text: "This is an opening scene." },
+                { type: "message",  text: "Room 1" },
                 { type: "addStoryFlag", flag: "Room_1_COMPLETE"}
             ]
         }

@@ -9,9 +9,7 @@ class GetItem {
     }
 
     init() {
-        console.log(this.item);
         window.playerState.items.push(this.item);
-   
         this.done();
     }
 }

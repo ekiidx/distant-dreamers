@@ -4,7 +4,7 @@ class PauseMenu {
         this.onComplete = onComplete;
         this.items = window.playerState.items;
         this.weaponsInventory = window.playerState.weaponsInventory;
-        this.weaponsEquipped = window.playerState.weaponsEquipped;
+        this.weaponsEquipped = window.playerState.fighters["p1"].weapon;
     }
 
     getOptions(screenKey) {
@@ -306,7 +306,7 @@ class PauseMenu {
 
         utils.wait(200);
         this.esc = new KeyPressListener("Escape", () => {
-          this.close();
+            this.close();
         })
     }
 }

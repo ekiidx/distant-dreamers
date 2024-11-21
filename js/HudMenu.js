@@ -1,7 +1,7 @@
 class HudMenu {
     constructor() {
         this.scoreboards = [];
-        this.weaponsEquipped = window.playerState.weaponsEquipped;
+        this.weaponsEquipped = window.playerState.fighters["p1"].weapon;
     }
 
     update() {
@@ -50,7 +50,7 @@ class HudMenu {
         // Create Weapon Hud
         this.weaponHud = document.createElement("span");
         this.weaponHud.classList.add("weapon-name");
-        this.weaponHud.innerHTML = window.Weapons[this.weaponsEquipped[0].weaponId].name || "";
+        this.weaponHud.innerHTML = window.Weapons[this.weaponsEquipped[0].weaponId].name;
     }
     
     init(container) {

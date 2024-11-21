@@ -31,5 +31,3 @@ window.Fighters = {
     actions: [ "strike" ]
   }
 }
-
-// base stats * level + equipment 

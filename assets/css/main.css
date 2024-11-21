@@ -101,8 +101,8 @@ body {
     image-rendering: pixelated;
 }
 .fighter-Vash {
-    bottom: 57px;
-    left: 1px;
+    top: 87px;
+    left: 32px;
     position: absolute;
     transform: scale(1.5);
     width: 32px;
@@ -111,8 +111,8 @@ body {
     background: url(../../assets/img/characters/shadow.png) no-repeat no-repeat;
 }
 .fighter-Sage {
-    top: 42px;
-    right: 4px;
+    top: 87px;
+    right: 35px;
     position: absolute;
     transform: scale(1.5);
     width: 32px;
@@ -121,8 +121,8 @@ body {
     background: url(../../assets/img/characters/shadow.png) no-repeat no-repeat;
 }
 .fighter-RedBoss {
-  top: 42px;
-  right: 4px;
+  top: 87px;
+  right: 35px;
   position: absolute;
   transform: scale(1.5);
   width: 32px;
@@ -154,12 +154,12 @@ body {
     opacity: 1;
   }
   .enemy[data-team="player"] {
-    left: 46px;
-    top: 70px;
+    top: 65px;
+    left: 29px;
   }
   .enemy[data-team="enemy"] {
-    top: 28px;
-    right: 77px;
+    top: 65px;
+    right: 49px;
   }
   /* .enemy-crop {
     position: absolute;

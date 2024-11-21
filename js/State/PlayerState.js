@@ -3,15 +3,16 @@ class PlayerState {
         this.fighters = {
             "p1": {
                 fighterId: "p01",
-                hp: 1,
-                maxHp: 50,
+                hp: 100,
+                maxHp: 100,
                 xp: 90,
                 maxXp: 100,
                 level: 1,
                 strength: 2,
                 defense: 2,
                 // status: { type: "regen" },
-                status: null
+                status: null,
+                weapon: [{ weaponId: "dagger", instanceId: "weapon1" }],
             },
             // "p2": {
             //     fighterId: "e001",
@@ -33,15 +34,15 @@ class PlayerState {
             { weaponId: "dagger", instanceId: "weapon1" },
             { weaponId: "short_sword", instanceId: "weapon2" }
         ]
-        this.weaponsEquipped = [ 
-            { weaponId: "dagger", instanceId: "weapon1" }
-        ]
+        // this.weaponsEquipped = [ 
+        //     { weaponId: "dagger", instanceId: "weapon1" }
+        // ]
         this.storyFlags = {
             // "DID_SOMETHING": true,
             // "DEAFEATED_FIRST_BOSS": true,
             // TEST_EVENT: true,
             // USED_CHEST: true
-        };
+        }
     }
 
     // swapLineup(oldId, incomingId) {

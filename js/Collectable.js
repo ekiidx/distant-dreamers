@@ -13,9 +13,7 @@ class Collectable extends GameObject {
         this.storyFlag = config.storyFlag;
         this.item = config.item;
 
-        console.log(this.item);
-
-        this.talking = [
+        this.actions = [
             {
                 required: [this.storyFlag],
                 events: [
@@ -24,8 +22,7 @@ class Collectable extends GameObject {
             },
             {
                 events: [
-                    { type: "message", text: "You found a chest!" },
-                    // add action to add item
+                    { type: "message", text: "You found a " + window.Actions[this.item.actionId].name + "." },
                     { type: "getItem", item: this.item },
                     { type: "addStoryFlag", flag: this.storyFlag }
                 ]

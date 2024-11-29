@@ -415,6 +415,10 @@ body {
   font-size: 0.375rem;
   margin-left: 1.25rem;
 }
+.pause-menu .flex-menu .location-name {
+  font-size: 0.375rem;
+  margin-left: 1.25rem;
+}
 .title-screen {
   position: absolute;
   left: 0;

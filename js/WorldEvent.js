@@ -61,7 +61,6 @@ class WorldEvent {
     }
 
     changeMap(resolve) {
-        // console.log(this.event);
         if (this.event.map === 'TestRoom') {
             if(!window.sfx.testRoom.playing() === true) {
                 window.sfx.testRoom.volume(.7).play();
@@ -90,6 +89,8 @@ class WorldEvent {
                 y: this.event.y,
                 direction: this.event.direction,
             });
+            window.playerState.map = [];
+            window.playerState.map.push(this.event.map);
             resolve();
             sceneTransition.fadeOut();
         })

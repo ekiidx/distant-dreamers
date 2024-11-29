@@ -2,6 +2,7 @@ class HudMenu {
     constructor() {
         this.scoreboards = [];
         this.weaponsEquipped = window.playerState.fighters["p1"].weapon;
+        this.mapName = window.WorldMaps[window.playerState.map].name;
     }
 
     update() {
@@ -44,13 +45,15 @@ class HudMenu {
     }
 
     createWeaponHud() {
-        // if (this.weaponHud) {
-        //     this.weaponHud.remove();
-        // }
-        // Create Weapon Hud
         this.weaponHud = document.createElement("span");
         this.weaponHud.classList.add("weapon-name");
         this.weaponHud.innerHTML = window.Weapons[this.weaponsEquipped[0].weaponId].name;
+    }
+
+    createLocationHud() {
+        this.locationHud = document.createElement("span");
+        this.locationHud.classList.add("location-name");
+        this.locationHud.innerHTML = this.mapName;
     }
     
     init(container) {
@@ -59,6 +62,9 @@ class HudMenu {
 
         this.createWeaponHud();
         container.appendChild(this.weaponHud);
+
+        this.createLocationHud();
+        container.appendChild(this.locationHud);
 
         // After battle PlayerStateUpdated is changed
         document.addEventListener("PlayerStateUpdated", () => {

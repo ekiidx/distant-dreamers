@@ -25,6 +25,7 @@ class PlayerState {
             // }
         }
         this.lineup = ["p1"];
+        this.map = [];
         this.items = [
             { actionId: "item_recoverHp", instanceId: "item1" },
             { actionId: "item_recoverHp", instanceId: "item2" },

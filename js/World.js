@@ -107,6 +107,7 @@ class World {
         this.map = new WorldMap(mapConfig);
         this.map.world = this;
         this.map.mountObjects();
+        window.playerState.map = this.save.mapId;
 
         if (heroInitialState) {
             // Remove "ghost wall" that takes up initial hero space when changing maps
@@ -128,7 +129,7 @@ class World {
     
     async init() {
         const container = document.querySelector(".game-container");
-
+        
         // Create new save
         this.save = new Save();
 
@@ -173,7 +174,7 @@ class World {
 
         // Start the main game loop
         this.startGameLoop();
-
+  
     // this.map.startScene([
     // { type: "battle", enemyId: "enemy_1" },                
     // { type: "changeMap", map: "Intro", x: utils.withGrid(4), y: utils.withGrid(10), direction: "up"},

@@ -9,13 +9,13 @@ class Sprite {
         }
 
         // Shadow
-        this.shadow = new Image()
-        this.useShadow = true;
-        if (this.useShadow) {
+        if (config.hasShadow) {
+            this.shadow = new Image();
             this.shadow.src= "assets/img/characters/shadow.png";
-        }
-        this.shadow.onload = () => {
-            this.isShadowLoaded = true;
+
+            this.shadow.onload = () => {
+                this.isShadowLoaded = true;
+            }
         }
 
         // Configure animations and initial state

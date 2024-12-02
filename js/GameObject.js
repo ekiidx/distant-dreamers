@@ -7,13 +7,14 @@ class GameObject {
         this.direction = config.direction || "down";
         this.sprite = new Sprite({
             gameObject: this,
-            src: config.src || "assets/img/characters/hero.png",
+            src: config.src || "",
+            hasShadow: config.hasShadow
         });
 
         // These happen once on map startup
         this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0;
-        this.talking = config.talking || [];
+        this.actions = config.actions || [];
         this.retryTimeout = null;
     }
 

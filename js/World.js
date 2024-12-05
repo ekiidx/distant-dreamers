@@ -85,20 +85,14 @@ class World {
                 }])
             }
         })
-        // new KeyPressListener("Space", () => {
-        //     if (!this.map.isScenePlaying) {
-        //         this.map.startScene([{
-        //             type: "gameOver"
-        //         }])
-        //     }
-        // })
     }
 
     bindHeroPositionCheck() {
         document.addEventListener("WalkingComplete", e => {
             if (e.detail.whoId === "hero") {
                 // Player position has changed
-                this.map.checkForFootstepScene()
+                this.map.checkForFootstepScene() 
+                this.map.checkForBattleScene();
             }
         })
     }
@@ -174,7 +168,7 @@ class World {
 
         // Start the main game loop
         this.startGameLoop();
-  
+
     // this.map.startScene([
     // { type: "battle", enemyId: "enemy_1" },                
     // { type: "changeMap", map: "Intro", x: utils.withGrid(4), y: utils.withGrid(10), direction: "up"},

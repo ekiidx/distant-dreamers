@@ -84,7 +84,7 @@ class Character extends GameObject {
         this[property] += change;
         this.movingProgressRemaining -= 1;
 
-        // we finished movement
+        // we finish movement
         if (this.movingProgressRemaining === 0) {
             this.intentPosition = null;
             utils.emitEvent("WalkingComplete", {

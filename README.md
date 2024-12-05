@@ -10,3 +10,4 @@ Javascript based RPG style game. I was inspired by games like stardew valley and
 - [x] Add Character menu
 - [x] Add Scene Controller
 - [x] Add Equipment & Weapons
+- [x] Add Battle Specific Spaces

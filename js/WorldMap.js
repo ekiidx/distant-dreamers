@@ -3,10 +3,9 @@ class WorldMap {
         this.world = null;
         this.gameObjects = {}; // live objects are in here
         this.configObjects = config.configObjects; // Configuration content
-
         this.openingScenes = config.openingScenes || {};
-
         this.sceneSpaces = config.sceneSpaces || {};
+        this.battleSpaces = config.battleSpaces || {};
         this.walls = config.walls || {};
 
         this.wallImage = new Image();
@@ -124,14 +123,6 @@ class WorldMap {
         // Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
     }
 
-    // async gameOver() {
-    //     console.log("this game over");
-    //     // Show the Game Over screen
-    //     this.gameOver = new GameOver({
-    //     });
-    //     await this.gameOver.init(document.querySelector(".game-container"));
-    // }
-
     // Check if there is action to be taken at a space
     checkForActionScene() {
         const hero = this.gameObjects["hero"]
@@ -160,9 +151,25 @@ class WorldMap {
                     return playerState.storyFlags[sf]
                 })
             })
-
-            if(!relevantSpaceScenario.required) {
+            // if(!relevantSpaceScenario.required) {
                 this.startScene(relevantSpaceScenario.events);
+            // }
+        }
+    }
+
+    checkForBattleScene() {
+        const hero = this.gameObjects["hero"];
+        const match = this.battleSpaces[`${hero.x},${hero.y}`];
+        if (!this.isScenePlaying && match && match[0].actions.length) {
+
+            const relevantBattleScenario = match[0].actions.find(scenario => {
+                return (scenario.required || []).every(sf => {
+                    return playerState.storyFlags[sf]
+                })
+            })
+
+            if(!relevantBattleScenario.required) {
+                this.startScene(relevantBattleScenario.events);
             }
         }
     }
@@ -1131,13 +1138,51 @@ window.WorldMaps = {
                 type: "Character",
                 isPlayerControlled: true,
                 hasShadow: true,
-                peepee: true,
                 x: utils.withGrid(6),
                 y: utils.withGrid(6),
                 src: "assets/img/characters/hero.png",
                 direction: "down"
             },
             npc1: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(4),
+                y: utils.withGrid(5),
+                src: "assets/img/characters/npc1.png",
+                required: ["BATTLE_1_COMPLETE"],
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["BATTLE_2_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "npc1"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "You can see me if you fight npc2",
+                                faceHero: "npc1"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "npc1"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "BATTLE_2_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            npc2: {
                 type: "Character",
                 hasShadow: true,
                 x: utils.withGrid(7),
@@ -1170,14 +1215,14 @@ window.WorldMaps = {
                         events: [{
                             type: "message",
                             text: "Dang, you are strong.",
-                            faceHero: "npc1"
+                            faceHero: "npc2"
                         }]
                     },
                     {
                         events: [{
                                 type: "message",
                                 text: "It's good to meet you.",
-                                faceHero: "npc1"
+                                faceHero: "npc2"
                             },
                             {
                                 type: "message",
@@ -1194,7 +1239,7 @@ window.WorldMaps = {
                             {
                                 type: "message",
                                 text: "Dang, you are strong.",
-                                faceHero: "npc1"
+                                faceHero: "npc2"
                             },
                             {
                                 type: "addStoryFlag",
@@ -1290,8 +1335,8 @@ window.WorldMaps = {
             }],
             [utils.asGridCoord(4, 10)]: [{
                 actions: [{
+                    required: ["BATTLE_1_COMPLETE"],
                     events: [
-                        // {who: "hero", type: "walk", direction: "up"},
                         {
                             type: "changeMap",
                             map: "Room_4",
@@ -1300,6 +1345,17 @@ window.WorldMaps = {
                             direction: "down"
                         }
                     ]
+                },
+                {
+                  events: [
+                    {
+                        type: "changeMap",
+                        map: "Foliage_Room",
+                        x: utils.withGrid(8),
+                        y: utils.withGrid(2),
+                        direction: "down"
+                    }
+                  ]  
                 }]
             }],
         },
@@ -2954,6 +3010,21 @@ window.WorldMaps = {
             [utils.asGridCoord(1, 3)]: true,
         },
         sceneSpaces: {
+            [utils.asGridCoord(15, 6)]: [{
+                actions: [{
+                    events: [
+                        {
+                            type: "changeMap",
+                            map: "Lamp_Room_Dark",
+                            x: utils.withGrid(1),
+                            y: utils.withGrid(7),
+                            direction: "right"
+                        }
+                    ]
+                }]
+            }],
+        },
+        battleSpaces: {
             [utils.asGridCoord(13, 4)]: [{
                 actions: [{
                     required: ["Foliage_Room_BATTLE_1_COMPLETE"],
@@ -3188,20 +3259,6 @@ window.WorldMaps = {
                         {
                             type: "addStoryFlag",
                             flag: "Foliage_Room_BATTLE_7_COMPLETE"
-                        }
-                    ]
-                }]
-            }],
-
-            [utils.asGridCoord(15, 6)]: [{
-                actions: [{
-                    events: [
-                        {
-                            type: "changeMap",
-                            map: "Lamp_Room_Dark",
-                            x: utils.withGrid(1),
-                            y: utils.withGrid(7),
-                            direction: "right"
                         }
                     ]
                 }]

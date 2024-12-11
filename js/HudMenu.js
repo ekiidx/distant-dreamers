@@ -3,6 +3,10 @@ class HudMenu {
         this.scoreboards = [];
         this.weaponsEquipped = window.playerState.fighters["p1"].weapon;
         this.mapName = window.WorldMaps[window.playerState.map].name;
+        this.statusMenu = document.getElementsByClassName("status-menu")[0];
+        this.hudMenu = document.getElementsByClassName("hud-menu")[0];
+        this.weaponMenu = document.getElementsByClassName("weapon-menu")[0];
+        this.locationMenu = document.getElementsByClassName("location-menu")[0];
     }
 
     update() {
@@ -11,10 +15,10 @@ class HudMenu {
         });
     }
 
-    updateWeapon(container) {
-        this.weaponHud.remove();
+    updateWeapon() {
+        this.weaponSpan.remove();
         this.createWeaponHud();
-        container.appendChild(this.weaponHud);
+        this.weaponMenu.appendChild(this.weaponSpan);
     }
 
     createElement() {
@@ -45,26 +49,26 @@ class HudMenu {
     }
 
     createWeaponHud() {
-        this.weaponHud = document.createElement("span");
-        this.weaponHud.classList.add("weapon-name");
-        this.weaponHud.innerHTML = window.Weapons[this.weaponsEquipped[0].weaponId].name;
+        this.weaponSpan = document.createElement("span");
+        this.weaponSpan.classList.add("weapon-name");
+        this.weaponSpan.innerHTML = window.Weapons[this.weaponsEquipped[0].weaponId].name;
     }
 
     createLocationHud() {
-        this.locationHud = document.createElement("span");
-        this.locationHud.classList.add("location-name");
-        this.locationHud.innerHTML = this.mapName;
+        this.locationSpan = document.createElement("span");
+        this.locationSpan.classList.add("location-name");
+        this.locationSpan.innerHTML = this.mapName;
     }
     
     init(container) {
         this.createElement();
-        container.appendChild(this.element);
+        this.hudMenu.appendChild(this.element);
 
         this.createWeaponHud();
-        container.appendChild(this.weaponHud);
+        this.weaponMenu.appendChild(this.weaponSpan);
 
         this.createLocationHud();
-        container.appendChild(this.locationHud);
+        this.locationMenu.appendChild(this.locationSpan);
 
         // After battle PlayerStateUpdated is changed
         document.addEventListener("PlayerStateUpdated", () => {

@@ -238,9 +238,21 @@ class PauseMenu {
         this.element.innerHTML = (`
                 <h2>Menu</h2>
         `);
+
         this.flexMenu = document.createElement("div");
         this.flexMenu.classList.add("flex-menu");
 
+        this.statusMenu = document.createElement("div");
+        this.statusMenu.classList.add("status-menu");
+
+        this.hudMenu = document.createElement("div");
+        this.hudMenu.classList.add("hud-menu");
+
+        this.weaponMenu = document.createElement("div");
+        this.weaponMenu.classList.add("weapon-menu");
+
+        this.locationMenu = document.createElement("div");
+        this.locationMenu.classList.add("location-menu");
     }
 
     close() {
@@ -278,31 +290,40 @@ class PauseMenu {
     weaponSubmit(weaponsInventoryItem) {
         this.weaponsEquipped.splice(0, 1);
         this.weaponsEquipped.push(weaponsInventoryItem);
-        this.hud.updateWeapon(this.node);
+
+        this.hud.updateWeapon(this.weaponSpan);
+        // this.hud.update(this.node);
         this.keyboardMenu.setOptions(this.getOptions("weapons"));
     }
 
     async init(container) {
         this.createElement();
+
         // this attaches pause-menu to the main game container
         container.appendChild(this.element);
+
+        // Attach Flex menu to pause-menu div
         this.element.appendChild(this.flexMenu);
 
         // Creates new keyboard menu instance 
         this.keyboardMenu = new KeyboardMenu({
             descriptionContainer: container
         })
+
         // This is where keyboardMenu attaches to pause-menu
         this.keyboardMenu.init(this.flexMenu);
         this.keyboardMenu.setOptions(this.getOptions("root"));
 
-        this.node = document.createElement("div");
-        this.node.classList.add("status-menu");
-        this.flexMenu.appendChild(this.node);
+        // This attached status menu to flex menu
+        this.flexMenu.appendChild(this.statusMenu);
+
+        this.statusMenu.appendChild(this.hudMenu);
+        this.statusMenu.appendChild(this.weaponMenu);
+        this.statusMenu.appendChild(this.locationMenu);
 
         // Fire the hud
         this.hud = new HudMenu();
-        this.hud.init(this.node);
+        this.hud.init(this.hudMenu);
 
         utils.wait(200);
         this.esc = new KeyPressListener("Escape", () => {

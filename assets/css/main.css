@@ -412,12 +412,20 @@ body {
   color: #2e1250;
 }
 .pause-menu .flex-menu .weapon-name {
+  display: block;
   font-size: 0.375rem;
   margin-left: 1.25rem;
 }
 .pause-menu .flex-menu .location-name {
+  display: block;
   font-size: 0.375rem;
   margin-left: 1.25rem;
+}
+.pause-menu .flex-menu .weapon-menu {
+  height: .5rem;
+}
+.pause-menu .flex-menu .location-menu {
+  height: .5rem;
 }
 .title-screen {
   position: absolute;

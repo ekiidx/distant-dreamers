@@ -74,12 +74,21 @@ class WorldMap {
     }
 
     mountObjects() {
-        Object.keys(this.configObjects).forEach(key => {
+        const characterArray = [];
+        for (const [key, value] of Object.entries(this.configObjects)) {
+            if (!value.required) {
+                characterArray.push(key)
+            }
+        }
+
+        // this key is just the name / id  ("hero")
+        characterArray.forEach(key => {
             // determine object mount
             let object = this.configObjects[key];
             object.id = key;
 
             let instance;
+ 
             if (object.type === "Character") {
                 instance = new Character(object);
             }
@@ -91,7 +100,7 @@ class WorldMap {
             if (object.type === "Actionable") {
                 instance = new Actionable(object);
             }
-            
+
             this.gameObjects[key] = instance;
             this.gameObjects[key].id = key;
             instance.mount(this);

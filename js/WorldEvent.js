@@ -60,21 +60,73 @@ class WorldEvent {
         message.init( document.querySelector(".game-container"));
     }
 
+    alert(resolve) {
+        const alert = document.createElement("div");
+        alert.classList.add("alert");
+
+        if (this.event.direction === "up") {
+            this.dirX = 168;
+            this.dirY = 96;
+        }
+
+        if (this.event.direction === "down") {
+            this.dirX = 168;
+            this.dirY = 64;
+        }
+
+        if (this.event.direction === "left") {
+            this.dirX = 184;
+            this.dirY = 80;
+        }
+
+        if (this.event.direction === "right") {
+            this.dirX = 152;
+            this.dirY = 80;
+        }
+
+        alert.style.setProperty('left', this.dirX + 'px');
+        alert.style.setProperty('top', this.dirY + 'px');
+        document.querySelector(".game-container").appendChild(alert);
+
+        setTimeout(() => { alert.remove(); resolve(); }, 1000);
+    }
+
     changeMap(resolve) {
         if (this.event.map === 'TestRoom') {
             if(!window.sfx.testRoom.playing() === true) {
-                window.sfx.testRoom.volume(.7).play();
+                window.sfx.testRoom.play();
             }
         }
         if (this.event.map === 'TestRoom2') {
             if(!window.sfx.testRoom.playing() === true) {
-                window.sfx.testRoom.volume(.7).play();
+                window.sfx.testRoom.play();
+            }
+        }
+        if (this.event.map === 'Intro') {
+            if(!window.sfx.testRoom.playing() === true) {
+                window.sfx.introRoom.play();
+            }
+        }
+        if (this.event.map === 'Sky_Room') {
+            if(!window.sfx.testRoom.playing() === true) {
+                window.sfx.introRoom.play();
             }
         }
         if (this.event.map === 'Street') {
             if(!window.sfx.testRoom.playing() === true) {
-                window.sfx.testRoom.volume(.7).play();
+                window.sfx.testRoom.play();
             }
+        }
+        if (this.event.map === 'Lamp_Room_Dark') {
+            // if (window.sfx.title.playing() === true) {
+            //     window.sfx.title.stop();
+            // }
+            if(!window.sfx.voxel.playing() === true) {
+                window.sfx.voxel.play();
+            }
+            // if(!window.sfx.testRoom.playing() === true) {
+            //     window.sfx.testRoom.volume(.7).play();
+            // }
         }
 
         // Deactive all objects
@@ -97,7 +149,7 @@ class WorldEvent {
     }
 
     battle(resolve) {
-        window.sfx.testRoom.stop();
+        // window.sfx.stop();
         window.sfx.battle.volume(.7).play();
         const sceneTransition = new SceneTransition();
         sceneTransition.battleTransition(document.querySelector(".game-container"));
@@ -132,14 +184,14 @@ class WorldEvent {
     pause(resolve) {
         this.map.isPaused = true;
 
-        window.sfx.testRoom.volume(.2);
+        window.sfx.pauseOpen.play();
         
         const menu = new PauseMenu({
             save: this.map.world.save,
             onComplete: () => {
                 resolve();
                 this.map.isPaused = false;
-                window.sfx.testRoom.volume(.7);
+                window.sfx.pauseClose.play();
                 this.map.world.startGameLoop();
             }
         });
@@ -149,6 +201,7 @@ class WorldEvent {
     getItem(resolve) {
         const getItem = new GetItem({
             item: this.event.item,
+            weapon: this.event.weapon,
             onComplete: () => resolve()
         })
         // console.log(getItem.item);

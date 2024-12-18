@@ -23,8 +23,9 @@ class TitleScreen {
           handler: () => {
             this.close();
             window.sfx.title.stop();
-            window.sfx.bells.volume(.3).play();
-            window.sfx.whoosh.volume(.4).play();
+            const sceneTransition = new SceneTransition();
+            sceneTransition.init(document.querySelector(".game-container"));
+            setTimeout(sceneTransition.fadeOut(), 1000);
             resolve(saveFile);
           }
         } : null
@@ -33,6 +34,9 @@ class TitleScreen {
     }
   
     createElement() {
+      this.background = document.createElement("div");
+      this.background.classList.add("title-background");
+
       this.element = document.createElement("div");
       this.element.classList.add("title-screen");
       this.element.innerHTML = (`
@@ -47,10 +51,9 @@ class TitleScreen {
     
     init(container) {
       return new Promise(resolve => {
-
         this.createElement();
+        this.element.appendChild(this.background);
         container.appendChild(this.element);
-        window.sfx.title.volume(.8).play();
         this.keyboardMenu = new KeyboardMenu();
         this.keyboardMenu.init(this.element);
         this.keyboardMenu.setOptions(this.getOptions(resolve));

@@ -119,6 +119,12 @@ class World {
         this.save.startingHeroX = this.map.gameObjects.hero.x;
         this.save.startingHeroY = this.map.gameObjects.hero.y;
         this.save.startingHeroDirection = this.map.gameObjects.hero.direction;
+
+        // if (this.save.mapId === 'Lamp_Room_Dark') {
+        //     if(!window.sfx.voxel.playing() === true) {
+        //         window.sfx.voxel.volume(.5).play();
+        //     }
+        // }
     }
     
     async init() {
@@ -127,21 +133,23 @@ class World {
         // Create new save
         this.save = new Save();
 
+        // Show the start screen
+        this.startScreen = new StartScreen({
+            container: container
+        });
+
         // Show the title screen
         this.titleScreen = new TitleScreen({
             save: this.save
-        });
-
-        // Show the new game screen
-        // this.newGameScene = new NewGameScene({
-        // });
+        });  
 
         // Show the Game Over screen
         this.gameOver = new GameOver({
         });
 
+        await this.startScreen.init(container);
         const useSaveFile = await this.titleScreen.init(container);
-        // await this.newGameScene.init(container);
+       
 
         //Potentially load saved data
         let initialHeroState = null;

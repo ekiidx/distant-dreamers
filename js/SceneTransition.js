@@ -10,6 +10,7 @@ class SceneTransition {
 
     fadeOut() {
         this.element.classList.add("fade-out");
+        // animationend is a native method
         this.element.addEventListener("animationend", () => {
             this.element.remove();
         }, { once: true })

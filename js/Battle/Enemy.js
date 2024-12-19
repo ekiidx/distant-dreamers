@@ -112,7 +112,6 @@ class Enemy {
     }
 
     decrementStatus() {
-
         if (this.status?.type === "fear") {
             if (this.status?.expiresIn > 0) {
                 this.status.expiresIn -= 1

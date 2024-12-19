@@ -8,8 +8,8 @@ class PlayerState {
                 xp: 90,
                 maxXp: 100,
                 level: 1,
-                strength: 2,
-                defense: 2,
+                strength: 1,
+                defense: 1,
                 // status: { type: "regen" },
                 status: null,
                 weapon: [{ weaponId: "dagger", instanceId: "weapon1" }],
@@ -33,16 +33,9 @@ class PlayerState {
         ]
         this.weaponsInventory = [
             { weaponId: "dagger", instanceId: "weapon1" },
-            { weaponId: "short_sword", instanceId: "weapon2" }
         ]
-        // this.weaponsEquipped = [ 
-        //     { weaponId: "dagger", instanceId: "weapon1" }
-        // ]
         this.storyFlags = {
-            // "DID_SOMETHING": true,
-            // "DEAFEATED_FIRST_BOSS": true,
-            // TEST_EVENT: true,
-            // USED_CHEST: true
+            // "BATTLE_1_COMPLETE": true,
         }
     }
 

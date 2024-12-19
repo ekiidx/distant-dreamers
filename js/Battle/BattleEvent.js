@@ -59,14 +59,14 @@ class BattleEvent {
                 hp: target.hp - (weaponModifier * defenseModifier)
             })
 
-            console.log(caster.name + " damage base: " + damage);
-            console.log(caster.name + " weapon: " + (window.Weapons[caster.weapon[0].weaponId].damage));
-            console.log(caster.name + " str: " + caster.strength);
-            console.log(target.name + " def: " + target.defense);
-            console.log(caster.name + " weaponModifier: " + weaponModifier);
-            console.log(caster.name + " defenseModifier: " + defenseModifier);
-            console.log(caster.name + " damage total: " + (weaponModifier * defenseModifier));
-            console.log(target.name + " hp: " + target.hp + " / " + target.maxHp);
+            // console.log(caster.name + " damage base: " + damage);
+            // console.log(caster.name + " weapon: " + (window.Weapons[caster.weapon[0].weaponId].damage));
+            // console.log(caster.name + " str: " + caster.strength);
+            // console.log(target.name + " def: " + target.defense);
+            // console.log(caster.name + " weaponModifier: " + weaponModifier);
+            // console.log(caster.name + " defenseModifier: " + defenseModifier);
+            // console.log(caster.name + " damage total: " + (weaponModifier * defenseModifier));
+            // console.log(target.name + " hp: " + target.hp + " / " + target.maxHp);
 
             //start blinking
             target.fighterElement.classList.add("battle-damage-blink");
@@ -132,14 +132,19 @@ class BattleEvent {
                 amount -= 1;
                 combatant.xp += 1;
 
-                // Check if we've hit a level up
+                // Check if there's a level up
                 if (combatant.xp === combatant.maxXp) {
                     combatant.xp = 0;
-                    combatant.maxXp = 100;
                     combatant.level += 1;
+                    combatant.maxXp = 100 * combatant.level;
+                    combatant.maxHp = combatant.maxHp * 1.2;
+                    combatant.strength += 1;
+                    combatant.defense += 1;
+
+                    console.log(combatant);
                 }
 
-                combatant.update();
+                // combatant.update();
                 requestAnimationFrame(step);
                 return;
             }
@@ -164,3 +169,25 @@ class BattleEvent {
         this[this.event.type](resolve);
     }
 }
+
+
+// Level 1     HP: 100     EXP: 0          Str: 2      Def: 2
+// Level 2     HP: 120     EXP: 50         Str: 3      Def: 3
+// Level 3     HP: 150     EXP: 150        Str: 4      Def: 4
+// Level 4     HP: 190     EXP: 300        Str: 5      Def: 5
+// Level 5     HP: 210     EXP:            Str: 6       Def:6
+// Level 6     HP: 270     EXP:            Str:  7      Def:7
+// Level 7     HP: 340     EXP:            Str:  8      Def:8
+// Level 8     HP: 420     EXP: 500        Str:   9     Def:9
+// Level 9     HP: 510     EXP:            Str:   10     Def:10
+// Level 10    HP: 610     EXP:            Str:   11     Def:11
+// Level 11    HP: 720     EXP:            Str:     12   Def:12
+// Level 12    HP: 840     EXP:            Str:   13     Def:13
+// Level 13    HP: 970     EXP:            Str:    14    Def:14
+// Level 14    HP: 1110    EXP:            Str:    15    Def:15
+// Level 15    HP: 1260    EXP:            Str:     16   Def:16
+// Level 16    HP: 1420    EXP:            Str:   17     Def:17
+// Level 17    HP: 1590    EXP:            Str:     18   Def:18
+// Level 18    HP: 1770    EXP:            Str:       19 Def:19
+// Level 19    HP: 1960    EXP:            Str:       20 Def:20
+// Level 20    HP: 2160    EXP:            Str:      21  Def: 21

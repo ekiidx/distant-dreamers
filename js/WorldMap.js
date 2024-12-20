@@ -139,9 +139,19 @@ class WorldMap {
         const match = Object.values(this.gameObjects).find(object => {
             return `${object.x},${object.y}` === `${nextCoords.x},${nextCoords.y}`
         });
-        if (!this.isScenePlaying && match && match.actions.length) {
+        const matchMulti = Object.values(this.gameObjects).find(mm => {
+            return `${mm.matchX},${mm.matchY}` === `${hero.x},${hero.y}`
+        });
 
+        if (!this.isScenePlaying && match && match.actions.length && match.multiSpaceEvent !== true) {
             const relevantScenario = match.actions.find(scenario => {
+                return (scenario.required || []).every(sf => {
+                    return playerState.storyFlags[sf]
+                })
+            })
+            this.startScene(relevantScenario.events);
+        } else if (!this.isScenePlaying && match && match.actions.length && match.multiSpaceEvent && matchMulti) {
+            const relevantScenario = matchMulti.actions.find(scenario => {
                 return (scenario.required || []).every(sf => {
                     return playerState.storyFlags[sf]
                 })
@@ -160,6 +170,7 @@ class WorldMap {
                     return playerState.storyFlags[sf]
                 })
             })
+
             // if(!relevantSpaceScenario.required) {
                 this.startScene(relevantSpaceScenario.events);
             // }
@@ -205,7 +216,7 @@ class WorldMap {
 }
 
 window.WorldMaps = {
-    BlackRoom: {
+    Black_Room: {
         id: "BlackRoom",
         name: "Black Room",
         lowerSrc: "",
@@ -331,8 +342,45 @@ window.WorldMaps = {
         },
         openingScenes: {
             events: [
-                { type: "message",  text: "This is an opening scene." },
-                { type: "addStoryFlag", flag: "BlackRoom_COMPLETE"}
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { type: "message",  text: "Huh? Where am I?" },
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { who: "hero", type: "walk",  direction: "right"},
+                { type: "message",  text: "Nothingness... everywhere..." },
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "walk",  direction: "left"},
+                { who: "hero", type: "stand",  direction: "down"},
+                { type: "message",  text: "I feel so sleepy..." },
+                {
+                    type: "changeMap",
+                    map: "Intro",
+                    x: utils.withGrid(4),
+                    y: utils.withGrid(10),
+                    direction: "down"
+                },
+                { type: "addStoryFlag", flag: "Black_Room_COMPLETE"},
             ]
         }
     },
@@ -1006,10 +1054,15 @@ window.WorldMaps = {
                     }], 
                 }],
             },
-            // collectableItem: new Collectable ({
-            //     x: utils.withGrid(4),
-            //     y: utils.withGrid(10)
-            // }),
+            globe:  {
+                type: "Collectable",
+                src: "assets/img/objects/globe.png",
+                x: utils.withGrid(8),
+                y: utils.withGrid(3),
+                weapon: { weaponId: "short_sword", instanceId: "weapon2" },
+                storyFlag: "Into_sword_COMPLETE",
+                additionalText: "It looks like a normal globe, oh there's something else here."
+            }
         },
         walls: {
             //"16,16": true
@@ -1027,7 +1080,7 @@ window.WorldMaps = {
             [utils.asGridCoord(5, 3)]: true,
             [utils.asGridCoord(6, 3)]: true,
             [utils.asGridCoord(7, 3)]: true,
-            [utils.asGridCoord(8, 3)]: true,
+
             [utils.asGridCoord(9, 4)]: true,
             [utils.asGridCoord(10, 5)]: true,
             [utils.asGridCoord(10, 6)]: true,
@@ -1074,9 +1127,9 @@ window.WorldMaps = {
                         // {who: "hero", type: "walk", direction: "up"},
                         {
                             type: "changeMap",
-                            map: "Room_1",
-                            x: utils.withGrid(8),
-                            y: utils.withGrid(3),
+                            map: "Sky_Room",
+                            x: utils.withGrid(15),
+                            y: utils.withGrid(6),
                             direction: "down"
                         }
                     ]
@@ -1134,6 +1187,154 @@ window.WorldMaps = {
                 { who: "penny", type: "walk",  direction: "right" },
                 { who: "penny", type: "stand",  direction: "up" },
                 { type: "addStoryFlag", flag: "Intro_COMPLETE"}
+            ]
+        }
+    },
+    Sky_Room: {
+        id: "Sky_Room",
+        name: "Sky Room",
+        lowerSrc: "assets/img/maps/sky_room_lower.png",
+        upperSrc: "assets/img/maps/sky_room_upper.png",
+        configObjects: {
+            hero: {
+                type: "Character",
+                isPlayerControlled: true,
+                hasShadow: true,
+                x: utils.withGrid(4),
+                y: utils.withGrid(10),
+                src: "assets/img/characters/hero.png"
+            },
+            mitch: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(15),
+                y: utils.withGrid(13),
+                src: "assets/img/characters/reese.png",
+                behaviorLoop: [{
+                        type: "stand",
+                        direction: "up",
+                        time: 2800
+                    },
+                    {
+                        type: "stand",
+                        direction: "up",
+                        time: 5800
+                    },
+                    {
+                        type: "stand",
+                        direction: "left",
+                        time: 9200
+                    },
+                ],
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "This way is blocked.",
+                        faceHero: "mitch"
+                    }, ]
+                }],
+            },
+            murry: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(18),
+                y: utils.withGrid(10),
+                src: "assets/img/characters/reese.png",
+                behaviorLoop: [{
+                        type: "stand",
+                        direction: "left",
+                        time: 2800
+                    },
+                    {
+                        type: "stand",
+                        direction: "up",
+                        time: 5800
+                    },
+                    {
+                        type: "stand",
+                        direction: "left",
+                        time: 3800
+                    },
+                    {
+                        type: "stand",
+                        direction: "up",
+                        time: 9200
+                    },
+                ],
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "We're securing this area.",
+                        faceHero: "murry"
+                    }, ]
+                }],
+            },
+        },
+        walls: {
+            //"16,16": true
+            [utils.asGridCoord(15, 5)]: true,
+            [utils.asGridCoord(16, 6)]: true,
+            [utils.asGridCoord(16, 7)]: true,
+            [utils.asGridCoord(17, 8)]: true,
+            [utils.asGridCoord(18, 9)]: true,
+            [utils.asGridCoord(19, 9)]: true,
+            [utils.asGridCoord(20, 10)]: true,
+            [utils.asGridCoord(19, 11)]: true,
+            [utils.asGridCoord(18, 11)]: true,
+            [utils.asGridCoord(17, 12)]: true,
+            [utils.asGridCoord(16, 13)]: true,
+            [utils.asGridCoord(16, 14)]: true,
+            [utils.asGridCoord(15, 15)]: true,
+            [utils.asGridCoord(14, 14)]: true,
+            [utils.asGridCoord(14, 13)]: true,
+            [utils.asGridCoord(13, 12)]: true,
+            [utils.asGridCoord(12, 11)]: true,
+            [utils.asGridCoord(11, 11)]: true,
+            [utils.asGridCoord(10, 10)]: true,
+            [utils.asGridCoord(11, 9)]: true,
+            [utils.asGridCoord(12, 9)]: true,
+            [utils.asGridCoord(13, 8)]: true,
+            [utils.asGridCoord(14, 7)]: true,
+            [utils.asGridCoord(14, 6)]: true,
+
+        },
+        sceneSpaces: {
+            [utils.asGridCoord(11, 10)]: [{
+                actions: [{
+                    events: [
+                        // {who: "hero", type: "walk", direction: "up"},
+                        {
+                            type: "changeMap",
+                            map: "Lamp_Room_Light",
+                            x: utils.withGrid(13),
+                            y: utils.withGrid(7),
+                            direction: "left"
+                        }
+                    ]
+                }]
+            }],
+            [utils.asGridCoord(15, 6)]: [{
+                actions: [{
+                    events: [
+                        // {who: "npc1", type: "walk", direction: "up"},
+                        {
+                            type: "changeMap",
+                            map: "Intro",
+                            x: utils.withGrid(4),
+                            y: utils.withGrid(10),
+                            direction: "up"
+                        },
+                    ]
+                }]
+            }]
+        },
+        openingScenes: {
+            events: [
+                { type: "message",  text: "Sky Room" },
+                { type: "addStoryFlag", flag: "Sky_Room_COMPLETE"},
+                { type: "message",  text: "Wow! This room is incredible!" },
+                { type: "message",  text: "It feels like I could be sucked into the sky!" },
+                { type: "message",  text: "Is that a potted plant?" },
             ]
         }
     },
@@ -1762,6 +1963,82 @@ window.WorldMaps = {
                 src: "assets/img/characters/hero.png",
                 direction: "up"
             },
+            lampNorth: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(7),
+                matchY: utils.withGrid(6),
+                direction: "down",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Dark",
+                            x: utils.withGrid(7),
+                            y: utils.withGrid(6),
+                            direction: "down"
+                        }
+                    ]
+                }]
+            },
+            lampEast: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(8),
+                matchY: utils.withGrid(7),
+                direction: "left",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Dark",
+                            x: utils.withGrid(8),
+                            y: utils.withGrid(7),
+                            direction: "left"
+                        }
+                    ]
+                }]
+            },
+            lampSouth: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(7),
+                matchY: utils.withGrid(8),
+                direction: "up",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Dark",
+                            x: utils.withGrid(7),
+                            y: utils.withGrid(8),
+                            direction: "up"
+                        }
+                    ]
+                }]
+            },
+            lampWest: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(6),
+                matchY: utils.withGrid(7),
+                direction: "right",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Dark",
+                            x: utils.withGrid(6),
+                            y: utils.withGrid(7),
+                            direction: "right"
+                        }
+                    ]
+                }]
+            }
         },
         walls: {
             //"16,16": true
@@ -1812,12 +2089,11 @@ window.WorldMaps = {
             [utils.asGridCoord(13, 7)]: [{
                 actions: [{
                     events: [
-                        // {who: "hero", type: "walk", direction: "up"},
                         {
                             type: "changeMap",
-                            map: "Room_1",
-                            x: utils.withGrid(1),
-                            y: utils.withGrid(5),
+                            map: "Sky_Room",
+                            x: utils.withGrid(11),
+                            y: utils.withGrid(10),
                             direction: "right"
                         }
                     ]
@@ -1826,7 +2102,6 @@ window.WorldMaps = {
             [utils.asGridCoord(1, 7)]: [{
                 actions: [{
                     events: [
-                        // {who: "hero", type: "walk", direction: "up"},
                         {
                             type: "changeMap",
                             map: "Foliage_Room",
@@ -1836,7 +2111,7 @@ window.WorldMaps = {
                         }
                     ]
                 }]
-            }]
+            }],
         },
         openingScenes: {
             events: [
@@ -1859,6 +2134,1059 @@ window.WorldMaps = {
                 y: utils.withGrid(10),
                 src: "assets/img/characters/hero.png",
                 direction: "up"
+            },
+            ghost1: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(3),
+                y: utils.withGrid(3),
+                src: "assets/img/characters/ghost.png",
+                // required: ["Lamp_Room_Dark_BATTLE_1_COMPLETE"],
+                direction: "right",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_1_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost1"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost1"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost1"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_1_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost2: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(8),
+                y: utils.withGrid(3),
+                src: "assets/img/characters/ghost.png",
+                direction: "right",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_2_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost2"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost2"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost2"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_2_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost3: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(5),
+                y: utils.withGrid(5),
+                src: "assets/img/characters/ghost.png",
+                direction: "left",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_3_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost3"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost3"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost3"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_3_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost4: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(12),
+                y: utils.withGrid(5),
+                src: "assets/img/characters/ghost.png",
+                direction: "left",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_4_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost4"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost4"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost4"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_4_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost5: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(9),
+                y: utils.withGrid(6),
+                src: "assets/img/characters/ghost.png",
+                direction: "down",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_5_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost5"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost5"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost5"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_5_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost6: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(2),
+                y: utils.withGrid(7),
+                src: "assets/img/characters/ghost.png",
+                direction: "right",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_6_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost6"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost6"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost6"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_6_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost7: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(11),
+                y: utils.withGrid(7),
+                src: "assets/img/characters/ghost.png",
+                direction: "up",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_7_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost7"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost7"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost7"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_7_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost8: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(4),
+                y: utils.withGrid(8),
+                src: "assets/img/characters/ghost.png",
+                direction: "left",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_8_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost8"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost8"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost8"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_8_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost9: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(2),
+                y: utils.withGrid(9),
+                src: "assets/img/characters/ghost.png",
+                direction: "right",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_9_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost9"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost9"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost9"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_9_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost10: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(4),
+                y: utils.withGrid(10),
+                src: "assets/img/characters/ghost.png",
+                direction: "up",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_10_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost10"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost10"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost10"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_10_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost11: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(3),
+                y: utils.withGrid(11),
+                src: "assets/img/characters/ghost.png",
+                direction: "down",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_11_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost11"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost11"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost11"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_11_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            ghost12: {
+                type: "Character",
+                hasShadow: true,
+                x: utils.withGrid(10),
+                y: utils.withGrid(11),
+                src: "assets/img/characters/ghost.png",
+                direction: "down",
+                actions: [{
+                        // use array to add multiple events that need to be completed in order for trigger
+                        required: ["Lamp_Room_Dark_BATTLE_12_COMPLETE"],
+                        events: [{
+                            type: "message",
+                            text: "Dang.",
+                            faceHero: "ghost12"
+                        }]
+                    },
+                    {
+                        events: [{
+                                type: "message",
+                                text: "Boo!",
+                                faceHero: "ghost12"
+                            },
+                            {
+                                type: "battle",
+                                enemyId: "enemy_1"
+                            },
+                            {
+                                type: "message",
+                                text: "Dang.",
+                                faceHero: "ghost12"
+                            },
+                            {
+                                type: "addStoryFlag",
+                                flag: "Lamp_Room_Dark_BATTLE_12_COMPLETE"
+                            }
+                        ]
+                    }
+                ]
+            },
+            lampNorth: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(7),
+                matchY: utils.withGrid(6),
+                direction: "down",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Light",
+                            x: utils.withGrid(7),
+                            y: utils.withGrid(6),
+                            direction: "down"
+                        }
+                    ]
+                }]
+            },
+            lampEast: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(8),
+                matchY: utils.withGrid(7),
+                direction: "left",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Light",
+                            x: utils.withGrid(8),
+                            y: utils.withGrid(7),
+                            direction: "left"
+                        }
+                    ]
+                }]
+            },
+            lampSouth: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(7),
+                matchY: utils.withGrid(8),
+                direction: "up",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Light",
+                            x: utils.withGrid(7),
+                            y: utils.withGrid(8),
+                            direction: "up"
+                        }
+                    ]
+                }]
+            },
+            lampWest: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(7),
+                matchX: utils.withGrid(6),
+                matchY: utils.withGrid(7),
+                direction: "right",
+                multiSpaceEvent: true,
+                actions: [{
+                    events: [{
+                        type: "changeMap",
+                            map: "Lamp_Room_Light",
+                            x: utils.withGrid(6),
+                            y: utils.withGrid(7),
+                            direction: "right"
+                        }
+                    ]
+                }]
+            },
+            web1: {
+                type: "Actionable",
+                x: utils.withGrid(8),
+                y: utils.withGrid(2),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web2: {
+                type: "Actionable",
+                x: utils.withGrid(5),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web3: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web4: {
+                type: "Actionable",
+                x: utils.withGrid(6),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web5: {
+                type: "Actionable",
+                x: utils.withGrid(13),
+                y: utils.withGrid(7),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web6: {
+                type: "Actionable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(10),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web7: {
+                type: "Actionable",
+                x: utils.withGrid(3),
+                y: utils.withGrid(10),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            web8: {
+                type: "Actionable",
+                x: utils.withGrid(11),
+                y: utils.withGrid(12),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Spider webs are gross!",
+                    }, ]
+                }],
+            },
+            pumpkin1: {
+                type: "Actionable",
+                x: utils.withGrid(10),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin2: {
+                type: "Actionable",
+                x: utils.withGrid(11),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin3: {
+                type: "Actionable",
+                x: utils.withGrid(12),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin4: {
+                type: "Actionable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin5: {
+                type: "Actionable",
+                x: utils.withGrid(8),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin6: {
+                type: "Actionable",
+                x: utils.withGrid(10),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin7: {
+                type: "Actionable",
+                x: utils.withGrid(8),
+                y: utils.withGrid(8),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin8: {
+                type: "Actionable",
+                x: utils.withGrid(6),
+                y: utils.withGrid(9),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin9: {
+                type: "Actionable",
+                x: utils.withGrid(9),
+                y: utils.withGrid(9),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            pumpkin10: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "It's a creepy pumpkin.",
+                    }, ]
+                }],
+            },
+            grave1: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(3),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave2: {
+                type: "Actionable",
+                x: utils.withGrid(3),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave3: {
+                type: "Actionable",
+                x: utils.withGrid(8),
+                y: utils.withGrid(4),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave4: {
+                type: "Actionable",
+                x: utils.withGrid(8),
+                y: utils.withGrid(5),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave5: {
+                type: "Actionable",
+                x: utils.withGrid(3),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave6: {
+                type: "Actionable",
+                x: utils.withGrid(4),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave7: {
+                type: "Actionable",
+                x: utils.withGrid(5),
+                y: utils.withGrid(6),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave8: {
+                type: "Actionable",
+                x: utils.withGrid(10),
+                y: utils.withGrid(7),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave9: {
+                type: "Actionable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(8),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave10: {
+                type: "Actionable",
+                x: utils.withGrid(5),
+                y: utils.withGrid(8),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave11: {
+                type: "Actionable",
+                x: utils.withGrid(6),
+                y: utils.withGrid(8),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave12: {
+                type: "Actionable",
+                x: utils.withGrid(10),
+                y: utils.withGrid(9),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave13: {
+                type: "Actionable",
+                x: utils.withGrid(11),
+                y: utils.withGrid(9),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave14: {
+                type: "Actionable",
+                x: utils.withGrid(12),
+                y: utils.withGrid(9),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave15: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(10),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave16: {
+                type: "Actionable",
+                x: utils.withGrid(9),
+                y: utils.withGrid(10),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave17: {
+                type: "Actionable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave18: {
+                type: "Actionable",
+                x: utils.withGrid(4),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave19: {
+                type: "Actionable",
+                x: utils.withGrid(5),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave20: {
+                type: "Actionable",
+                x: utils.withGrid(9),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave21: {
+                type: "Actionable",
+                x: utils.withGrid(11),
+                y: utils.withGrid(11),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            grave22: {
+                type: "Actionable",
+                x: utils.withGrid(7),
+                y: utils.withGrid(12),
+                // src: "",
+                actions: [{
+                    events: [{
+                        type: "message",
+                        text: "Here lies ...",
+                    }, ]
+                }],
+            },
+            chest99: {
+                type: "Collectable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(3),
+                item: { actionId: "item_recoverHp", instanceId: "item400" },
+                storyFlag: "Lamp_Room_Dark_Chest1_COMPLETE"
+            },
+            chest100: {
+                type: "Collectable",
+                x: utils.withGrid(12),
+                y: utils.withGrid(3),
+                item: { actionId: "item_recoverHp", instanceId: "item401" },
+                storyFlag: "Lamp_Room_Dark_Chest2_COMPLETE"
+            },
+            chest101: {
+                type: "Collectable",
+                x: utils.withGrid(2),
+                y: utils.withGrid(12),
+                item: { actionId: "item_recoverHp", instanceId: "item402" },
+                storyFlag: "Lamp_Room_Dark_Chest3_COMPLETE"
+            },
+            chest102: {
+                type: "Collectable",
+                x: utils.withGrid(12),
+                y: utils.withGrid(12),
+                item: { actionId: "item_recoverHp", instanceId: "item403" },
+                storyFlag: "Lamp_Room_Dark_Chest4_COMPLETE"
             },
         },
         walls: {
@@ -2396,37 +3724,6 @@ window.WorldMaps = {
                 y: utils.withGrid(3),
                 src: "assets/img/characters/chad.png",
                 direction: "down",
-                actions: [{
-                    // use array to add multiple events that need to be completed in order for trigger
-                    required: ["Foliage_Room_BATTLE_1_COMPLETE"],
-                    events: [{
-                        type: "message",
-                        text: "I need to water some more plants.",
-                        faceHero: "npc1"
-                    }]
-                },
-                {
-                    events: [{
-                            type: "message",
-                            text: "Help I'm lost!",
-                            faceHero: "npc1"
-                        },
-                        {
-                            type: "battle",
-                            enemyId: "enemy_1"
-                        },
-                        {
-                            type: "message",
-                            text: "I need to water some more plants.",
-                            faceHero: "npc1"
-                        },
-                        {
-                            type: "addStoryFlag",
-                            flag: "Foliage_Room_BATTLE_1_COMPLETE"
-                        }
-                    ]
-                }
-            ]
             },
             npc2: {
                 type: "Character",
@@ -3024,7 +4321,7 @@ window.WorldMaps = {
                     events: [
                         {
                             type: "changeMap",
-                            map: "Lamp_Room_Dark",
+                            map: "Lamp_Room_Light",
                             x: utils.withGrid(1),
                             y: utils.withGrid(7),
                             direction: "right"
@@ -3047,6 +4344,10 @@ window.WorldMaps = {
                 },
                 {
                     events: [
+                        {
+                            type: "alert",
+                            direction: "down"
+                        },
                         {
                             type: "message",
                             text: "Help I'm lost!",
@@ -3082,6 +4383,10 @@ window.WorldMaps = {
                 {
                     events: [
                         {
+                            type: "alert",
+                            direction: "down"
+                        },
+                        {
                             type: "message",
                             text: "Who are you?",
                             // faceHero: "n"
@@ -3115,6 +4420,10 @@ window.WorldMaps = {
                 },
                 {
                     events: [
+                        {
+                            type: "alert",
+                            direction: "right"
+                        },
                         {
                             type: "message",
                             text: "Doesn't this room smell nice?",
@@ -3150,6 +4459,10 @@ window.WorldMaps = {
                 {
                     events: [
                         {
+                            type: "alert",
+                            direction: "right"
+                        },
+                        {
                             type: "message",
                             text: "I'm the last one.",
                             // faceHero: "n"
@@ -3183,6 +4496,10 @@ window.WorldMaps = {
                 },
                 {
                     events: [
+                        {
+                            type: "alert",
+                            direction: "left"
+                        },
                         {
                             type: "message",
                             text: "I love the color green.",
@@ -3218,6 +4535,10 @@ window.WorldMaps = {
                 {
                     events: [
                         {
+                            type: "alert",
+                            direction: "right"
+                        },
+                        {
                             type: "message",
                             text: "This is my favorite room.",
                             // faceHero: "n"
@@ -3238,7 +4559,7 @@ window.WorldMaps = {
                     ]
                 }]
             }],
-            [utils.asGridCoord(12, 10)]: [{
+            [utils.asGridCoord(12, 9)]: [{
                 actions: [{
                     required: ["Foliage_Room_BATTLE_7_COMPLETE"],
                     events: [
@@ -3251,6 +4572,10 @@ window.WorldMaps = {
                 },
                 {
                     events: [
+                        {
+                            type: "alert",
+                            direction: "up"
+                        },
                         {
                             type: "message",
                             text: "This plant needs some water.",

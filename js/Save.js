@@ -17,6 +17,7 @@ class Save {
           fighters: playerState.fighters,
           lineup: playerState.lineup,
           items: playerState.items,
+          weaponsInventory: playerState.weaponsInventory,
           storyFlags: playerState.storyFlags
         }
       }))

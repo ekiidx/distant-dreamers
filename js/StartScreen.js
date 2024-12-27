@@ -10,7 +10,7 @@ class StartScreen {
           description: "",
           handler: () => {
             this.close();
-            window.sfx.title.volume(.7).play();
+            window.sfx.title.play();
             // resolve();
             this.logoScreen(resolve);
           }
@@ -23,8 +23,7 @@ class StartScreen {
       this.logoScreen.classList.add("logo-screen");
       this.container.appendChild(this.logoScreen);
       this.logoScreen.innerHTML = (`
-        <img class="lore-games-logo" src="/assets/img/lore-games-logo.png" alt="Lore Games" />
-        <!-- <p class="copyright">Lore Games 2025</p> -->
+        <img class="lore-games-logo" src="assets/img/lore-games-logo.png" alt="Lore Games" />
       `)
       
       setTimeout(() => {
@@ -34,8 +33,6 @@ class StartScreen {
     }
 
     secondScreen(resolve) {
-      console.log("second screen");
-
       setTimeout(() => resolve(), 2000);
     }
 

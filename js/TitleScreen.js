@@ -12,8 +12,8 @@ class TitleScreen {
           handler: () => {
             this.close();
             window.sfx.title.stop();
-            window.sfx.bells.volume(.3).play();
-            window.sfx.whoosh.volume(.4).play();
+            window.sfx.bells.play();
+            window.sfx.whoosh.play();
             resolve();
           }
         },
@@ -22,7 +22,36 @@ class TitleScreen {
           description: "",
           handler: () => {
             this.close();
+
             window.sfx.title.stop();
+            window.sfx.bells.play();
+            window.sfx.whoosh.play();
+
+            // Intro Rooom
+            if (saveFile.mapId === 'Intro') {
+              setTimeout(() => {
+                  window.sfx.introRoom.play();
+              }, 1000);
+            }
+            // Sky Room
+            if (saveFile.mapId === 'Sky_Room') {
+                setTimeout(() => {
+                    window.sfx.skyRoom.play();
+                }, 1000);
+            }
+            // Lamp Room
+            if (saveFile.mapId === 'Lamp_Room_Dark') {
+                setTimeout(() => {
+                    window.sfx.voxel.play();
+                }, 1000);
+            }
+            // Foliage Room
+            if (saveFile.mapId === 'Foliage_Room') {
+                setTimeout(() => {
+                    window.sfx.foliageRoom.play();
+                }, 1000);
+            }
+        
             const sceneTransition = new SceneTransition();
             sceneTransition.init(document.querySelector(".game-container"));
             setTimeout(sceneTransition.fadeOut(), 1000);
@@ -41,6 +70,8 @@ class TitleScreen {
       this.element.classList.add("title-screen");
       this.element.innerHTML = (`
         <img class="title-screen-logo" src="assets/img/distant-dreamers-logo.png" alt="Distant Dreamers" />
+
+        <span class="copyright">© 2025 LORE Games v1.0</span>
       `)
     }
   

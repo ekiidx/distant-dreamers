@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'Pixelon';
-    src: url('/assets/fonts/Pixelon.eot');
-    src: url('/assets/fonts/Pixelon.eot?#iefix') format('embedded-opentype'),
-         url('/assets/fonts/Pixelon.woff2') format('woff2'),
-         url('/assets/fonts/Pixelon.woff') format('woff'),
-         url('/assets/fonts/Pixelon.ttf')  format('truetype'),
-         url('/assets/fonts/Pixelon.svg#Pixelon') format('svg');
+    src: url('../../assets/fonts/Pixelon.eot');
+    src: url('../../assets/fonts/Pixelon.eot?#iefix') format('embedded-opentype'),
+         url('../../assets/fonts/Pixelon.woff2') format('woff2'),
+         url('../../assets/fonts/Pixelon.woff') format('woff'),
+         url('../../assets/fonts/Pixelon.ttf')  format('truetype'),
+         url('../../assets/fonts/Pixelon.svg#Pixelon') format('svg');
 }

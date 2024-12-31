@@ -1,6 +1,12 @@
 class GetItem {
-    constructor({ item, onComplete }) {
-        this.item = item;
+    constructor({ item, weapon, onComplete }) {
+        if (item) {
+            this.item = item || null;
+        }
+
+        if (weapon) {
+            this.weapon = weapon || null;
+        }
         this.onComplete = onComplete;
     }
 
@@ -9,7 +15,14 @@ class GetItem {
     }
 
     init() {
-        window.playerState.items.push(this.item);
+        if (this.item) {
+            window.playerState.items.push(this.item);
+        }
+
+        if (this.weapon) {
+            window.playerState.weaponsInventory.push(this.weapon);
+        }
+       
         this.done();
     }
 }

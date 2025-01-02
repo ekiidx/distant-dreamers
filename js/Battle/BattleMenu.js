@@ -33,7 +33,8 @@ class BattleMenu {
             label: "Go Back",
             description: "Go back to previous screen.",
             handler: () => {
-                this.keyboardMenu.setOptions(this.getScreens().root)
+                this.keyboardMenu.setOptions(this.getScreens().root);
+                window.sfx.select.play();
             }
         };
 
@@ -43,7 +44,8 @@ class BattleMenu {
                     description: "Choose an attack",
                     handler: () => {
                         // Go to attack
-                        this.keyboardMenu.setOptions(this.getScreens().attacks)
+                        this.keyboardMenu.setOptions(this.getScreens().attacks);
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -52,7 +54,8 @@ class BattleMenu {
                     disabled: false,
                     handler: () => {
                         // Go to items
-                        this.keyboardMenu.setOptions(this.getScreens().items)
+                        this.keyboardMenu.setOptions(this.getScreens().items);
+                        window.sfx.select.play();
                     }
                 },
             ],
@@ -63,7 +66,8 @@ class BattleMenu {
                         label: action.name,
                         description: action.description,
                         handler: () => {
-                            this.menuSubmit(action)
+                            this.menuSubmit(action);
+                            window.sfx.select.play();
                         }
                     }
                 }),
@@ -79,7 +83,8 @@ class BattleMenu {
                             return "x" + item.quantity;
                         },
                         handler: () => {
-                            this.menuSubmit(action, item.instanceId)
+                            this.menuSubmit(action, item.instanceId);
+                            window.sfx.select.play();
                         }
                     }
                 }),
@@ -89,9 +94,8 @@ class BattleMenu {
     }
 
     menuSubmit(action, instanceId = null) {
-
         this.keyboardMenu?.end();
-
+     
         this.onComplete({
             action,
             target: action.targetType === "friendly" ? this.caster : this.enemy,

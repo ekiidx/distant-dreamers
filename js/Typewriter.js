@@ -15,6 +15,9 @@ class Typewriter {
         if (list.length > 0) {
             this.timeout = setTimeout(() => {
                 this.revealOneCharacter(list)
+                if (list.length % 2 === 0) {
+                    window.sfx.typewriter.play();
+                }
             }, next.delayAfter)
         } else {
             this.IsDone = true;

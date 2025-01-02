@@ -24,7 +24,6 @@ class TurnCycle {
         })
 
         if (submission.instanceId) {
-
             // Add to list to persist player state later
             this.battle.usedInstanceIds[submission.instanceId] = true;
             // Remove item from battle state
@@ -51,19 +50,14 @@ class TurnCycle {
                 type: "textMessage",
                 text: `${submission.target.name} is defeated!`
             })
-
             window.sfx.battle.stop();
 
             if (submission.target.team === "player") {
-                window.sfx.gameOver.volume(.8).play();
+                window.sfx.gameOver.play();
             }
 
             if (submission.target.team === "enemy") {
-
-                window.sfx.winner.volume(.7).play();
-                window.sfx.winner.on('end', function(){
-                    window.sfx.testRoom.volume(.7).play();
-                });
+                window.sfx.winner.play();
 
                 const playerActiveId = this.battle.activeCombatants.player;
                 const xp = submission.target.givesXp;
@@ -110,7 +104,6 @@ class TurnCycle {
         }
 
         // We have dead player, but still no winner
-
         // Check for post events
         // do things after the original turn submission
         const postEvents = caster.getPostEvents();

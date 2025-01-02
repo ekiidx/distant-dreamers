@@ -16,6 +16,7 @@ class PauseMenu {
                     description: "Check Status.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("status") )
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -23,6 +24,7 @@ class PauseMenu {
                     description: "Check inventory.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("items") )
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -30,6 +32,7 @@ class PauseMenu {
                     description: "Weapon inventory.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("weapons") )
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -37,6 +40,7 @@ class PauseMenu {
                     description: "Save your game.",
                     handler: () => {
                         this.save.save();
+                        window.sfx.bells.play();
                         this.close();
                     }
                 },
@@ -77,7 +81,7 @@ class PauseMenu {
                             return "x" + item.quantity;
                         },
                         handler: () => {
-                            this.menuSubmit(action, item.instanceId)
+                            this.menuSubmit(action, item.instanceId);
                         }
                     }
                 }),
@@ -86,6 +90,7 @@ class PauseMenu {
                     description: "Go Back.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("root") );
+                        window.sfx.select.play();
                     }
                 }
             ]
@@ -116,6 +121,7 @@ class PauseMenu {
                     description: "Go Back.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("root") );
+                        window.sfx.select.play();
                     }
                 }
             ]
@@ -142,6 +148,7 @@ class PauseMenu {
                     description: "Go Back.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("root") );
+                        window.sfx.select.play();
                     }
                 }
             ]
@@ -155,6 +162,7 @@ class PauseMenu {
                     description: "Player Level",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -162,6 +170,7 @@ class PauseMenu {
                     description: "Player Health",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -169,6 +178,7 @@ class PauseMenu {
                     description: "Player Experience",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -176,6 +186,7 @@ class PauseMenu {
                     description: "Player Strength",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -183,6 +194,7 @@ class PauseMenu {
                     description: "Player Defense",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("Vash") );
+                        window.sfx.select.play();
                     }
                 },
                 {
@@ -190,6 +202,7 @@ class PauseMenu {
                     description: "Go Back.",
                     handler: () => {
                         this.keyboardMenu.setOptions( this.getOptions("root") );
+                        window.sfx.select.play();
                     }
                 }
             ]
@@ -235,9 +248,9 @@ class PauseMenu {
     createElement() {
         this.element = document.createElement("div");
         this.element.classList.add("pause-menu");
-        this.element.innerHTML = (`
-                <h2>Menu</h2>
-        `);
+        // this.element.innerHTML = (`
+        //         <h2>Menu</h2>
+        // `);
 
         this.flexMenu = document.createElement("div");
         this.flexMenu.classList.add("flex-menu");
@@ -264,6 +277,7 @@ class PauseMenu {
     }
 
     menuSubmit(action, instanceId = null) {
+        window.sfx.button.play();
         let character = playerState.fighters["p1"];
         let characterHp = character["hp"];
 
@@ -294,6 +308,7 @@ class PauseMenu {
         this.hud.updateWeapon(this.weaponSpan);
         // this.hud.update(this.node);
         this.keyboardMenu.setOptions(this.getOptions("weapons"));
+        window.sfx.weapon_equip.play();
     }
 
     async init(container) {

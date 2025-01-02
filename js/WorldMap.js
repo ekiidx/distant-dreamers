@@ -124,6 +124,32 @@ class WorldMap {
                 // gameOver();
                 break;
             }
+            if (result === "BATTLE_WIN") {
+                 // Intro Rooom
+                 if (this.world.save.mapId === 'Intro') {
+                    setTimeout(() => {
+                        window.sfx.introRoom.play();
+                    }, 1000);
+                }
+                // Sky Room
+                if (this.world.save.mapId === 'Sky_Room') {
+                    setTimeout(() => {
+                        window.sfx.skyRoom.play();
+                    }, 1000);
+                }
+                // Lamp Room
+                if (this.world.save.mapId === 'Lamp_Room_Dark') {
+                    setTimeout(() => {
+                        window.sfx.voxel.play();
+                    }, 1000);
+                }
+                // Foliage Room
+                if (this.world.save.mapId === 'Foliage_Room') {
+                    setTimeout(() => {
+                        window.sfx.foliageRoom.play();
+                    }, 1000);
+                }
+            }
         }
         // when all events have played, set to false to continue on with the game
         this.isScenePlaying = false;
@@ -346,7 +372,7 @@ window.WorldMaps = {
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "stand",  direction: "down"},
-                { type: "message",  text: "Huh? Where am I?" },
+                { type: "message",  text: "Huh? Where am I?"},
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "stand",  direction: "down"},
@@ -358,7 +384,7 @@ window.WorldMaps = {
                 { who: "hero", type: "walk",  direction: "right"},
                 { who: "hero", type: "walk",  direction: "right"},
                 { who: "hero", type: "walk",  direction: "right"},
-                { type: "message",  text: "Nothingness... everywhere..." },
+                { type: "message",  text: "Nothingness... everywhere?"},
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "stand",  direction: "down"},
                 { who: "hero", type: "walk",  direction: "left"},
@@ -372,7 +398,7 @@ window.WorldMaps = {
                 { who: "hero", type: "walk",  direction: "left"},
                 { who: "hero", type: "walk",  direction: "left"},
                 { who: "hero", type: "stand",  direction: "down"},
-                { type: "message",  text: "I feel so sleepy..." },
+                { type: "message",  text: "I feel so sleepy..."},
                 {
                     type: "changeMap",
                     map: "Intro",
@@ -866,13 +892,14 @@ window.WorldMaps = {
             //         {
                         events: [{
                                 type: "message",
-                                text: "It's good to meet you.",
+                                text: "Please use the left path through this door and collect the [astral compass] and bring it here.",
                                 faceHero: "penny"
                             },
-            //                 {
-            //                     type: "message",
-            //                     text: "You can press 'Enter' to talk to others like me."
-            //                 },
+                            {
+                                type: "message",
+                                text: "I will reward you handsomely for your troubles, distant dreamer.",
+                                faceHero: "penny"
+                            },
             //                 {
             //                     type: "message",
             //                     text: "Some of us will even battle you!"
@@ -1139,7 +1166,7 @@ window.WorldMaps = {
         openingScenes: {
             events: [
                 { who: "penny", type: "message",  text: "Next!" },
-                { who: "penny", type: "message",  text: "I said NEXT!" },
+                { who: "penny", type: "message",  text: "I said NEXT!"},
                 { who: "penny", type: "message",  text: "Hey you!" },
                 { who: "penny", type: "message",  text: "Yeah you! Please approach my desk." },
                 { who: "hero", type: "walk",  direction: "up"},
@@ -1156,7 +1183,9 @@ window.WorldMaps = {
                 { who: "reese2", type: "walk",  direction: "right" },
                 { who: "reese2", type: "stand",  direction: "up" },
 
-                { who: "penny", type: "message",  text: "I have a task for you." },
+                { who: "penny", type: "message",  text: "Welcome to the dream world!" },
+                { who: "penny", type: "message",  text: "I have summoned you to complete a task only you can do." },
+                { who: "penny", type: "message",  text: "I need you to collect a [special item] that only you can find." },
                 { who: "penny", type: "message",  text: "Please follow me." },
 
                 { who: "penny", type: "walk",  direction: "up" },
@@ -1305,9 +1334,9 @@ window.WorldMaps = {
                         // {who: "hero", type: "walk", direction: "up"},
                         {
                             type: "changeMap",
-                            map: "Lamp_Room_Light",
-                            x: utils.withGrid(13),
-                            y: utils.withGrid(7),
+                            map: "Foliage_Room",
+                            x: utils.withGrid(15),
+                            y: utils.withGrid(6),
                             direction: "left"
                         }
                     ]
@@ -1320,8 +1349,8 @@ window.WorldMaps = {
                         {
                             type: "changeMap",
                             map: "Intro",
-                            x: utils.withGrid(4),
-                            y: utils.withGrid(10),
+                            x: utils.withGrid(5),
+                            y: utils.withGrid(16),
                             direction: "up"
                         },
                     ]
@@ -4321,9 +4350,9 @@ window.WorldMaps = {
                     events: [
                         {
                             type: "changeMap",
-                            map: "Lamp_Room_Light",
-                            x: utils.withGrid(1),
-                            y: utils.withGrid(7),
+                            map: "Sky_Room",
+                            x: utils.withGrid(11),
+                            y: utils.withGrid(10),
                             direction: "right"
                         }
                     ]

@@ -48,7 +48,7 @@ class KeyboardMenu {
         // Battle description box
         this.descriptionElement = document.createElement("div");
         this.descriptionElement.classList.add("description-box");
-        this.descriptionElement.innerHTML = (`<p>This is where info about the game will be</p>`);
+        this.descriptionElement.innerHTML = (`<p></p>`);
         this.descriptionElementText = this.descriptionElement.querySelector("p");
     }
 
@@ -73,6 +73,7 @@ class KeyboardMenu {
                 return el.dataset.button < current && !el.disabled;
             })
             prevButton?.focus();
+            window.sfx.select.play();
         })
         this.down = new KeyPressListener("ArrowDown", () => {
             const current = Number(this.prevFocus.getAttribute("data-button"));
@@ -81,6 +82,7 @@ class KeyboardMenu {
 
             })
             nextButton?.focus();
+            window.sfx.select.play();
         })
     }
 }

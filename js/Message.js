@@ -35,6 +35,7 @@ class Message {
     done() {
         // If typwriterText is done remove and unbind element
         if (this.typewriterText.isDone) {
+            window.sfx.typewriterConfirm.play();
             this.element.remove();
             this.actionListener.unbind();
             this.onComplete();

@@ -4,56 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distant Dreamers</title>
-    <link rel="stylesheet" href="assets/css/Pixelon.css?=v1.0.3">
-    <link rel="stylesheet" href="assets/css/main.css?=v1.0.3" type="text/css">
+    
+    <link rel="preload" as="style" href="assets/css/Pixelon.css?=v1.0.4">
+    <link rel="preload" as="style" href="assets/css/main.css?=v1.0.4" type="text/css">
+    <link rel="preload" as="image" href="assets/img/lore-games-logo.png">
+    <link rel="preload" as="image" href="assets/img/distant-dreamers-logo.png">
+    <link rel="preload" as="image" href="assets/img/title-background.png">
+
+    <link rel="preload" as="image" href="assets/img/characters/hero.png">
+    <link rel="preload" as="image" href="assets/img/characters/penny.png">
+    <link rel="preload" as="image" href="assets/img/characters/alexander.png">
+    <link rel="preload" as="image" href="assets/img/characters/chad.png">
+    <link rel="preload" as="image" href="assets/img/characters/ghost.png">
+    <link rel="preload" as="image" href="assets/img/characters/lucy.png">
+    <link rel="preload" as="image" href="assets/img/characters/paisley.png">
+    <link rel="preload" as="image" href="assets/img/characters/reese.png">
+    <link rel="preload" as="image" href="assets/img/characters/shadow.png">
+
+    <link rel="preload" as="image" href="assets/img/maps/intro_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/intro_upper.png">
+    <link rel="preload" as="image" href="assets/img/maps/sky_room_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/sky_room_upper.png">
+    <link rel="preload" as="image" href="assets/img/maps/foliage_room_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/foliage_room_upper.png">
+    <link rel="preload" as="image" href="assets/img/maps/lamp_room_light_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/lamp_room_light_upper.png">
+    <link rel="preload" as="image" href="assets/img/maps/lamp_room_dark_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/lamp_room_dark_upper.png">
+    <link rel="preload" as="image" href="assets/img/maps/battle_room.png">
+    <link rel="preload" as="image" href="assets/img/maps/library_room_lower.png">
+    <link rel="preload" as="image" href="assets/img/maps/library_room_upper.png">
+
+    <link rel="preload" as="image" href="assets/img/objects/chest.png">
+    <link rel="preload" as="image" href="assets/img/objects/globe.png">
+    <link rel="preload" as="image" href="assets/img/objects/potted-plant.png">
+
+    <link rel="preload" as="image" href="assets/img/ui/enemy-plate.png">
+    <link rel="preload" as="image" href="assets/img/ui/explamation-mark.png">
+
+    <link rel="stylesheet" href="assets/css/Pixelon.css?=v1.0.4">
+    <link rel="stylesheet" href="assets/css/main.css?=v1.0.4" type="text/css">
 </head>
 <body>
     <div class="game-container">
         <canvas class="game-canvas" width="352" height="198"></canvas>
     </div>
 
-    <script src="js/Content/actions.js?=v1.0.3"></script>
-    <script src="js/Content/fighters.js?=v1.0.3"></script>
-    <script src="js/Content/enemies.js?=v1.0.3"></script>
-    <script src="js/Content/weapons.js?=v1.0.3"></script>
+    <script src="js/Content/actions.js?=v1.0.4"></script>
+    <script src="js/Content/fighters.js?=v1.0.4"></script>
+    <script src="js/Content/enemies.js?=v1.0.4"></script>
+    <script src="js/Content/weapons.js?=v1.0.4"></script>
 
-    <script src="js/State/PlayerState.js?=v1.0.3"></script>
+    <script src="js/State/PlayerState.js?=v1.0.4"></script>
 
-    <script src="js/utils.js?=v1.0.3"></script>
-    <script src="js/PlayerInput.js?=v1.0.3"></script>
-    <script src="js/World.js?=v1.0.3"></script>
-    <script src="js/GameObject.js?=v1.0.3"></script>
-    <script src="js/Character.js?=v1.0.3"></script>
+    <script src="js/utils.js?=v1.0.4"></script>
+    <script src="js/PlayerInput.js?=v1.0.4"></script>
+    <script src="js/World.js?=v1.0.4"></script>
+    <script src="js/GameObject.js?=v1.0.4"></script>
+    <script src="js/Character.js?=v1.0.4"></script>
     <script src="js/Collectable.js"></script>
     <script src="js/Actionable.js"></script>
-    <script src="js/Sprite.js?=v1.0.3"></script>
-    <script src="js/WorldMap.js?=v1.0.3"></script>
-    <script src="js/WorldEvent.js?=v1.0.3"></script>
-    <script src="js/Message.js?=v1.0.3"></script>
-    <script src="js/KeyPressListener.js?=v1.0.3"></script>
-    <script src="js/Typewriter.js?=v1.0.3"></script>
-    <script src="js/SceneTransition.js?=v1.0.3"></script>
-    <script src="js/KeyboardMenu.js?=v1.0.3"></script>
+    <script src="js/Sprite.js?=v1.0.4"></script>
+    <script src="js/WorldMap.js?=v1.0.4"></script>
+    <script src="js/WorldEvent.js?=v1.0.4"></script>
+    <script src="js/Message.js?=v1.0.4"></script>
+    <script src="js/KeyPressListener.js?=v1.0.4"></script>
+    <script src="js/Typewriter.js?=v1.0.4"></script>
+    <script src="js/SceneTransition.js?=v1.0.4"></script>
+    <script src="js/KeyboardMenu.js?=v1.0.4"></script>
     <script src="js/HudMenu.js"></script>
-    <script src="js/PauseMenu.js?=v1.0.3"></script>
-    <script src="js/GameOver.js?=v1.0.3"></script>
-    <script src="js/Save.js?=v1.0.3"></script>
-    <script src="js/StartScreen.js?=v1.0.3"></script>
-    <script src="js/TitleScreen.js?=v1.0.3"></script>
-    <script src="js/NewGameScene.js?=v1.0.3"></script>
-    <script src="js/GetItem.js?=v1.0.3"></script>
+    <script src="js/PauseMenu.js?=v1.0.4"></script>
+    <script src="js/GameOver.js?=v1.0.4"></script>
+    <script src="js/Save.js?=v1.0.4"></script>
+    <script src="js/StartScreen.js?=v1.0.4"></script>
+    <script src="js/TitleScreen.js?=v1.0.4"></script>
+    <script src="js/NewGameScene.js?=v1.0.4"></script>
+    <script src="js/GetItem.js?=v1.0.4"></script>
 
-    <script src="js/Battle/Battle.js?=v1.0.3"></script>
-    <script src="js/Battle/Enemy.js?=v1.0.3"></script>
-    <!-- <script src="js/Battle/Team.js?=v1.0.3"></script> -->
-    <script src="js/Battle/BattleMenu.js?=v1.0.3"></script>
-    <script src="js/Battle/BattleEvent.js?=v1.0.3"></script>
-    <script src="js/Battle/TurnCycle.js?=v1.0.3"></script>
-    <script src="js/Battle/BattleAnimations.js?=v1.0.3"></script>
+    <script src="js/Battle/Battle.js?=v1.0.4"></script>
+    <script src="js/Battle/Enemy.js?=v1.0.4"></script>
+    <!-- <script src="js/Battle/Team.js?=v1.0.4"></script> -->
+    <script src="js/Battle/BattleMenu.js?=v1.0.4"></script>
+    <script src="js/Battle/BattleEvent.js?=v1.0.4"></script>
+    <script src="js/Battle/TurnCycle.js?=v1.0.4"></script>
+    <script src="js/Battle/BattleAnimations.js?=v1.0.4"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js"></script>
-    <script src="js/Howler.js?=v1.0.3"></script>
+    <script src="js/Howler.js?=v1.0.4"></script>
 
-    <script src="js/init.js?=v1.0.3"></script>
+    <script src="js/init.js?=v1.0.4"></script>
 </body>
 </html>
